@@ -1,0 +1,73 @@
+<!DOCTYPE rkplugin>
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+	<code file="Kmeanspartitioning.js" />
+	<help file="Kmeanspartitioning.rkh" />
+	<include file="../rk.ClusterAnalysis.pluginmap" />
+	<logic>
+		<connect governor="current_object" client="var_data.available" />
+		<connect governor="var_data.available" client="vrs_Selectdt.root" />
+		<convert id="lgc_vardata" sources="var_data.available" mode="notequals" />
+		<connect governor="lgc_vardata" client="frm_Usnlysbs.enabled" />
+		<script>
+			<![CDATA[ 
+				gui.addChangeCommand("var_data.available", "dataChanged()");
+							// this function is called whenever the data was changed
+							dataChanged = function(){
+									var prepareFrame = "true";
+									var selectFrame = "true";
+									var thisObject = makeRObject(gui.getValue("var_data.available"));
+									 if(thisObject.classes()){
+										if(!thisObject.isDataFrame()){
+											selectFrame = "false";
+											if(thisObject.classes().indexOf("dist") != -1){
+												prepareFrame = "false";
+											} else {}
+										} else {}
+									} else {}
+									gui.setValue("frm_Usnlysbs.enabled", selectFrame);
+									gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
+								} 
+			]]>
+		</script>
+	</logic>
+	<dialog label="Cluster analysis: K-means partitioning">
+		<row id="row_vSSDSUUSSS">
+			<varselector id="vrs_Selectdt" label="Select data" />
+			<column id="clm_vDSUUSSSDD">
+				<varslot id="var_data" label="Data (data.frame or matrix)" source="vrs_Selectdt" classes="data.frame matrix" required="true" />
+				<frame label="Use only a subset of variables" checkable="true" checked="false" id="frm_Usnlysbs">
+					<varslot id="vrsl_Slctdvrb" label="Selected variables" source="vrs_Selectdt" multi="true" />
+				</frame>
+				<frame label="Data preparation" id="frm_Dtprprtn">
+					<checkbox id="chc_Rmvmssng" label="Remove missing values" value="true" checked="true" />
+					<checkbox id="chc_Stdrdzvl" label="Stadardize values" value="true" />
+				</frame>
+				<stretch />
+				<saveobject label="Save results to workspace" checkable="true" initial="clust.k.result" id="svb_Svrsltst" />
+			</column>
+			<column id="clm_fNN2NN2AAA">
+				<frame id="frm_spnbxlbNN2">
+					<spinbox label="Number of clusters to extract" id="spn_Nmbrfcls" min="2" type="integer" />
+				</frame>
+				<stretch />
+				<frame label="Advanced options" id="frm_Advncdpt">
+					<dropdown id="drp_Algorthm" label="Algorithm">
+						<option label="Hartigan &amp; Wong" value="Hartigan-Wong" checked="true" />
+						<option label="Lloyd" value="Lloyd" />
+						<option label="Forgy" value="Forgy" />
+						<option label="MacQueen" value="MacQueen" />
+					</dropdown>
+					<spinbox label="Maximum number of iterations" id="spn_Mxmmnmbr" initial="10" min="1" type="integer" />
+					<spinbox label="Initial random set of centers" id="spn_Intlrndm" initial="1" min="1" type="integer" />
+				</frame>
+				<frame label="Plot results" checkable="true" id="frm_Pltrslts">
+					<checkbox id="chc_Pltclstr" label="Plot cluster centers" value="true" checked="true" />
+					<embed component="rkward::plot_options" as_button="true" label="Generic plot options" id="emb_Gnrcpltp" />
+					<preview />
+				</frame>
+			</column>
+		</row>
+	</dialog>
+</document>

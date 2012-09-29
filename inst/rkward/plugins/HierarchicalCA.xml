@@ -1,0 +1,93 @@
+<!DOCTYPE rkplugin>
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+	<code file="HierarchicalCA.js" />
+	<help file="HierarchicalCA.rkh" />
+	<logic>
+		<connect governor="current_object" client="var_data.available" />
+		<connect governor="var_data.available" client="vrs_Selectdt.root" />
+		<convert id="lgc_vardata" sources="var_data.available" mode="notequals" />
+		<connect governor="lgc_vardata" client="frm_Usnlysbs.enabled" />
+		<script>
+			<![CDATA[ 
+				gui.addChangeCommand("var_data.available", "dataChanged()");
+							// this function is called whenever the data was changed
+							dataChanged = function(){
+									var prepareFrame = "true";
+									var selectFrame = "true";
+									var thisObject = makeRObject(gui.getValue("var_data.available"));
+									 if(thisObject.classes()){
+										if(!thisObject.isDataFrame()){
+											selectFrame = "false";
+											if(thisObject.classes().indexOf("dist") != -1){
+												prepareFrame = "false";
+											} else {}
+										} else {}
+									} else {}
+									gui.setValue("frm_Usnlysbs.enabled", selectFrame);
+									gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
+								} 
+			]]>
+		</script>
+		<convert id="lgc_drpCmptt" sources="drp_Cmpttnmt.string" mode="equals" standard="minkowski" />
+		<connect governor="lgc_drpCmptt" client="spn_PwrfMnkw.enabled" />
+		<set id="emb_Gnrcpltp.allow_type" to="false" />
+		<set id="emb_Gnrcpltp.axistypes.visible" to="false" />
+		<set id="emb_Gnrcpltp.scale.visible" to="false" />
+		<convert id="lgc_frmDtprp" sources="frm_Dtprprtn.enabled" mode="equals" standard="true" />
+		<connect governor="lgc_frmDtprp" client="frm_Dstncmtr.enabled" />
+	</logic>
+	<dialog label="Cluster analysis: Hierarchical">
+		<row id="row_vSSDSUUSSS">
+			<varselector id="vrs_Selectdt" label="Select data" />
+			<column id="clm_vDSUUSSSDD">
+				<varslot id="var_data" label="Data (data.frame, matrix or dist)" source="vrs_Selectdt" classes="data.frame matrix dist" required="true" />
+				<frame label="Use only a subset of variables" checkable="true" checked="false" id="frm_Usnlysbs">
+					<varslot id="vrsl_Slctdvrb" label="Selected variables" source="vrs_Selectdt" multi="true" />
+				</frame>
+				<frame label="Data preparation" id="frm_Dtprprtn">
+					<checkbox id="chc_Rmvmssng" label="Remove missing values" value="true" checked="true" />
+					<checkbox id="chc_Stdrdzvl" label="Stadardize values" value="true" />
+				</frame>
+				<stretch />
+				<saveobject label="Save results to workspace" checkable="true" initial="clust.h.result" id="svb_Svrsltst" />
+			</column>
+			<column id="clm_fDDCCEMMCB">
+				<frame label="Distance matrix" id="frm_Dstncmtr">
+					<dropdown id="drp_Cmpttnmt" label="Computation method">
+						<option label="Euclidean" value="euclidean" checked="true" />
+						<option label="Maximum" value="maximum" />
+						<option label="Manhattan (city block)" value="manhattan" />
+						<option label="Canberra" value="canberra" />
+						<option label="Binary" value="binary" />
+						<option label="Minkowski" value="minkowski" />
+					</dropdown>
+					<spinbox label="Power of Minkowski distance" id="spn_PwrfMnkw" initial="2" min="1" type="integer" />
+				</frame>
+				<frame label="Clustering" id="frm_Clustrng">
+					<dropdown id="drp_Agglmrtn" label="Agglomeration method">
+						<option label="Ward" value="ward" checked="true" />
+						<option label="Single linkage (nearest neighbor)" value="single" />
+						<option label="Complete linkage (furthest neighbor)" value="complete" />
+						<option label="Average linkage (between groups linkage)" value="average" />
+						<option label="McQuitty" value="mcquitty" />
+						<option label="Median clustering" value="median" />
+						<option label="Centroid clustering" value="centroid" />
+					</dropdown>
+				</frame>
+				<stretch />
+				<frame label="Draw dendrogram" checkable="true" id="frm_Drwdndrg">
+					<spinbox label="Draw border around clusters (1 for none)" id="spn_Drwbrdr1" initial="1" min="1" type="integer" />
+					<spinbox label="Fraction of height by which labels should hang below plot" id="spn_Frctnfhg" initial="0.1" min="0" />
+					<spinbox label="Minimum height (suppress details below)" id="spn_Mnmmhght" min="0" />
+					<frame id="frm_chckbxdcPP">
+						<checkbox id="chc_Pltsplts" label="Plot splits at equally-spaced heights (not object height)" value="true" />
+					</frame>
+					<embed component="rkward::plot_options" as_button="true" label="Generic plot options" id="emb_Gnrcpltp" />
+					<preview />
+				</frame>
+			</column>
+		</row>
+	</dialog>
+</document>

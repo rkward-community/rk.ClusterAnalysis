@@ -1,0 +1,94 @@
+<!DOCTYPE rkplugin>
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+	<code file="Determinenumberofclusters.js" />
+	<help file="Determinenumberofclusters.rkh" />
+	<logic>
+		<connect governor="current_object" client="var_data.available" />
+		<connect governor="var_data.available" client="vrs_Selectdt.root" />
+		<convert id="lgc_vardata" sources="var_data.available" mode="notequals" />
+		<connect governor="lgc_vardata" client="frm_Usnlysbs.enabled" />
+		<script>
+			<![CDATA[ 
+				gui.addChangeCommand("var_data.available", "dataChanged()");
+									// this function is called whenever the data was changed
+									dataChanged = function(){
+											var prepareFrame = "true";
+											var selectFrame = "true";
+											var thisObject = makeRObject(gui.getValue("var_data.available"));
+											if(thisObject.classes()){
+												if(!thisObject.isDataFrame()){
+													selectFrame = "false";
+													if(thisObject.classes().indexOf("dist") != -1){
+														prepareFrame = "false";
+														gui.setValue("rad_Method.string", "hclust");
+													} else {}
+												} else {}
+											} else {}
+											gui.setValue("frm_Usnlysbs.enabled", selectFrame);
+											gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
+										} 
+			]]>
+		</script>
+		<convert id="lgc_drpCmptt" sources="drp_Cmpttnmt.string" mode="equals" standard="minkowski" />
+		<connect governor="lgc_drpCmptt" client="spn_PwrfMnkw.enabled" />
+		<convert id="lgc_frmDtprp" sources="frm_Dtprprtn.enabled" mode="equals" standard="true" />
+		<connect governor="lgc_frmDtprp" client="frm_Dstncmtr.enabled" />
+		<connect governor="lgc_frmDtprp" client="rad_Method.enabled" />
+		<convert id="lgc_rdMthdhc" sources="rad_Method.string" mode="equals" standard="hclust" />
+		<convert id="lgc_lgcrdMtD" sources="lgc_rdMthdhc;lgc_frmDtprp" mode="and" />
+		<connect governor="lgc_lgcrdMtD" client="frm_Dstncmtr.enabled" />
+		<connect governor="lgc_rdMthdhc" client="frm_Clustrng.enabled" />
+	</logic>
+	<dialog label="Cluster analysis: Determine number of clusters">
+		<row id="row_vSSDSUUSSS">
+			<varselector id="vrs_Selectdt" label="Select data" />
+			<column id="clm_vDSUUSSSDD">
+				<varslot id="var_data" label="Data (data.frame, matrix or dist)" source="vrs_Selectdt" classes="data.frame matrix dist" required="true" />
+				<frame label="Use only a subset of variables" checkable="true" checked="false" id="frm_Usnlysbs">
+					<varslot id="vrsl_Slctdvrb" label="Selected variables" source="vrs_Selectdt" multi="true" />
+				</frame>
+				<frame label="Data preparation" id="frm_Dtprprtn">
+					<checkbox id="chc_Rmvmssng" label="Remove missing values" value="true" checked="true" />
+					<checkbox id="chc_Stdrdzvl" label="Stadardize values" value="true" />
+				</frame>
+				<stretch />
+				<frame label="Plot options" id="frm_Plotptns">
+					<embed component="rkward::plot_options" as_button="true" label="Generic plot options" id="emb_Gnrcpltp" />
+					<preview />
+				</frame>
+			</column>
+			<column id="clm_sMM152MMKH">
+				<spinbox label="Maximum number of clusters to exexamine" id="spn_Mxmmnmbr" initial="15" min="2" type="integer" />
+				<stretch />
+				<radio id="rad_Method" label="Method">
+					<option label="K-means total within sum of sqares" value="kmeans" />
+					<option label="Hiearchical clustering criterion (Inverse Scree)" value="hclust" checked="true" />
+				</radio>
+				<frame label="Distance matrix" id="frm_Dstncmtr">
+					<dropdown id="drp_Cmpttnmt" label="Computation method">
+						<option label="Euclidean" value="euclidean" checked="true" />
+						<option label="Maximum" value="maximum" />
+						<option label="Manhattan (city block)" value="manhattan" />
+						<option label="Canberra" value="canberra" />
+						<option label="Binary" value="binary" />
+						<option label="Minkowski" value="minkowski" />
+					</dropdown>
+					<spinbox label="Power of Minkowski distance" id="spn_PwrfMnkw" initial="2" min="1" type="integer" />
+				</frame>
+				<frame label="Clustering" id="frm_Clustrng">
+					<dropdown id="drp_Agglmrtn" label="Agglomeration method">
+						<option label="Ward" value="ward" checked="true" />
+						<option label="Single linkage (nearest neighbor)" value="single" />
+						<option label="Complete linkage (furthest neighbor)" value="complete" />
+						<option label="Average linkage (between groups linkage)" value="average" />
+						<option label="McQuitty" value="mcquitty" />
+						<option label="Median clustering" value="median" />
+						<option label="Centroid clustering" value="centroid" />
+					</dropdown>
+				</frame>
+			</column>
+		</row>
+	</dialog>
+</document>

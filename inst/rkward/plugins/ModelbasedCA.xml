@@ -1,0 +1,66 @@
+<!DOCTYPE rkplugin>
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+	<code file="ModelbasedCA.js" />
+	<help file="ModelbasedCA.rkh" />
+	<logic>
+		<connect governor="current_object" client="var_data.available" />
+		<connect governor="var_data.available" client="vrs_Selectdt.root" />
+		<convert id="lgc_vardata" sources="var_data.available" mode="notequals" />
+		<connect governor="lgc_vardata" client="frm_Usnlysbs.enabled" />
+		<script>
+			<![CDATA[ 
+				gui.addChangeCommand("var_data.available", "dataChanged()");
+							// this function is called whenever the data was changed
+							dataChanged = function(){
+									var prepareFrame = "true";
+									var selectFrame = "true";
+									var thisObject = makeRObject(gui.getValue("var_data.available"));
+									 if(thisObject.classes()){
+										if(!thisObject.isDataFrame()){
+											selectFrame = "false";
+											if(thisObject.classes().indexOf("dist") != -1){
+												prepareFrame = "false";
+											} else {}
+										} else {}
+									} else {}
+									gui.setValue("frm_Usnlysbs.enabled", selectFrame);
+									gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
+								} 
+			]]>
+		</script>
+	</logic>
+	<dialog label="Cluster analysis: Model based">
+		<row id="row_vSSDSUUSSS">
+			<varselector id="vrs_Selectdt" label="Select data" />
+			<column id="clm_vDSUUSSSDD">
+				<varslot id="var_data" label="Data (data.frame or matrix)" source="vrs_Selectdt" classes="data.frame matrix" required="true" />
+				<frame label="Use only a subset of variables" checkable="true" checked="false" id="frm_Usnlysbs">
+					<varslot id="vrsl_Slctdvrb" label="Selected variables" source="vrs_Selectdt" multi="true" />
+				</frame>
+				<frame label="Data preparation" id="frm_Dtprprtn">
+					<checkbox id="chc_Rmvmssng" label="Remove missing values" value="true" checked="true" />
+					<checkbox id="chc_Stdrdzvl" label="Stadardize values" value="true" />
+				</frame>
+				<stretch />
+				<saveobject label="Save results to workspace" checkable="true" initial="clust.m.result" id="svb_Svrsltst" />
+			</column>
+			<column id="clm_fAAMM92PPP">
+				<frame label="Advanced options" id="frm_Advncdpt">
+					<spinbox label="Max number of clusters to test" id="spn_Mxnmbrfc" initial="9" min="2" type="integer" />
+				</frame>
+				<frame label="Plot results" checkable="true" id="frm_Pltrslts">
+					<radio id="rad_Plottype" label="Plot type">
+						<option label="BIC" value="BIC" checked="true" />
+						<option label="Classification" value="classification" />
+						<option label="Classification uncertainty" value="uncertainty" />
+						<option label="Density" value="density" />
+					</radio>
+					<stretch />
+					<preview />
+				</frame>
+			</column>
+		</row>
+	</dialog>
+</document>
