@@ -26,8 +26,7 @@ about.info <- rk.XML.about(
 ############
 
 # for plots
-generic.plot.options <- rk.XML.embed(component="rkward::plot_options", button=TRUE, label="Generic plot options")
-js.po.printout <- rk.JS.vars(generic.plot.options, modifiers="code.printout", check.modifiers=FALSE)
+generic.plot.options <- rk.plotOptions()
 
 # for data
 var.select <- rk.XML.varselector(label="Select data")
@@ -191,17 +190,16 @@ clust.k.js.plot <- rk.paste.JS(
 	js.selected.vars,
 	ite(js.plotk.dend, rk.paste.JS(echo("\n"), rk.paste.JS.graph(
 			echo("\t\tplot(", var.data,",\n\t\t\tcol=clust.k.result$cluster"),
-			ite(id("!", js.po.printout, ".match(/main\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
 				echo(",\n\t\t\tmain=\"K-means partitioning\"")),
-			ite(id("!", js.po.printout, ".match(/sub\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
 				echo(",\n\t\t\tsub=\"Grouped into ", clust.k.spin.numcl, " clusters by the ", clust.k.drop.meth, " algorithm\"")),
 			# generic plot options go here
-			id("echo(", js.po.printout, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
+			id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
 			echo(")"),
 			ite(clust.plotk.chk.points,
 				echo("\n\t\tpoints(clust.k.result$centers, col=1:", clust.k.spin.numcl, ", pch=8, cex=2)")),
-			plotOpts=generic.plot.options,
-			printoutObj=js.po.printout))
+			plotOpts=generic.plot.options))
 		),
 	ite("full", rk.paste.JS(echo("\nrk.print(clust.k.result)\n"), js.prt.subset, level=3))
 )
@@ -299,29 +297,28 @@ clust.h.js.dend <- rk.paste.JS(
 	js.selected.vars,
 	js.prepare,
 	ite(js.ploth.dend, rk.paste.JS(echo("\n"), rk.paste.JS.graph(
-			ite(id("!", js.po.printout, ".match(/sub\\s*=/) && ", js.prepare, " != \"true\""),
+			ite(id("!", generic.plot.options, ".match(/sub\\s*=/) && ", js.prepare, " != \"true\""),
 				echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(", var.data, ", \"method\")\n\n")),
 			echo("\t\tplclust(clust.h.result"),
-			ite(id("!", js.po.printout, ".match(/main\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
 				echo(",\n\t\t\tmain=\"Cluster dendrogram\"")),
-			ite(id("!", js.po.printout, ".match(/sub\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
 					ite(id(js.prepare, " == \"true\""),
 						echo(",\n\t\t\tsub=\"Distance computation: ", clust.h.drop.dist, ", agglomeration method: ",clust.h.drop.clst,"\""),
 						echo(",\n\t\t\tsub=paste(\"Distance computation: \", distance.computation, \", agglomeration method: ",clust.h.drop.clst,"\", sep=\"\")")
 					)
 			),
-			ite(id("!", js.po.printout, ".match(/xlab\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/xlab\\s*=/)"),
 				echo(",\n\t\t\txlab=\"Data: ", var.data, "\"")),
 			ite(clust.dend.cbox.unit, echo(",\n\t\t\tunit=TRUE")),
 			ite(id(clust.dend.spin.hang, " != 0.1"), echo(",\n\t\t\thang=", clust.dend.spin.hang)),
 			ite(id(clust.dend.spin.hmin, " != 0"), echo(",\n\t\t\thmin=", clust.dend.spin.hmin)),
 			# generic plot options go here
-			id("echo(", js.po.printout, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
+			id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
 			echo(")"),
 			ite(id(clust.dend.spin.numcl, " > 1"),
 				echo("\n\t\trect.hclust(clust.h.result, k=", clust.dend.spin.numcl, ", border=\"red\")")),
-			plotOpts=generic.plot.options,
-			printoutObj=js.po.printout
+			plotOpts=generic.plot.options
 		))
 	),
 	ite("full", rk.paste.JS(echo("\nrk.print(clust.h.result)\n"), js.prt.subset, level=3))
@@ -412,10 +409,10 @@ clust.m.js.plot <- rk.paste.JS(
 		echo("\t\tplot(clust.m.result,\n\t\t\tdata=",var.data,
 		",\n\t\t\twhat=\"", clust.plotm.type, "\""),
 # 		# generic plot options go here
-# 		id("echo(", js.po.printout, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
+# 		id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
  		echo(")")#,
 # 		plotOpts=generic.plot.options,
-# 		printoutObj=js.po.printout
+# 		printoutObj=generic.plot.options
 		))),
 	ite("full", rk.paste.JS(echo("\nrk.print(clust.m.result)\n"), js.prt.subset))
 )
@@ -533,35 +530,35 @@ clust.num.js.print <- rk.paste.JS(
 	js.prepare,
 	echo("\n"),
 	rk.paste.JS.graph(
-		ite(id("!", js.po.printout, ".match(/sub\\s*=/) && ", js.prepare, " != \"true\""),
+		ite(id("!", generic.plot.options, ".match(/sub\\s*=/) && ", js.prepare, " != \"true\""),
 			echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(", var.data, ", \"method\")\n\n")),
 		echo("\t\tplot(\n\t\t\t"),
 		ite(id(clust.num.radio.type, " == \"kmeans\" && ", js.prepare, " == \"true\""),
 			rk.paste.JS(echo("1:",clust.num.spin.numcl,",\n\t\t\tclust.wss"),
-			ite(id("!", js.po.printout, ".match(/type\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/type\\s*=/)"),
 				echo(",\n\t\t\ttype=\"b\"")),
-			ite(id("!", js.po.printout, ".match(/xlab\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/xlab\\s*=/)"),
 				echo(",\n\t\t\txlab=\"Number of Clusters\"")),
-			ite(id("!", js.po.printout, ".match(/ylab\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/ylab\\s*=/)"),
 				echo(",\n\t\t\tylab=\"Within groups sum of squares\"")),
-			ite(id("!", js.po.printout, ".match(/main\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
 				echo(",\n\t\t\tmain=\"Within sum of squares by clusters\"")),
-			ite(id("!", js.po.printout, ".match(/sub\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
 				echo(",\n\t\t\tsub=\"Examined ", clust.num.spin.numcl, " clusters using k-means partitioning\"")),
 			# generic plot options go here
-			id("echo(", js.po.printout, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
+			id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
 			echo(")"), level=3)),
 		ite(id(clust.num.radio.type, " == \"hclust\" || ", js.prepare, " != \"true\""),
 			rk.paste.JS(echo("clust.wss"),
-			ite(id("!", js.po.printout, ".match(/type\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/type\\s*=/)"),
 				echo(",\n\t\t\ttype=\"b\"")),
-			ite(id("!", js.po.printout, ".match(/xlab\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/xlab\\s*=/)"),
 				echo(",\n\t\t\txlab=\"Number of Clusters\"")),
-			ite(id("!", js.po.printout, ".match(/ylab\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/ylab\\s*=/)"),
 				echo(",\n\t\t\tylab=\"Agglomeration criterion\"")),
-			ite(id("!", js.po.printout, ".match(/main\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
 				echo(",\n\t\t\tmain=\"Inverse Scree plot\"")),
-			ite(id("!", js.po.printout, ".match(/sub\\s*=/)"),
+			ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
 					ite(id(js.prepare, " == \"true\""),
 						echo(",\n\t\t\tsub=\"Examined ", clust.num.spin.numcl, " clusters (dist: ", clust.h.drop.dist, ", hclust: ",clust.h.drop.clst,")\""),
 						echo(",\n\t\t\tsub=paste(\"Examined ", clust.num.spin.numcl, " clusters (dist: \", distance.computation, \", hclust: ",clust.h.drop.clst,")\", sep=\"\")")
@@ -569,11 +566,10 @@ clust.num.js.print <- rk.paste.JS(
 			),
 			echo(",\n\t\t\txaxt=\"n\""),
 			# generic plot options go here
-			id("echo(", js.po.printout, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
+			id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
 			echo(")",
 			"\n\t\taxis(1, at=1:",clust.num.spin.numcl,", labels=",clust.num.spin.numcl, ":1)"), level=3)),
-		plotOpts=generic.plot.options,
-		printoutObj=js.po.printout
+		plotOpts=generic.plot.options
 	),
 	ite("!full", js.prt.subset)
 )
