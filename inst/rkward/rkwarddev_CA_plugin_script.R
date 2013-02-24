@@ -9,6 +9,8 @@ local({
 # set the output directory to overwrite the actual plugin
 output.dir <- tempdir()
 overwrite <- TRUE
+# if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0
+guess.getter <- FALSE
 
 about.info <- rk.XML.about(
 	name="rk.ClusterAnalysis",
@@ -16,10 +18,12 @@ about.info <- rk.XML.about(
 		person(given="Meik", family="Michalke",
 			email="meik.michalke@hhu.de", role=c("aut","cre"))),
 	about=list(desc="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses",
-		version="0.01-7", url="http://rkward.sf.net"),
-	dependencies=list(rkward.min="0.5.6"),
-	package=list(c(name="mclust"))
+		version="0.01-8", url="http://rkward.sf.net")
 	)
+dependencies.info <- rk.XML.dependencies(
+	dependencies=list(rkward.min=ifelse(isTRUE(guess.getter), "0.6.0", "0.5.6")),
+	package=list(c(name="mclust"))
+)
 
 ############
 ## re-used objects
@@ -334,6 +338,7 @@ clust.h.component <- rk.plugin.component("Hierarchical CA",
 		calculate=clust.h.js.calc,
 		doPrintout=clust.h.js.dend
 	),
+	guess.getter=guess.getter,
 	hierarchy=list("analysis", "Cluster analysis"),
 	create=c("xml", "js"))
 
@@ -427,6 +432,7 @@ clust.m.component <- rk.plugin.component("Model based CA",
 		calculate=clust.m.js.calc,
 		doPrintout=clust.m.js.plot
 	),
+	guess.getter=guess.getter,
 	hierarchy=list("analysis", "Cluster analysis"),
 	create=c("xml", "js"))
 
@@ -583,6 +589,7 @@ clust.num.component <- rk.plugin.component("Determine number of clusters",
 #		require="fcp",
 		calculate=clust.num.js.calc,
 		doPrintout=clust.num.js.print),
+	guess.getter=guess.getter,
 	hierarchy=list("plots", "Cluster analysis"),
 	create=c("xml", "js"))
 
@@ -595,6 +602,7 @@ clust.num.component <- rk.plugin.component("Determine number of clusters",
 cluster.plugin.dir <<- rk.plugin.skeleton(
 	about.info,
 	path=output.dir,
+	guess.getter=guess.getter,
 	xml=list(
 		dialog=clust.k.full.dialog,
 		logic=lgc.sect.k),
@@ -607,6 +615,7 @@ cluster.plugin.dir <<- rk.plugin.skeleton(
 		clust.h.component,
 		clust.m.component,
 		clust.num.component),
+	dependencies=dependencies.info,
 	create=c("pmap", "xml", "js", "desc"),
 	overwrite=overwrite,
 	tests=FALSE,

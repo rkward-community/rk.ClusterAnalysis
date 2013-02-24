@@ -1,5 +1,9 @@
 ChangeLog for package rk.ClusterAnalysis
 
+changes in version 0.01-8 (2013-02-24)
+changed:
+  - updated rkwarddev generator script (compatibility with 0.06-2) and regenerated plugin code
+
 changes in version 0.01-7 (2012-09-29)
 fixed:
   - added generic pre/post plot options

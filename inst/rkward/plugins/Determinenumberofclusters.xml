@@ -1,4 +1,4 @@
-<!DOCTYPE rkplugin>
+<!DOCTYPE rkplugin >
 <document>
 	<!-- this code was generated using the rkwarddev package.
 			perhaps don't make changes here, but in the rkwarddev script instead! -->
@@ -55,7 +55,7 @@
 				</frame>
 				<stretch />
 				<frame label="Plot options" id="frm_Plotptns">
-					<embed component="rkward::plot_options" as_button="true" label="Generic plot options" id="emb_Gnrcpltp" />
+					<embed component="rkward::plot_options" as_button="true" label="Generic plot options" id="emb_rkwrdpltptnG" />
 					<preview />
 				</frame>
 			</column>

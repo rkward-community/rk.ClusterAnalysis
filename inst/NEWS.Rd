@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{News for Package 'rk.ClusterAnalysis'}
+\section{Changes in rk.ClusterAnalysis version 0.01-8 (2013-02-24)}{
+  \subsection{changed}{
+    \itemize{
+      \item updated rkwarddev generator script (compatibility with 0.06-2) and regenerated plugin code
+    }
+  }
+}
 \section{Changes in rk.ClusterAnalysis version 0.01-7 (2012-09-29)}{
   \subsection{fixed}{
     \itemize{

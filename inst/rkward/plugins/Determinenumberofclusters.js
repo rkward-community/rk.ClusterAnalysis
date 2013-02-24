@@ -83,9 +83,9 @@ function doPrintout(full){
 	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
 	echo("\n");
 	// in case there are generic plot options defined:
-	var embGnrcpltpCodePreprocess = getValue("emb_Gnrcpltp.code.preprocess");
-	var embGnrcpltpCodePrintout = getValue("emb_Gnrcpltp.code.printout");
-	var embGnrcpltpCodeCalculate = getValue("emb_Gnrcpltp.code.calculate");
+	var embRkwrdpltptnGCodePreprocess = getValue("emb_rkwrdpltptnG.code.preprocess");
+	var embRkwrdpltptnGCodePrintout = getValue("emb_rkwrdpltptnG.code.printout");
+	var embRkwrdpltptnGCodeCalculate = getValue("emb_rkwrdpltptnG.code.calculate");
 
 	if(full) {
 		echo("rk.graph.on()\n");
@@ -93,48 +93,48 @@ function doPrintout(full){
 	echo("\ttry({\n");
 
 	// insert any option-setting code that should be run before the actual plotting commands:
-	printIndentedUnlessEmpty("\t\t", embGnrcpltpCodePreprocess, "\n", "");
+	printIndentedUnlessEmpty("\t\t", embRkwrdpltptnGCodePreprocess, "\n", "");
 
 	// the actual plot:
-	if(!embGnrcpltpCodePrintout.match(/sub\s*=/) && frmDtprprtnEnabled != "true") {
+	if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/) && frmDtprprtnEnabled != "true") {
 		echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(" + varData + ", \"method\")\n\n");
 	}
 	echo("\t\tplot(\n\t\t\t");
 	if(radMethod == "kmeans" && frmDtprprtnEnabled == "true") {
 		echo("1:" + spnMxmmnmbr + ",\n\t\t\tclust.wss");
-		if(!embGnrcpltpCodePrintout.match(/type\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/type\s*=/)) {
 			echo(",\n\t\t\ttype=\"b\"");
 		}
-		if(!embGnrcpltpCodePrintout.match(/xlab\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/xlab\s*=/)) {
 			echo(",\n\t\t\txlab=\"Number of Clusters\"");
 		}
-		if(!embGnrcpltpCodePrintout.match(/ylab\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/ylab\s*=/)) {
 			echo(",\n\t\t\tylab=\"Within groups sum of squares\"");
 		}
-		if(!embGnrcpltpCodePrintout.match(/main\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/main\s*=/)) {
 			echo(",\n\t\t\tmain=\"Within sum of squares by clusters\"");
 		}
-		if(!embGnrcpltpCodePrintout.match(/sub\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/)) {
 			echo(",\n\t\t\tsub=\"Examined " + spnMxmmnmbr + " clusters using k-means partitioning\"");
 		}
-		echo(embGnrcpltpCodePrintout.replace(/, /g, ",\n\t\t\t"));
+		echo(embRkwrdpltptnGCodePrintout.replace(/, /g, ",\n\t\t\t"));
 		echo(")");
 	}
 	if(radMethod == "hclust" || frmDtprprtnEnabled != "true") {
 		echo("clust.wss");
-		if(!embGnrcpltpCodePrintout.match(/type\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/type\s*=/)) {
 			echo(",\n\t\t\ttype=\"b\"");
 		}
-		if(!embGnrcpltpCodePrintout.match(/xlab\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/xlab\s*=/)) {
 			echo(",\n\t\t\txlab=\"Number of Clusters\"");
 		}
-		if(!embGnrcpltpCodePrintout.match(/ylab\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/ylab\s*=/)) {
 			echo(",\n\t\t\tylab=\"Agglomeration criterion\"");
 		}
-		if(!embGnrcpltpCodePrintout.match(/main\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/main\s*=/)) {
 			echo(",\n\t\t\tmain=\"Inverse Scree plot\"");
 		}
-		if(!embGnrcpltpCodePrintout.match(/sub\s*=/)) {
+		if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/)) {
 			if(frmDtprprtnEnabled == "true") {
 				echo(",\n\t\t\tsub=\"Examined " + spnMxmmnmbr + " clusters (dist: " + drpCmpttnmt + ", hclust: " + drpAgglmrtn + ")\"");
 			} else {
@@ -142,12 +142,12 @@ function doPrintout(full){
 			}
 		}
 		echo(",\n\t\t\txaxt=\"n\"");
-		echo(embGnrcpltpCodePrintout.replace(/, /g, ",\n\t\t\t"));
+		echo(embRkwrdpltptnGCodePrintout.replace(/, /g, ",\n\t\t\t"));
 		echo(")" + "\n\t\taxis(1, at=1:" + spnMxmmnmbr + ", labels=" + spnMxmmnmbr + ":1)");
 	}
 
 	// insert any option-setting code that should be run after the actual plot:
-	printIndentedUnlessEmpty("\t\t", embGnrcpltpCodeCalculate, "\n", "");
+	printIndentedUnlessEmpty("\t\t", embRkwrdpltptnGCodeCalculate, "\n", "");
 
 	echo("\n\t})\n");
 	if(full) {

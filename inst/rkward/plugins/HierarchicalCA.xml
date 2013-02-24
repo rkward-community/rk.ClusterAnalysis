@@ -1,4 +1,4 @@
-<!DOCTYPE rkplugin>
+<!DOCTYPE rkplugin >
 <document>
 	<!-- this code was generated using the rkwarddev package.
 			perhaps don't make changes here, but in the rkwarddev script instead! -->
@@ -32,9 +32,9 @@
 		</script>
 		<convert id="lgc_drpCmptt" sources="drp_Cmpttnmt.string" mode="equals" standard="minkowski" />
 		<connect governor="lgc_drpCmptt" client="spn_PwrfMnkw.enabled" />
-		<set id="emb_Gnrcpltp.allow_type" to="false" />
-		<set id="emb_Gnrcpltp.axistypes.visible" to="false" />
-		<set id="emb_Gnrcpltp.scale.visible" to="false" />
+		<set id="emb_rkwrdpltptnG.allow_type" to="false" />
+		<set id="emb_rkwrdpltptnG.axistypes.visible" to="false" />
+		<set id="emb_rkwrdpltptnG.scale.visible" to="false" />
 		<convert id="lgc_frmDtprp" sources="frm_Dtprprtn.enabled" mode="equals" standard="true" />
 		<connect governor="lgc_frmDtprp" client="frm_Dstncmtr.enabled" />
 	</logic>
@@ -84,7 +84,7 @@
 					<frame id="frm_chckbxdcPP">
 						<checkbox id="chc_Pltsplts" label="Plot splits at equally-spaced heights (not object height)" value="true" />
 					</frame>
-					<embed component="rkward::plot_options" as_button="true" label="Generic plot options" id="emb_Gnrcpltp" />
+					<embed component="rkward::plot_options" as_button="true" label="Generic plot options" id="emb_rkwrdpltptnG" />
 					<preview />
 				</frame>
 			</column>
