@@ -1,5 +1,11 @@
 ChangeLog for package rk.ClusterAnalysis
 
+changes in version 0.01-9 (2013-04-04)
+added:
+  - debianized the plugin
+fixed:
+  - removed erroneous pluginmap inclusions from XML files
+
 changes in version 0.01-8 (2013-02-24)
 changed:
   - updated rkwarddev generator script (compatibility with 0.06-2) and regenerated plugin code

@@ -4,7 +4,6 @@
 			perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<code file="Kmeanspartitioning.js" />
 	<help file="Kmeanspartitioning.rkh" />
-	<include file="../rk.ClusterAnalysis.pluginmap" />
 	<logic>
 		<connect governor="current_object" client="var_data.available" />
 		<connect governor="var_data.available" client="vrs_Selectdt.root" />
