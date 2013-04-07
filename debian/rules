@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 #								-*- makefile -*-
-# debian/rules file for the Debian/GNU Linux r-other-rkward-rk-clusteranalysis package
+# debian/rules file for the Debian/GNU Linux r-other-rkward-rk.clusteranalysis package
 # Copyright 2013 by m.eik michalke <meik.michalke@hhu.de>
 
 debRreposname := other-rkward

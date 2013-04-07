@@ -1,4 +1,4 @@
-Source: r-other-rkward-rk-clusteranalysis
+Source: r-other-rkward-rk.clusteranalysis
 Section: math
 Priority: optional
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
@@ -6,7 +6,7 @@ Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 2.9.0), cdbs, rkward (
 Standards-Version: 3.9.3.1
 Homepage: http://rkward.sf.net
 
-Package: r-other-rkward-rk-clusteranalysis
+Package: r-other-rkward-rk.clusteranalysis
 Architecture: all
 Section: math
 Depends: r-base (>= 2.15.0), rkward (>= 0.5.6)

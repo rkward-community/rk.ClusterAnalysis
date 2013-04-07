@@ -1,3 +1,9 @@
+r-other-rkward-rk.clusteranalysis (0.01-9-2) unstable; urgency=low
+
+  * renamed package (keep the period in name)
+
+ -- m.eik michalke <meik.michalke@hhu.de>  Sun, 07 Apr 2013 21:07:57 +0000
+
 r-other-rkward-rk-clusteranalysis (0.01-9-1) unstable; urgency=low
 
   * new upstream release
