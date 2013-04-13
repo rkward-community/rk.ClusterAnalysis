@@ -18,7 +18,7 @@ about.info <- rk.XML.about(
 		person(given="Meik", family="Michalke",
 			email="meik.michalke@hhu.de", role=c("aut","cre"))),
 	about=list(desc="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses",
-		version="0.01-9", url="http://rkward.sf.net")
+		version="0.01-10", url="http://rkward.sf.net")
 	)
 dependencies.info <- rk.XML.dependencies(
 	dependencies=list(rkward.min=ifelse(isTRUE(guess.getter), "0.6.0", "0.5.6")),
@@ -92,8 +92,7 @@ lgc.data.from.selection <- rk.XML.connect(governor=var.data, client=var.select, 
 gov.data <- rk.XML.convert(sources=list(available=var.data), mode=c(notequals=""))
 lgc.enable.selected <- rk.XML.connect(governor=gov.data, client=frame.selected.vars, set="enabled")
 # disable distance computation, if dist object given
-gov.isntDistData <- rk.XML.convert(sources=list(enabled=clust.pre.frame), mode=c(equals="true"))
-lgc.isntDistData <- rk.XML.connect(governor=gov.isntDistData, client=clust.h.frame.dist, set="enabled")
+lgc.isntDistData <- rk.XML.connect(governor=clust.pre.frame, get="enabled", client=clust.h.frame.dist, set="enabled")
 
 # for JavaScript
 js.frm.subset <- rk.JS.vars(frame.selected.vars, modifiers="checked") # see if the frame is checked
@@ -266,7 +265,6 @@ clust.h.full.dialog <- rk.XML.dialog(
 		rk.XML.set(generic.plot.options, set="allow_type", to=FALSE),
 		rk.XML.set(generic.plot.options, set="axistypes.visible", to=FALSE),
 		rk.XML.set(generic.plot.options, set="scale.visible", to=FALSE),
-		gov.isntDistData,
 		lgc.isntDistData
 	)
 
@@ -497,11 +495,10 @@ clust.num.full.dialog <- rk.XML.dialog(
 				}", js=FALSE)),
 		CA.gov.dist.num <- rk.XML.convert(sources=list(string=clust.h.drop.dist), mode=c(equals="minkowski")),
 		rk.XML.connect(governor=CA.gov.dist.num, client=clust.h.spin.pwmink, set="enabled"),
-		gov.isntDistData,
 		lgc.isntDistData,
-		rk.XML.connect(governor=gov.isntDistData, client=clust.num.radio.type, set="enabled"),
+		rk.XML.connect(governor=clust.pre.frame, get="enabled", client=clust.num.radio.type, set="enabled"),
 		CA.gov.dist.num.type <- rk.XML.convert(sources=list(string=clust.num.radio.type), mode=c(equals="hclust")),
-		CA.gov.dist.notDistData <- rk.XML.convert(sources=list(CA.gov.dist.num.type, gov.isntDistData), mode=c(and="")),
+		CA.gov.dist.notDistData <- rk.XML.convert(sources=list(CA.gov.dist.num.type, enabled=clust.pre.frame), mode=c(and="")),
 		rk.XML.connect(governor=CA.gov.dist.notDistData, client=clust.num.frm.dist, set="enabled"),
 		rk.XML.connect(governor=CA.gov.dist.num.type, client=clust.num.frm.clst, set="enabled")
 	)

@@ -33,11 +33,10 @@
 		</script>
 		<convert id="lgc_drpCmptt" sources="drp_Cmpttnmt.string" mode="equals" standard="minkowski" />
 		<connect governor="lgc_drpCmptt" client="spn_PwrfMnkw.enabled" />
-		<convert id="lgc_frmDtprp" sources="frm_Dtprprtn.enabled" mode="equals" standard="true" />
-		<connect governor="lgc_frmDtprp" client="frm_Dstncmtr.enabled" />
-		<connect governor="lgc_frmDtprp" client="rad_Method.enabled" />
+		<connect governor="frm_Dtprprtn.enabled" client="frm_Dstncmtr.enabled" />
+		<connect governor="frm_Dtprprtn.enabled" client="rad_Method.enabled" />
 		<convert id="lgc_rdMthdhc" sources="rad_Method.string" mode="equals" standard="hclust" />
-		<convert id="lgc_lgcrdMtD" sources="lgc_rdMthdhc;lgc_frmDtprp" mode="and" />
+		<convert id="lgc_lgcrdMtD" sources="lgc_rdMthdhc;frm_Dtprprtn.enabled" mode="and" />
 		<connect governor="lgc_lgcrdMtD" client="frm_Dstncmtr.enabled" />
 		<connect governor="lgc_rdMthdhc" client="frm_Clustrng.enabled" />
 	</logic>

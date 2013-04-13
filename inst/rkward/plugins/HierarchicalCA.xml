@@ -35,8 +35,7 @@
 		<set id="emb_rkwrdpltptnG.allow_type" to="false" />
 		<set id="emb_rkwrdpltptnG.axistypes.visible" to="false" />
 		<set id="emb_rkwrdpltptnG.scale.visible" to="false" />
-		<convert id="lgc_frmDtprp" sources="frm_Dtprprtn.enabled" mode="equals" standard="true" />
-		<connect governor="lgc_frmDtprp" client="frm_Dstncmtr.enabled" />
+		<connect governor="frm_Dtprprtn.enabled" client="frm_Dstncmtr.enabled" />
 	</logic>
 	<dialog label="Cluster analysis: Hierarchical">
 		<row id="row_vSSDSUUSSS">

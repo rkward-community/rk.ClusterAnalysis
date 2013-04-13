@@ -15,8 +15,8 @@
 		name="rk.ClusterAnalysis"
 		shortinfo="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
 		longinfo="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
-		version="0.01-9"
-		releasedate="2013-04-04"
+		version="0.01-10"
+		releasedate="2013-04-13"
 		url="http://rkward.sf.net"
 		license="GPL (&gt;= 3)"
 	>

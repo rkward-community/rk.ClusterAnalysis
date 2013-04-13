@@ -1,5 +1,10 @@
 ChangeLog for package rk.ClusterAnalysis
 
+changes in version 0.01-10 (2013-04-12)
+fixed:
+  - corrected logic sections in hierarchical CA and determine number of clusters dialogs
+    (distance calculation was not correctly enabled/disabled)
+
 changes in version 0.01-9 (2013-04-04)
 added:
   - debianized the plugin
