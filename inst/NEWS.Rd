@@ -1,5 +1,13 @@
 \name{NEWS}
 \title{News for Package 'rk.ClusterAnalysis'}
+\section{Changes in rk.ClusterAnalysis version 0.01-10 (2013-04-14)}{
+  \subsection{fixed}{
+    \itemize{
+      \item corrected logic sections in hierarchical CA and determine number of clusters dialogs
+        (distance calculation was not correctly enabled/disabled)
+    }
+  }
+}
 \section{Changes in rk.ClusterAnalysis version 0.01-9 (2013-04-04)}{
   \subsection{added}{
     \itemize{
