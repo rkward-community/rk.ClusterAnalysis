@@ -1,8 +1,10 @@
 \name{NEWS}
 \title{News for Package 'rk.ClusterAnalysis'}
 \section{Changes in rk.ClusterAnalysis version 0.01-11 (2015-03-13)}{
-  \itemize{
-    \item rebuilt using rkwarddev 0.07-1
+  \subsection{changed}{
+    \itemize{
+      \item rebuilt using rkwarddev 0.07-1
+    }
   }
 }
 \section{Changes in rk.ClusterAnalysis version 0.01-10 (2013-04-14)}{
