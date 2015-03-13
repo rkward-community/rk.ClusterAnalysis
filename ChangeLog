@@ -1,5 +1,8 @@
 ChangeLog for package rk.ClusterAnalysis
 
+changes in version 0.01-11 (2015-03-13)
+  - rebuilt using rkwarddev 0.07-1
+
 changes in version 0.01-10 (2013-04-14)
 fixed:
   - corrected logic sections in hierarchical CA and determine number of clusters dialogs

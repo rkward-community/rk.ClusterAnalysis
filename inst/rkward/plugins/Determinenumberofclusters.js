@@ -10,16 +10,17 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
-	var varData = getValue("var_data");
-	var vrslSlctdvrb = getValue("vrsl_Slctdvrb");
-	var chcRmvmssng = getValue("chc_Rmvmssng");
-	var chcStdrdzvl = getValue("chc_Stdrdzvl");
-	var spnMxmmnmbr = getValue("spn_Mxmmnmbr");
-	var radMethod = getValue("rad_Method");
-	var drpCmpttnmt = getValue("drp_Cmpttnmt");
-	var spnPwrfMnkw = getValue("spn_PwrfMnkw");
-	var drpAgglmrtn = getValue("drp_Agglmrtn");
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
+
+	var varData = getString("var_data");
+	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
+	var spnMxmmnmbr = getString("spn_Mxmmnmbr");
+	var radMethod = getString("rad_Method");
+	var drpCmpttnmt = getString("drp_Cmpttnmt");
+	var spnPwrfMnkw = getString("spn_PwrfMnkw");
+	var drpAgglmrtn = getString("drp_Agglmrtn");
+	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
+	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
+	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
 
 	// the R code to be evaluated
 	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
@@ -62,20 +63,22 @@ function preview(){
 
 function doPrintout(full){
 	// read in variables from dialog
-	var varData = getValue("var_data");
-	var vrslSlctdvrb = getValue("vrsl_Slctdvrb");
-	var chcRmvmssng = getValue("chc_Rmvmssng");
-	var chcStdrdzvl = getValue("chc_Stdrdzvl");
-	var spnMxmmnmbr = getValue("spn_Mxmmnmbr");
-	var radMethod = getValue("rad_Method");
-	var drpCmpttnmt = getValue("drp_Cmpttnmt");
-	var spnPwrfMnkw = getValue("spn_PwrfMnkw");
-	var drpAgglmrtn = getValue("drp_Agglmrtn");
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
+
+	var varData = getString("var_data");
+	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
+	var spnMxmmnmbr = getString("spn_Mxmmnmbr");
+	var radMethod = getString("rad_Method");
+	var drpCmpttnmt = getString("drp_Cmpttnmt");
+	var spnPwrfMnkw = getString("spn_PwrfMnkw");
+	var drpAgglmrtn = getString("drp_Agglmrtn");
+	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
+	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
+	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
 
 	// create the plot
 	if(full) {
-		echo("rk.header(\"Determine number of clusters results\")\n");
+		new Header(i18n("Determine number of clusters results")).print();
+
 	}
 
 	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");

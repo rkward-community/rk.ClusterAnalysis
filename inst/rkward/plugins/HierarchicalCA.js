@@ -10,20 +10,21 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
-	var varData = getValue("var_data");
-	var vrslSlctdvrb = getValue("vrsl_Slctdvrb");
-	var chcRmvmssng = getValue("chc_Rmvmssng");
-	var chcStdrdzvl = getValue("chc_Stdrdzvl");
-	var svbSvrsltst = getValue("svb_Svrsltst");
-	var drpCmpttnmt = getValue("drp_Cmpttnmt");
-	var spnPwrfMnkw = getValue("spn_PwrfMnkw");
-	var drpAgglmrtn = getValue("drp_Agglmrtn");
-	var spnDrwbrdr1 = getValue("spn_Drwbrdr1");
-	var spnFrctnfhg = getValue("spn_Frctnfhg");
-	var spnMnmmhght = getValue("spn_Mnmmhght");
-	var chcPltsplts = getValue("chc_Pltsplts");
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
-	var frmDrwdndrgChecked = getValue("frm_Drwdndrg.checked");
+
+	var varData = getString("var_data");
+	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
+	var svbSvrsltst = getString("svb_Svrsltst");
+	var drpCmpttnmt = getString("drp_Cmpttnmt");
+	var spnPwrfMnkw = getString("spn_PwrfMnkw");
+	var drpAgglmrtn = getString("drp_Agglmrtn");
+	var spnDrwbrdr1 = getString("spn_Drwbrdr1");
+	var spnFrctnfhg = getString("spn_Frctnfhg");
+	var spnMnmmhght = getString("spn_Mnmmhght");
+	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
+	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
+	var chcPltsplts = getBoolean("chc_Pltsplts.state");
+	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
+	var frmDrwdndrgChecked = getBoolean("frm_Drwdndrg.checked");
 
 	// the R code to be evaluated
 	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
@@ -76,24 +77,26 @@ function preview(){
 
 function doPrintout(full){
 	// read in variables from dialog
-	var varData = getValue("var_data");
-	var vrslSlctdvrb = getValue("vrsl_Slctdvrb");
-	var chcRmvmssng = getValue("chc_Rmvmssng");
-	var chcStdrdzvl = getValue("chc_Stdrdzvl");
-	var svbSvrsltst = getValue("svb_Svrsltst");
-	var drpCmpttnmt = getValue("drp_Cmpttnmt");
-	var spnPwrfMnkw = getValue("spn_PwrfMnkw");
-	var drpAgglmrtn = getValue("drp_Agglmrtn");
-	var spnDrwbrdr1 = getValue("spn_Drwbrdr1");
-	var spnFrctnfhg = getValue("spn_Frctnfhg");
-	var spnMnmmhght = getValue("spn_Mnmmhght");
-	var chcPltsplts = getValue("chc_Pltsplts");
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
-	var frmDrwdndrgChecked = getValue("frm_Drwdndrg.checked");
+
+	var varData = getString("var_data");
+	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
+	var svbSvrsltst = getString("svb_Svrsltst");
+	var drpCmpttnmt = getString("drp_Cmpttnmt");
+	var spnPwrfMnkw = getString("spn_PwrfMnkw");
+	var drpAgglmrtn = getString("drp_Agglmrtn");
+	var spnDrwbrdr1 = getString("spn_Drwbrdr1");
+	var spnFrctnfhg = getString("spn_Frctnfhg");
+	var spnMnmmhght = getString("spn_Mnmmhght");
+	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
+	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
+	var chcPltsplts = getBoolean("chc_Pltsplts.state");
+	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
+	var frmDrwdndrgChecked = getBoolean("frm_Drwdndrg.checked");
 
 	// create the plot
 	if(full) {
-		echo("rk.header(\"Hierarchical CA results\")\n");
+		new Header(i18n("Hierarchical CA results")).print();
+
 	}
 
 	var frmDrwdndrgChecked = getValue("frm_Drwdndrg.checked");

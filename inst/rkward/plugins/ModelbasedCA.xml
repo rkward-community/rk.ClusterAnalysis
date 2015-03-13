@@ -4,30 +4,32 @@
 			perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<code file="ModelbasedCA.js" />
 	<help file="ModelbasedCA.rkh" />
+	<!-- <dependencies>
+			</dependencies> -->
 	<logic>
 		<connect governor="current_object" client="var_data.available" />
 		<connect governor="var_data.available" client="vrs_Selectdt.root" />
-		<convert id="lgc_vardata" sources="var_data.available" mode="notequals" />
+		<convert id="lgc_vardata" sources="var_data.available" mode="notequals" standard="" />
 		<connect governor="lgc_vardata" client="frm_Usnlysbs.enabled" />
 		<script>
 			<![CDATA[ 
 				gui.addChangeCommand("var_data.available", "dataChanged()");
-							// this function is called whenever the data was changed
-							dataChanged = function(){
-									var prepareFrame = "true";
-									var selectFrame = "true";
-									var thisObject = makeRObject(gui.getValue("var_data.available"));
-									 if(thisObject.classes()){
-										if(!thisObject.isDataFrame()){
-											selectFrame = "false";
-											if(thisObject.classes().indexOf("dist") != -1){
-												prepareFrame = "false";
-											} else {}
-										} else {}
-									} else {}
-									gui.setValue("frm_Usnlysbs.enabled", selectFrame);
-									gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
-								} 
+							  // this function is called whenever the data was changed
+							  dataChanged = function(){
+							      var prepareFrame = "true";
+							      var selectFrame = "true";
+							      var thisObject = makeRObject(gui.getValue("var_data.available"));
+							       if(thisObject.classes()){
+							        if(!thisObject.isDataFrame()){
+							          selectFrame = "false";
+							          if(thisObject.classes().indexOf("dist") != -1){
+							            prepareFrame = "false";
+							          } else {}
+							        } else {}
+							      } else {}
+							      gui.setValue("frm_Usnlysbs.enabled", selectFrame);
+							      gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
+							    } 
 			]]>
 		</script>
 	</logic>

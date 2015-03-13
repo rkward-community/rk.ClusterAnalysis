@@ -10,15 +10,16 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
-	var varData = getValue("var_data");
-	var vrslSlctdvrb = getValue("vrsl_Slctdvrb");
-	var chcRmvmssng = getValue("chc_Rmvmssng");
-	var chcStdrdzvl = getValue("chc_Stdrdzvl");
-	var svbSvrsltst = getValue("svb_Svrsltst");
-	var spnMxnmbrfc = getValue("spn_Mxnmbrfc");
-	var radPlottype = getValue("rad_Plottype");
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
-	var frmPltrsltsChecked = getValue("frm_Pltrslts.checked");
+
+	var varData = getString("var_data");
+	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
+	var svbSvrsltst = getString("svb_Svrsltst");
+	var spnMxnmbrfc = getString("spn_Mxnmbrfc");
+	var radPlottype = getString("rad_Plottype");
+	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
+	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
+	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
+	var frmPltrsltsChecked = getBoolean("frm_Pltrslts.checked");
 
 	// the R code to be evaluated
 	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
@@ -54,19 +55,21 @@ function preview(){
 
 function doPrintout(full){
 	// read in variables from dialog
-	var varData = getValue("var_data");
-	var vrslSlctdvrb = getValue("vrsl_Slctdvrb");
-	var chcRmvmssng = getValue("chc_Rmvmssng");
-	var chcStdrdzvl = getValue("chc_Stdrdzvl");
-	var svbSvrsltst = getValue("svb_Svrsltst");
-	var spnMxnmbrfc = getValue("spn_Mxnmbrfc");
-	var radPlottype = getValue("rad_Plottype");
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
-	var frmPltrsltsChecked = getValue("frm_Pltrslts.checked");
+
+	var varData = getString("var_data");
+	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
+	var svbSvrsltst = getString("svb_Svrsltst");
+	var spnMxnmbrfc = getString("spn_Mxnmbrfc");
+	var radPlottype = getString("rad_Plottype");
+	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
+	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
+	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
+	var frmPltrsltsChecked = getBoolean("frm_Pltrslts.checked");
 
 	// create the plot
 	if(full) {
-		echo("rk.header(\"Model based CA results\")\n");
+		new Header(i18n("Model based CA results")).print();
+
 	}
 
 	var frmPltrsltsChecked = getValue("frm_Pltrslts.checked");

@@ -3,9 +3,9 @@
 #' \tabular{ll}{
 #' Package: \tab rk.ClusterAnalysis\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.01-10\cr
-#' Date: \tab 2013-04-14\cr
-#' Depends: \tab  rkward (>= 0.5.6)\cr
+#' Version: \tab 0.01-11\cr
+#' Date: \tab 2015-03-13\cr
+#' Depends: \tab rkward (>= 0.6.0)\cr
 #' Enhances: \tab rkward\cr
 #' License: \tab GPL (>= 3)\cr
 #' LazyLoad: \tab yes\cr
@@ -14,10 +14,10 @@
 #'
 #' RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
 #'
-#' @aliases rk.ClusterAnalysis-package rk.ClusterAnalysis
+#' @aliases rk.ClusterAnalysis-package
 #' @name rk.ClusterAnalysis-package
 #' @docType package
 #' @title The rk.ClusterAnalysis Package
-#' @author Meik Michalke \email{meik.michalke@@hhu.de}
+#' @author Meik Michalke
 #' @keywords package
 NULL

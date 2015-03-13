@@ -10,18 +10,19 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
-	var varData = getValue("var_data");
-	var vrslSlctdvrb = getValue("vrsl_Slctdvrb");
-	var chcRmvmssng = getValue("chc_Rmvmssng");
-	var chcStdrdzvl = getValue("chc_Stdrdzvl");
-	var svbSvrsltst = getValue("svb_Svrsltst");
-	var spnNmbrfcls = getValue("spn_Nmbrfcls");
-	var drpAlgorthm = getValue("drp_Algorthm");
-	var spnMxmmnmbr = getValue("spn_Mxmmnmbr");
-	var spnIntlrndm = getValue("spn_Intlrndm");
-	var chcPltclstr = getValue("chc_Pltclstr");
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
-	var frmPltrsltsChecked = getValue("frm_Pltrslts.checked");
+
+	var varData = getString("var_data");
+	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
+	var svbSvrsltst = getString("svb_Svrsltst");
+	var spnNmbrfcls = getString("spn_Nmbrfcls");
+	var drpAlgorthm = getString("drp_Algorthm");
+	var spnMxmmnmbr = getString("spn_Mxmmnmbr");
+	var spnIntlrndm = getString("spn_Intlrndm");
+	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
+	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
+	var chcPltclstr = getBoolean("chc_Pltclstr.state");
+	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
+	var frmPltrsltsChecked = getBoolean("frm_Pltrslts.checked");
 
 	// the R code to be evaluated
 	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
@@ -67,22 +68,24 @@ function preview(){
 
 function doPrintout(full){
 	// read in variables from dialog
-	var varData = getValue("var_data");
-	var vrslSlctdvrb = getValue("vrsl_Slctdvrb");
-	var chcRmvmssng = getValue("chc_Rmvmssng");
-	var chcStdrdzvl = getValue("chc_Stdrdzvl");
-	var svbSvrsltst = getValue("svb_Svrsltst");
-	var spnNmbrfcls = getValue("spn_Nmbrfcls");
-	var drpAlgorthm = getValue("drp_Algorthm");
-	var spnMxmmnmbr = getValue("spn_Mxmmnmbr");
-	var spnIntlrndm = getValue("spn_Intlrndm");
-	var chcPltclstr = getValue("chc_Pltclstr");
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
-	var frmPltrsltsChecked = getValue("frm_Pltrslts.checked");
+
+	var varData = getString("var_data");
+	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
+	var svbSvrsltst = getString("svb_Svrsltst");
+	var spnNmbrfcls = getString("spn_Nmbrfcls");
+	var drpAlgorthm = getString("drp_Algorthm");
+	var spnMxmmnmbr = getString("spn_Mxmmnmbr");
+	var spnIntlrndm = getString("spn_Intlrndm");
+	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
+	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
+	var chcPltclstr = getBoolean("chc_Pltclstr.state");
+	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
+	var frmPltrsltsChecked = getBoolean("frm_Pltrslts.checked");
 
 	// create the plot
 	if(full) {
-		echo("rk.header(\"Cluster analysis\")\n");
+		new Header(i18n(""Cluster analysis"")).print();
+
 	}
 
 	var frmPltrsltsChecked = getValue("frm_Pltrslts.checked");
