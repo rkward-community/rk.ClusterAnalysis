@@ -2,13 +2,13 @@ bibentry("Manual",
     title="rk.ClusterAnalysis: RKWard GUI to conduct k-means, model based and hierarchical cluster analyses",
     author="Meik Michalke",
     year="2015",
-    note="(Version 0.01-11)",
-    url="http://rkward.sf.net",
+    note="(Version 0.01-12)",
+    url="https://rkward.kde.org",
 
     textVersion =
     paste("Michalke, M. (2015). ",
-        "rk.ClusterAnalysis: RKWard GUI to conduct k-means, model based and hierarchical cluster analyses (Version 0.01-11). ",
-        "Available from http://rkward.sf.net",
+        "rk.ClusterAnalysis: RKWard GUI to conduct k-means, model based and hierarchical cluster analyses (Version 0.01-12). ",
+        "Available from https://rkward.kde.org",
         sep=""),
 
     mheader = "To cite rk.ClusterAnalysis in publications use:")

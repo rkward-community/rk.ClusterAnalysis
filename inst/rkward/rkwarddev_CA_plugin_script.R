@@ -18,7 +18,7 @@ about.info <- rk.XML.about(
     person(given="Meik", family="Michalke",
       email="meik.michalke@hhu.de", role=c("aut","cre"))),
   about=list(desc="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses",
-    version="0.01-11", url="http://rkward.sf.net")
+    version="0.01-12", url="https://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(
   dependencies=list(rkward.min=ifelse(isTRUE(guess.getter), "0.6.0", "0.5.6")),
