@@ -1,5 +1,15 @@
 ChangeLog for package rk.ClusterAnalysis
 
+changes in version 0.01-13 (2015-06-17)
+fixed:
+  - fixed bugs in the checkbox evaluation, didn't work in recent RKWard versions any longer
+  - replacing "ward" with "ward.D" (as of R 3.0.3)
+changed:
+  - replaced the deprecated plclust() with plot(), including workarounds for the options
+    "unit" and "hmin" which are no longer available with plot()
+added:
+  - new clustering method "ward.D2" (as of R 3.0.3)
+
 changes in version 0.01-12 (2015-03-14)
 fixed:
   - replaced the outdated links to sourceforge with our new KDE URL

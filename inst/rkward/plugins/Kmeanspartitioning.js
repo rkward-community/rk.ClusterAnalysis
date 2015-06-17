@@ -31,10 +31,10 @@ function calculate(){
 	if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
 		echo("\t# Use subset of variables\n\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
 	}
-	if(frmDtprprtnEnabled == "true" && chcRmvmssng == "true") {
+	if(frmDtprprtnEnabled && chcRmvmssng) {
 		echo("\t# Listwise removal of missings\n\t" + varData + " <- na.omit(" + varData + ")\n");
 	}
-	if(frmDtprprtnEnabled == "true" && chcStdrdzvl == "true") {
+	if(frmDtprprtnEnabled && chcStdrdzvl) {
 		echo("\t# Standardizing values\n\t" + varData + " <- scale(" + varData + ")\n");
 	}
 	echo("\tclust.k.result <- kmeans(");

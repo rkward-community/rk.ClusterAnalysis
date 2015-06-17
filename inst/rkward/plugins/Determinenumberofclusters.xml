@@ -80,9 +80,10 @@
 				</frame>
 				<frame label="Clustering" id="frm_Clustrng">
 					<dropdown id="drp_Agglmrtn" label="Agglomeration method">
-						<option label="Ward" value="ward" checked="true" />
+						<option label="Ward (incl. clustering criterion)" value="ward.D2" />
+						<option label="Ward (without clustering criterion)" value="ward.D" />
 						<option label="Single linkage (nearest neighbor)" value="single" />
-						<option label="Complete linkage (furthest neighbor)" value="complete" />
+						<option label="Complete linkage (furthest neighbor)" value="complete" checked="true" />
 						<option label="Average linkage (between groups linkage)" value="average" />
 						<option label="McQuitty" value="mcquitty" />
 						<option label="Median clustering" value="median" />

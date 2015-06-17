@@ -29,10 +29,10 @@ function calculate(){
 	if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
 		echo("\t# Use subset of variables\n\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
 	}
-	if(frmDtprprtnEnabled == "true" && chcRmvmssng == "true") {
+	if(frmDtprprtnEnabled && chcRmvmssng) {
 		echo("\t# Listwise removal of missings\n\t" + varData + " <- na.omit(" + varData + ")\n");
 	}
-	if(frmDtprprtnEnabled == "true" && chcStdrdzvl == "true") {
+	if(frmDtprprtnEnabled && chcStdrdzvl) {
 		echo("\t# Standardizing values\n\t" + varData + " <- scale(" + varData + ")\n");
 	}
 	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
@@ -41,7 +41,7 @@ function calculate(){
 	}
 	if(radMethod == "hclust" && varData) {
 		echo("\t# Get clustering criterion");
-		if(frmDtprprtnEnabled == "true") {
+		if(frmDtprprtnEnabled) {
 			echo("\n\tclust.from <- nrow(" + varData + ")-" + spnMxmmnmbr + "\n\tclust.to <- nrow(" + varData + ")-1" + "\n\tclust.wss <- hclust(dist(" + varData + ", method=\"" + drpCmpttnmt + "\"), method=\"" + drpAgglmrtn + "\")$height[clust.from:clust.to]\n\n");
 		} else {
 			echo("\n\tclust.from <- attr(" + varData + ", \"Size\")-" + spnMxmmnmbr + "\n\tclust.to <- attr(" + varData + ", \"Size\")-1" + "\n\tclust.wss <- hclust(" + varData + ", method=\"" + drpAgglmrtn + "\")$height[clust.from:clust.to]\n\n");
@@ -99,11 +99,11 @@ function doPrintout(full){
 	printIndentedUnlessEmpty("\t\t", embRkwrdpltptnGCodePreprocess, "\n", "");
 
 	// the actual plot:
-	if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/) && frmDtprprtnEnabled != "true") {
+	if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/) && !frmDtprprtnEnabled) {
 		echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(" + varData + ", \"method\")\n\n");
 	}
 	echo("\t\tplot(\n\t\t\t");
-	if(radMethod == "kmeans" && frmDtprprtnEnabled == "true") {
+	if(radMethod == "kmeans" && frmDtprprtnEnabled) {
 		echo("1:" + spnMxmmnmbr + ",\n\t\t\tclust.wss");
 		if(!embRkwrdpltptnGCodePrintout.match(/type\s*=/)) {
 			echo(",\n\t\t\ttype=\"b\"");
@@ -123,7 +123,7 @@ function doPrintout(full){
 		echo(embRkwrdpltptnGCodePrintout.replace(/, /g, ",\n\t\t\t"));
 		echo(")");
 	}
-	if(radMethod == "hclust" || frmDtprprtnEnabled != "true") {
+	if(radMethod == "hclust" || !frmDtprprtnEnabled) {
 		echo("clust.wss");
 		if(!embRkwrdpltptnGCodePrintout.match(/type\s*=/)) {
 			echo(",\n\t\t\ttype=\"b\"");
@@ -138,7 +138,7 @@ function doPrintout(full){
 			echo(",\n\t\t\tmain=\"Inverse Scree plot\"");
 		}
 		if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/)) {
-			if(frmDtprprtnEnabled == "true") {
+			if(frmDtprprtnEnabled) {
 				echo(",\n\t\t\tsub=\"Examined " + spnMxmmnmbr + " clusters (dist: " + drpCmpttnmt + ", hclust: " + drpAgglmrtn + ")\"");
 			} else {
 				echo(",\n\t\t\tsub=paste(\"Examined " + spnMxmmnmbr + " clusters (dist: \", distance.computation, \", hclust: " + drpAgglmrtn + ")\", sep=\"\")");

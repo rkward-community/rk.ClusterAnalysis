@@ -33,14 +33,14 @@ function calculate(){
 	if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
 		echo("\t# Use subset of variables\n\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
 	}
-	if(frmDtprprtnEnabled == "true" && chcRmvmssng == "true") {
+	if(frmDtprprtnEnabled && chcRmvmssng) {
 		echo("\t# Listwise removal of missings\n\t" + varData + " <- na.omit(" + varData + ")\n");
 	}
-	if(frmDtprprtnEnabled == "true" && chcStdrdzvl == "true") {
+	if(frmDtprprtnEnabled && chcStdrdzvl) {
 		echo("\t# Standardizing values\n\t" + varData + " <- scale(" + varData + ")\n");
 	}
 	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
-	if(frmDtprprtnEnabled == "true") {
+	if(frmDtprprtnEnabled) {
 		echo("\t# Compute distance matrix\n\tclust.h.distances <- dist(");
 		if(varData) {
 			echo("\n\t\tx=" + varData);
@@ -119,15 +119,21 @@ function doPrintout(full){
 	printIndentedUnlessEmpty("\t\t", embRkwrdpltptnGCodePreprocess, "\n", "");
 
 	// the actual plot:
-	if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/) && frmDtprprtnEnabled != "true") {
-		echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(" + varData + ", \"method\")\n\n");
+	if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/) && !frmDtprprtnEnabled) {
+		echo("\t\t# extract distance computation method from dist object\n\t\tdistance.computation <- attr(" + varData + ", \"method\")\n");
 	}
-	echo("\t\tplclust(clust.h.result");
+	if(spnMnmmhght != 0) {
+		echo("\t\t# set minimum height\n\t\tclust.h.result$height <- pmax(clust.h.result$height, " + spnMnmmhght + ")\n");
+	}
+	if(chcPltsplts) {
+		echo("\t\t# set equally spaced heights\n\t\tclust.h.result$height <- rank(clust.h.result$height)\n");
+	}
+	echo("\t\tplot(clust.h.result");
 	if(!embRkwrdpltptnGCodePrintout.match(/main\s*=/)) {
 		echo(",\n\t\t\tmain=\"Cluster dendrogram\"");
 	}
 	if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/)) {
-		if(frmDtprprtnEnabled == "true") {
+		if(frmDtprprtnEnabled) {
 			echo(",\n\t\t\tsub=\"Distance computation: " + drpCmpttnmt + ", agglomeration method: " + drpAgglmrtn + "\"");
 		} else {
 			echo(",\n\t\t\tsub=paste(\"Distance computation: \", distance.computation, \", agglomeration method: " + drpAgglmrtn + "\", sep=\"\")");
@@ -136,14 +142,8 @@ function doPrintout(full){
 	if(!embRkwrdpltptnGCodePrintout.match(/xlab\s*=/)) {
 		echo(",\n\t\t\txlab=\"Data: " + varData + "\"");
 	}
-	if(chcPltsplts) {
-		echo(",\n\t\t\tunit=TRUE");
-	}
 	if(spnFrctnfhg != 0.1) {
 		echo(",\n\t\t\thang=" + spnFrctnfhg);
-	}
-	if(spnMnmmhght != 0) {
-		echo(",\n\t\t\thmin=" + spnMnmmhght);
 	}
 	echo(embRkwrdpltptnGCodePrintout.replace(/, /g, ",\n\t\t\t"));
 	echo(")");

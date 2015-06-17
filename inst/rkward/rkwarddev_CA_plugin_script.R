@@ -18,7 +18,7 @@ about.info <- rk.XML.about(
     person(given="Meik", family="Michalke",
       email="meik.michalke@hhu.de", role=c("aut","cre"))),
   about=list(desc="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses",
-    version="0.01-12", url="https://rkward.kde.org")
+    version="0.01-13", url="https://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(
   dependencies=list(rkward.min=ifelse(isTRUE(guess.getter), "0.6.0", "0.5.6")),
@@ -40,8 +40,8 @@ selected.vars <- rk.XML.varslot(label="Selected variables", source=var.select, m
 frame.selected.vars <- rk.XML.frame(selected.vars, label="Use only a subset of variables", checkable=TRUE, chk=FALSE)
 
 # prepare data
-clust.pre.omitNA <- rk.XML.cbox("Remove missing values", value="true", chk=TRUE)
-clust.pre.scale <- rk.XML.cbox("Stadardize values", value="true")
+clust.pre.omitNA <- rk.XML.cbox("Remove missing values", chk=TRUE)
+clust.pre.scale <- rk.XML.cbox("Stadardize values")
 clust.pre.frame <- rk.XML.frame(
     clust.pre.omitNA,
     clust.pre.scale,
@@ -56,9 +56,10 @@ clust.h.drop.dist <- rk.XML.dropdown(label="Computation method", options=list(
     "Minkowski"=c(val="minkowski")
   ))
 clust.h.drop.clst <- rk.XML.dropdown(label="Agglomeration method", options=list(
-    "Ward"=c(val="ward", chk=TRUE),
+    "Ward (incl. clustering criterion)"=c(val="ward.D2"),
+    "Ward (without clustering criterion)"=c(val="ward.D"),
     "Single linkage (nearest neighbor)"=c(val="single"),
-    "Complete linkage (furthest neighbor)"=c(val="complete"),
+    "Complete linkage (furthest neighbor)"=c(val="complete", chk=TRUE),
     "Average linkage (between groups linkage)"=c(val="average"),
     "McQuitty"=c(val="mcquitty"),
     "Median clustering"=c(val="median"),
@@ -104,9 +105,9 @@ js.data.preparation <- rk.paste.JS(
   js.prepare,
   ite(id(js.frm.subset, " && ", js.selected.vars, " != \"\""), echo("\t# Use subset of variables\n\t",
     var.data, " <- subset(",var.data,", select=c(\"", js.selected.vars, "\"))\n")),
-  ite(id(js.prepare, " == \"true\" && ", clust.pre.omitNA, " == \"true\""), echo("\t# Listwise removal of missings\n\t",
+  ite(id(js.prepare, " && ", clust.pre.omitNA), echo("\t# Listwise removal of missings\n\t",
     var.data, " <- na.omit(", var.data, ")\n")),
-  ite(id(js.prepare, " == \"true\" && ", clust.pre.scale, " == \"true\""), echo("\t# Standardizing values\n\t",
+  ite(id(js.prepare, " && ", clust.pre.scale), echo("\t# Standardizing values\n\t",
     var.data, " <- scale(", var.data, ")\n")))
 # print selected subsets, if needed
 js.prt.subset <- ite(id(js.frm.subset, " & ", js.selected.vars, " != \"\""),
@@ -134,7 +135,7 @@ clust.k.spin.nstart <- rk.XML.spinbox(label="Initial random set of centers", min
 save.results.k <- rk.XML.saveobj("Save results to workspace", initial="clust.k.result")
 
 # plot results
-clust.plotk.chk.points <- rk.XML.cbox("Plot cluster centers", val="true", chk=TRUE)
+clust.plotk.chk.points <- rk.XML.cbox("Plot cluster centers", chk=TRUE)
 
 clust.plotk.preview <- rk.XML.preview()
 
@@ -218,7 +219,7 @@ save.results.h <- rk.XML.saveobj("Save results to workspace", initial="clust.h.r
 # dendrogram
 clust.dend.spin.numcl <- rk.XML.spinbox(label="Draw border around clusters (1 for none)", min=1, initial=1, real=FALSE)
 
-clust.dend.cbox.unit <- rk.XML.cbox("Plot splits at equally-spaced heights (not object height)", val="true", chk=FALSE)
+clust.dend.cbox.unit <- rk.XML.cbox("Plot splits at equally-spaced heights (not object height)", chk=FALSE)
 clust.dend.spin.hang <- rk.XML.spinbox(label="Fraction of height by which labels should hang below plot", min=0, initial=0.1, real=TRUE)
 clust.dend.spin.hmin <- rk.XML.spinbox(label="Minimum height (suppress details below)", min=0, initial=0, real=TRUE)
 
@@ -273,7 +274,7 @@ clust.h.js.calc <- rk.paste.JS(
 #  js.selected.vars,
   js.data.preparation,
   js.prepare,
-  ite(id(js.prepare, " == \"true\""),
+  ite(id(js.prepare),
     rk.paste.JS(
       echo("\t# Compute distance matrix\n\tclust.h.distances <- dist("),
       ite(var.data, echo("\n\t\tx=", var.data)),
@@ -299,22 +300,22 @@ clust.h.js.dend <- rk.paste.JS(
   js.selected.vars,
   js.prepare,
   ite(js.ploth.dend, rk.paste.JS(echo("\n"), rk.paste.JS.graph(
-      ite(id("!", generic.plot.options, ".match(/sub\\s*=/) && ", js.prepare, " != \"true\""),
-        echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(", var.data, ", \"method\")\n\n")),
-      echo("\t\tplclust(clust.h.result"),
+      ite(id("!", generic.plot.options, ".match(/sub\\s*=/) && !", js.prepare),
+        echo("\t\t# extract distance computation method from dist object\n\t\tdistance.computation <- attr(", var.data, ", \"method\")\n")),
+      ite(id(clust.dend.spin.hmin, " != 0"), echo("\t\t# set minimum height\n\t\tclust.h.result$height <- pmax(clust.h.result$height, ", clust.dend.spin.hmin, ")\n")),
+      ite(clust.dend.cbox.unit, echo("\t\t# set equally spaced heights\n\t\tclust.h.result$height <- rank(clust.h.result$height)\n")),
+      echo("\t\tplot(clust.h.result"),
       ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
         echo(",\n\t\t\tmain=\"Cluster dendrogram\"")),
       ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
-          ite(id(js.prepare, " == \"true\""),
+          ite(id(js.prepare),
             echo(",\n\t\t\tsub=\"Distance computation: ", clust.h.drop.dist, ", agglomeration method: ",clust.h.drop.clst,"\""),
             echo(",\n\t\t\tsub=paste(\"Distance computation: \", distance.computation, \", agglomeration method: ",clust.h.drop.clst,"\", sep=\"\")")
           )
       ),
       ite(id("!", generic.plot.options, ".match(/xlab\\s*=/)"),
         echo(",\n\t\t\txlab=\"Data: ", var.data, "\"")),
-      ite(clust.dend.cbox.unit, echo(",\n\t\t\tunit=TRUE")),
       ite(id(clust.dend.spin.hang, " != 0.1"), echo(",\n\t\t\thang=", clust.dend.spin.hang)),
-      ite(id(clust.dend.spin.hmin, " != 0"), echo(",\n\t\t\thmin=", clust.dend.spin.hmin)),
       # generic plot options go here
       id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
       echo(")"),
@@ -515,7 +516,7 @@ clust.num.js.calc <- rk.paste.JS(
     "\tfor (i in 2:",clust.num.spin.numcl,"){\n\t\tclust.wss[i] <- kmeans(",var.data,", centers=i)$tot.withinss\n\t}\n\n")),
   ite(id(clust.num.radio.type, " == \"hclust\" && ", var.data), rk.paste.JS(
       echo("\t# Get clustering criterion"),
-      ite(id(js.prepare, " == \"true\""),
+      ite(id(js.prepare),
         echo("\n\tclust.from <- nrow(",var.data,")-",clust.num.spin.numcl,
           "\n\tclust.to <- nrow(",var.data,")-1",
           "\n\tclust.wss <- hclust(dist(",var.data,", method=\"", clust.h.drop.dist, "\"), method=\"",clust.h.drop.clst,"\")$height[clust.from:clust.to]\n\n"),
@@ -533,10 +534,10 @@ clust.num.js.print <- rk.paste.JS(
   js.prepare,
   echo("\n"),
   rk.paste.JS.graph(
-    ite(id("!", generic.plot.options, ".match(/sub\\s*=/) && ", js.prepare, " != \"true\""),
+    ite(id("!", generic.plot.options, ".match(/sub\\s*=/) && !", js.prepare),
       echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(", var.data, ", \"method\")\n\n")),
     echo("\t\tplot(\n\t\t\t"),
-    ite(id(clust.num.radio.type, " == \"kmeans\" && ", js.prepare, " == \"true\""),
+    ite(id(clust.num.radio.type, " == \"kmeans\" && ", js.prepare),
       rk.paste.JS(echo("1:",clust.num.spin.numcl,",\n\t\t\tclust.wss"),
       ite(id("!", generic.plot.options, ".match(/type\\s*=/)"),
         echo(",\n\t\t\ttype=\"b\"")),
@@ -551,7 +552,7 @@ clust.num.js.print <- rk.paste.JS(
       # generic plot options go here
       id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
       echo(")"), level=3)),
-    ite(id(clust.num.radio.type, " == \"hclust\" || ", js.prepare, " != \"true\""),
+    ite(id(clust.num.radio.type, " == \"hclust\" || !", js.prepare),
       rk.paste.JS(echo("clust.wss"),
       ite(id("!", generic.plot.options, ".match(/type\\s*=/)"),
         echo(",\n\t\t\ttype=\"b\"")),
@@ -562,7 +563,7 @@ clust.num.js.print <- rk.paste.JS(
       ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
         echo(",\n\t\t\tmain=\"Inverse Scree plot\"")),
       ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
-          ite(id(js.prepare, " == \"true\""),
+          ite(id(js.prepare),
             echo(",\n\t\t\tsub=\"Examined ", clust.num.spin.numcl, " clusters (dist: ", clust.h.drop.dist, ", hclust: ",clust.h.drop.clst,")\""),
             echo(",\n\t\t\tsub=paste(\"Examined ", clust.num.spin.numcl, " clusters (dist: \", distance.computation, \", hclust: ",clust.h.drop.clst,")\", sep=\"\")")
           )
