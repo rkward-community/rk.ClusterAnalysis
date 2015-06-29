@@ -2,7 +2,7 @@ Package: rk.ClusterAnalysis
 Type: Package
 Title: RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
 Version: 0.01-13
-Date: 2015-06-17
+Date: 2015-06-29
 Author: Meik Michalke
 Maintainer: Meik Michalke <meik.michalke@hhu.de>
 Depends: rkward (>= 0.6.0)

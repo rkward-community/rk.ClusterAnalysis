@@ -9,7 +9,7 @@ Homepage: https://rkward.kde.org
 Package: r-other-rkward-rk.clusteranalysis
 Architecture: all
 Section: math
-Depends: r-base (>= 2.15.0), rkward (>= 0.5.6)
+Depends: r-base (>= 3.0.0), rkward (>= 0.6.0)
 Description: GNU R package: RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
 Homepage: https://rkward.kde.org
 Suggests: r-cran-mclust
