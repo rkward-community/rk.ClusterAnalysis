@@ -31,17 +31,21 @@ function calculate(){
 	var vrslSlctdvrbShortname = getValue("vrsl_Slctdvrb.shortname").split("\n").join("\", \"");
 	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
 	if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
-		echo("\t# Use subset of variables\n\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
+		comment("Use subset of variables", "\t");
+		echo("\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
 	}
-	if(frmDtprprtnEnabled && chcRmvmssng) {
-		echo("\t# Listwise removal of missings\n\t" + varData + " <- na.omit(" + varData + ")\n");
+		if(frmDtprprtnEnabled && chcRmvmssng) {
+		comment("Listwise removal of missings", "\t");
+		echo("\t" + varData + " <- na.omit(" + varData + ")\n");
 	}
-	if(frmDtprprtnEnabled && chcStdrdzvl) {
-		echo("\t# Standardizing values\n\t" + varData + " <- scale(" + varData + ")\n");
+		if(frmDtprprtnEnabled && chcStdrdzvl) {
+		comment("Standardizing values", "\t");
+		echo("\t" + varData + " <- scale(" + varData + ")\n");
 	}
 	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
 	if(frmDtprprtnEnabled) {
-		echo("\t# Compute distance matrix\n\tclust.h.distances <- dist(");
+		comment("Compute distance matrix", "\t");
+		echo("\tclust.h.distances <- dist(");
 		if(varData) {
 			echo("\n\t\tx=" + varData);
 		}
@@ -50,11 +54,13 @@ function calculate(){
 			echo(",\n\t\tp=" + spnPwrfMnkw);
 		}
 		echo("\n\t)\n");
-		echo("\t# Hierarchical CA\n\tclust.h.result <- hclust(d=clust.h.distances");
+		comment("Hierarchical CA", "\t");
+		echo("\tclust.h.result <- hclust(\n\t\td=clust.h.distances");
 		echo(",\n\t\tmethod=\"" + drpAgglmrtn + "\"");
 		echo("\n\t)\n\n");
 	} else {
-		echo("\t# Hierarchical CA\n\tclust.h.result <- hclust(");
+		comment("Hierarchical CA", "\t");
+		echo("\tclust.h.result <- hclust(");
 		if(varData) {
 			echo("\n\t\td=" + varData);
 		}
@@ -161,9 +167,9 @@ function doPrintout(full){
 	}
 	if(full) {
 		echo("\nrk.print(clust.h.result)\n");
-		if(frmUsnlysbsChecked & vrslSlctdvrbShortname != "") {
-			echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"" + vrslSlctdvrbShortname + "\"))\n\n");
-		}
+		if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
+		echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"" + vrslSlctdvrbShortname + "\"))\n\n");
+	}
 	}
 
 	// left over from the printout function

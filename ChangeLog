@@ -1,5 +1,11 @@
 ChangeLog for package rk.ClusterAnalysis
 
+changes in version 0.01-14 (2015-11-08)
+unreleased:
+  - this release is under devoplment
+fixed:
+  - JavaScript header for k-means clustering was quoted too often
+
 changes in version 0.01-13 (2015-06-17)
 fixed:
   - fixed bugs in the checkbox evaluation, didn't work in recent RKWard versions any longer

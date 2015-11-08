@@ -29,13 +29,16 @@ function calculate(){
 	var vrslSlctdvrbShortname = getValue("vrsl_Slctdvrb.shortname").split("\n").join("\", \"");
 	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
 	if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
-		echo("\t# Use subset of variables\n\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
+		comment("Use subset of variables", "\t");
+		echo("\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
 	}
-	if(frmDtprprtnEnabled && chcRmvmssng) {
-		echo("\t# Listwise removal of missings\n\t" + varData + " <- na.omit(" + varData + ")\n");
+		if(frmDtprprtnEnabled && chcRmvmssng) {
+		comment("Listwise removal of missings", "\t");
+		echo("\t" + varData + " <- na.omit(" + varData + ")\n");
 	}
-	if(frmDtprprtnEnabled && chcStdrdzvl) {
-		echo("\t# Standardizing values\n\t" + varData + " <- scale(" + varData + ")\n");
+		if(frmDtprprtnEnabled && chcStdrdzvl) {
+		comment("Standardizing values", "\t");
+		echo("\t" + varData + " <- scale(" + varData + ")\n");
 	}
 	echo("\tclust.k.result <- kmeans(");
 	if(varData) {
@@ -45,10 +48,10 @@ function calculate(){
 	if(drpAlgorthm != "Hartigan-Wong") {
 		echo(",\n\t\talgorithm=\"" + drpAlgorthm + "\"");
 	}
-	if(spnMxmmnmbr != 10) {
+		if(spnMxmmnmbr != 10) {
 		echo(",\n\t\titer.max=" + spnMxmmnmbr);
 	}
-	if(spnIntlrndm != 1) {
+		if(spnIntlrndm != 1) {
 		echo(",\n\t\tnstart=" + spnIntlrndm);
 	}
 	echo("\n\t)\n\n");
@@ -84,7 +87,7 @@ function doPrintout(full){
 
 	// create the plot
 	if(full) {
-		new Header(i18n(""Cluster analysis"")).print();
+		new Header(i18n("Cluster analysis")).print();
 
 	}
 
@@ -130,9 +133,9 @@ function doPrintout(full){
 	}
 	if(full) {
 		echo("\nrk.print(clust.k.result)\n");
-		if(frmUsnlysbsChecked & vrslSlctdvrbShortname != "") {
-			echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"" + vrslSlctdvrbShortname + "\"))\n\n");
-		}
+		if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
+		echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"" + vrslSlctdvrbShortname + "\"))\n\n");
+	}
 	}
 
 	// left over from the printout function

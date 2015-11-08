@@ -7,7 +7,7 @@
 	<!-- <dependencies>
 			</dependencies> -->
 	<logic>
-		<connect governor="current_object" client="var_data.available" />
+		<connect governor="current_object.state" client="var_data.available" />
 		<connect governor="var_data.available" client="vrs_Selectdt.root" />
 		<convert id="lgc_vardata" sources="var_data.available" mode="notequals" standard="" />
 		<connect governor="lgc_vardata" client="frm_Usnlysbs.enabled" />

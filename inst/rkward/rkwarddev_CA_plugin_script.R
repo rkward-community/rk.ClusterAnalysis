@@ -4,6 +4,7 @@
 # *EXCEPT* for the last call, see below.
 
 require(rkwarddev)
+rkwarddev.required("0.07-4")
 
 local({
 # set the output directory to overwrite the actual plugin
@@ -18,7 +19,7 @@ about.info <- rk.XML.about(
     person(given="Meik", family="Michalke",
       email="meik.michalke@hhu.de", role=c("aut","cre"))),
   about=list(desc="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses",
-    version="0.01-13", url="https://rkward.kde.org")
+    version="0.01-14", url="https://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(
   dependencies=list(rkward.min=ifelse(isTRUE(guess.getter), "0.6.0", "0.5.6")),
@@ -103,15 +104,28 @@ js.data.preparation <- rk.paste.JS(
   js.frm.subset,
   js.selected.vars,
   js.prepare,
-  ite(id(js.frm.subset, " && ", js.selected.vars, " != \"\""), echo("\t# Use subset of variables\n\t",
-    var.data, " <- subset(",var.data,", select=c(\"", js.selected.vars, "\"))\n")),
-  ite(id(js.prepare, " && ", clust.pre.omitNA), echo("\t# Listwise removal of missings\n\t",
-    var.data, " <- na.omit(", var.data, ")\n")),
-  ite(id(js.prepare, " && ", clust.pre.scale), echo("\t# Standardizing values\n\t",
-    var.data, " <- scale(", var.data, ")\n")))
+  js(
+    if(js.frm.subset && js.selected.vars != ""){
+      R.comment("Use subset of variables")
+      echo("\t", var.data, " <- subset(",var.data,", select=c(\"", js.selected.vars, "\"))\n")
+    } else {},
+    if(js.prepare && clust.pre.omitNA){
+      R.comment("Listwise removal of missings")
+      echo("\t", var.data, " <- na.omit(", var.data, ")\n")
+    } else {},
+    if(js.prepare && clust.pre.scale){
+      R.comment("Standardizing values")
+      echo("\t", var.data, " <- scale(", var.data, ")\n")
+    } else {},
+    linebreaks=TRUE
+  )
+)
 # print selected subsets, if needed
-js.prt.subset <- ite(id(js.frm.subset, " & ", js.selected.vars, " != \"\""),
-  echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"", js.selected.vars, "\"))\n\n"))
+js.prt.subset <- js(
+  if(js.frm.subset && js.selected.vars != ""){
+    echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"", js.selected.vars, "\"))\n\n")
+  } else {}
+)
 
 ############
 ## k-means
@@ -180,11 +194,24 @@ lgc.sect.k <- rk.XML.logic(
 clust.k.js.calc <- rk.paste.JS(
   js.data.preparation,
   echo("\tclust.k.result <- kmeans("),
-  ite(var.data, echo("\n\t\tx=", var.data)),
+  js(
+    if(var.data){
+      echo("\n\t\tx=", var.data)
+    } else {}
+  ),
   echo(",\n\t\tcenters=", clust.k.spin.numcl),
-  ite(id(clust.k.drop.meth, " != \"Hartigan-Wong\""), echo(",\n\t\talgorithm=\"", clust.k.drop.meth,"\"")),
-  ite(id(clust.k.spin.maxiter, " != 10"), echo(",\n\t\titer.max=", clust.k.spin.maxiter)),
-  ite(id(clust.k.spin.nstart, " != 1"), echo(",\n\t\tnstart=", clust.k.spin.nstart)),
+  js(
+    if(clust.k.drop.meth != "Hartigan-Wong"){
+      echo(",\n\t\talgorithm=\"", clust.k.drop.meth,"\"")
+    } else {},
+    if(clust.k.spin.maxiter != 10){
+      echo(",\n\t\titer.max=", clust.k.spin.maxiter)
+    } else {},
+    if(clust.k.spin.nstart != 1){
+      echo(",\n\t\tnstart=", clust.k.spin.nstart)
+    } else {},
+    linebreaks=TRUE
+  ),
   echo("\n\t)\n\n")
 )
 
@@ -192,7 +219,8 @@ clust.k.js.plot <- rk.paste.JS(
   js.plotk.dend <- rk.JS.vars(clust.plotk.frame.dend, modifiers="checked"),
   js.frm.subset,
   js.selected.vars,
-  ite(js.plotk.dend, rk.paste.JS(echo("\n"), rk.paste.JS.graph(
+  ite(js.plotk.dend, 
+    rk.paste.JS(echo("\n"), rk.paste.JS.graph(
       echo("\t\tplot(", var.data,",\n\t\t\tcol=clust.k.result$cluster"),
       ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
         echo(",\n\t\t\tmain=\"K-means partitioning\"")),
@@ -203,9 +231,14 @@ clust.k.js.plot <- rk.paste.JS(
       echo(")"),
       ite(clust.plotk.chk.points,
         echo("\n\t\tpoints(clust.k.result$centers, col=1:", clust.k.spin.numcl, ", pch=8, cex=2)")),
-      plotOpts=generic.plot.options))
-    ),
-  ite("full", rk.paste.JS(echo("\nrk.print(clust.k.result)\n"), js.prt.subset, level=3))
+      plotOpts=generic.plot.options)
+    )
+  ),
+  js(
+    if("full"){
+      rk.paste.JS(echo("\nrk.print(clust.k.result)\n"), js.prt.subset, level=3)
+    }
+  )
 )
 
 # revert var.data from backup
@@ -276,17 +309,20 @@ clust.h.js.calc <- rk.paste.JS(
   js.prepare,
   ite(id(js.prepare),
     rk.paste.JS(
-      echo("\t# Compute distance matrix\n\tclust.h.distances <- dist("),
+      R.comment("Compute distance matrix"),
+      echo("\tclust.h.distances <- dist("),
       ite(var.data, echo("\n\t\tx=", var.data)),
       echo(",\n\t\tmethod=\"", clust.h.drop.dist, "\""),
       ite(id(clust.h.drop.dist, " == \"minkowski\""), echo(",\n\t\tp=", clust.h.spin.pwmink)),
       echo("\n\t)\n"),
-      echo("\t# Hierarchical CA\n\tclust.h.result <- hclust(d=clust.h.distances"),
+      R.comment("Hierarchical CA"),
+      echo("\tclust.h.result <- hclust(\n\t\td=clust.h.distances"),
       echo(",\n\t\tmethod=\"", clust.h.drop.clst, "\""),
       echo("\n\t)\n\n"), level=3
     ),
     rk.paste.JS(
-      echo("\t# Hierarchical CA\n\tclust.h.result <- hclust("),
+      R.comment("Hierarchical CA"),
+      echo("\tclust.h.result <- hclust("),
       ite(var.data, echo("\n\t\td=", var.data)),
       echo(",\n\t\tmethod=\"", clust.h.drop.clst, "\""),
       echo("\n\t)\n\n"), level=3
@@ -400,7 +436,8 @@ clust.m.full.dialog <- rk.XML.dialog(
 ## JavaScript
 clust.m.js.calc <- rk.paste.JS(
   js.data.preparation,
-  echo("\t# Model based CA\n\tclust.m.result <- Mclust(data=", var.data),
+  R.comment("Model based CA"),
+  echo("\tclust.m.result <- Mclust(data=", var.data),
   ite(id(clust.m.spin.numcl, " != 9"), echo(",\n\t\tG=1:", clust.m.spin.numcl, "\n\t")),
   echo(")\n\n")
 )
@@ -604,7 +641,7 @@ cluster.plugin.dir <<- rk.plugin.skeleton(
   xml=list(
     dialog=clust.k.full.dialog,
     logic=lgc.sect.k),
-  js=list(results.header="\"Cluster analysis\"",
+  js=list(results.header="Cluster analysis",
 #    require="fpc",
     calculate=clust.k.js.calc,
     doPrintout=clust.k.js.plot),
