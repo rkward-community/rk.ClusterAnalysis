@@ -26,15 +26,19 @@ function calculate(){
 	var vrslSlctdvrbShortname = getValue("vrsl_Slctdvrb.shortname").split("\n").join("\", \"");
 	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
 	if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
-		echo("\t# Use subset of variables\n\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
+		comment("Use subset of variables", "\t");
+		echo("\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
 	}
-	if(frmDtprprtnEnabled && chcRmvmssng) {
-		echo("\t# Listwise removal of missings\n\t" + varData + " <- na.omit(" + varData + ")\n");
+		if(frmDtprprtnEnabled && chcRmvmssng) {
+		comment("Listwise removal of missings", "\t");
+		echo("\t" + varData + " <- na.omit(" + varData + ")\n");
 	}
-	if(frmDtprprtnEnabled && chcStdrdzvl) {
-		echo("\t# Standardizing values\n\t" + varData + " <- scale(" + varData + ")\n");
+		if(frmDtprprtnEnabled && chcStdrdzvl) {
+		comment("Standardizing values", "\t");
+		echo("\t" + varData + " <- scale(" + varData + ")\n");
 	}
-	echo("\t# Model based CA\n\tclust.m.result <- Mclust(data=" + varData);
+	comment("Model based CA", "\t");
+	echo("\tclust.m.result <- Mclust(data=" + varData);
 	if(spnMxnmbrfc != 9) {
 		echo(",\n\t\tG=1:" + spnMxnmbrfc + "\n\t");
 	}
@@ -99,7 +103,7 @@ function doPrintout(full){
 	}
 	if(full) {
 		echo("\nrk.print(clust.m.result)\n");
-	if(frmUsnlysbsChecked & vrslSlctdvrbShortname != "") {
+	if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
 		echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"" + vrslSlctdvrbShortname + "\"))\n\n");
 	}
 	}
