@@ -12,6 +12,7 @@ output.dir <- tempdir()
 overwrite <- TRUE
 # if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0
 guess.getter <- TRUE
+rk.set.indent(by="  ")
 
 about.info <- rk.XML.about(
   name="rk.ClusterAnalysis",
