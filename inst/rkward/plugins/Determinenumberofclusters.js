@@ -4,164 +4,163 @@
 
 
 function preprocess(){
-	// add requirements etc. here
+  // add requirements etc. here
 
 }
 
 function calculate(){
-	// read in variables from dialog
+  // read in variables from dialog
+  var dataSelected = getString("dataSelected");
+  var varsSelected = getString("varsSelected");
+  var nMaxClust = getString("nMaxClust");
+  var nClustMethod = getString("nClustMethod");
+  var distMethod = getString("distMethod");
+  var powerMinkowski = getString("powerMinkowski");
+  var clustMethod = getString("clustMethod");
+  var omitNA = getBoolean("omitNA.state");
+  var scaleValues = getBoolean("scaleValues.state");
+  var useSubsetChecked = getBoolean("useSubset.checked");
 
-	var varData = getString("var_data");
-	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
-	var spnMxmmnmbr = getString("spn_Mxmmnmbr");
-	var radMethod = getString("rad_Method");
-	var drpCmpttnmt = getString("drp_Cmpttnmt");
-	var spnPwrfMnkw = getString("spn_PwrfMnkw");
-	var drpAgglmrtn = getString("drp_Agglmrtn");
-	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
-	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
-	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
-
-	// the R code to be evaluated
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
-	var vrslSlctdvrbShortname = getValue("vrsl_Slctdvrb.shortname").split("\n").join("\", \"");
-	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
-	if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
-		comment("Use subset of variables", "\t");
-		echo("\t" + varData + " <- subset(" + varData + ", select=c(\"" + vrslSlctdvrbShortname + "\"))\n");
-	}
-		if(frmDtprprtnEnabled && chcRmvmssng) {
-		comment("Listwise removal of missings", "\t");
-		echo("\t" + varData + " <- na.omit(" + varData + ")\n");
-	}
-		if(frmDtprprtnEnabled && chcStdrdzvl) {
-		comment("Standardizing values", "\t");
-		echo("\t" + varData + " <- scale(" + varData + ")\n");
-	}
-	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
-	if(radMethod == "kmeans" && varData) {
-		echo("\t# Calculate within groups sum of squares" + "\n\tclust.wss <- (nrow(" + varData + ")-1) * sum(apply(" + varData + ", 2, var))\n" + "\tfor (i in 2:" + spnMxmmnmbr + "){\n\t\tclust.wss[i] <- kmeans(" + varData + ", centers=i)$tot.withinss\n\t}\n\n");
-	}
-	if(radMethod == "hclust" && varData) {
-		echo("\t# Get clustering criterion");
-		if(frmDtprprtnEnabled) {
-			echo("\n\tclust.from <- nrow(" + varData + ")-" + spnMxmmnmbr + "\n\tclust.to <- nrow(" + varData + ")-1" + "\n\tclust.wss <- hclust(dist(" + varData + ", method=\"" + drpCmpttnmt + "\"), method=\"" + drpAgglmrtn + "\")$height[clust.from:clust.to]\n\n");
-		} else {
-			echo("\n\tclust.from <- attr(" + varData + ", \"Size\")-" + spnMxmmnmbr + "\n\tclust.to <- attr(" + varData + ", \"Size\")-1" + "\n\tclust.wss <- hclust(" + varData + ", method=\"" + drpAgglmrtn + "\")$height[clust.from:clust.to]\n\n");
-		}
-	}
+  // the R code to be evaluated
+  var useSubsetChecked = getValue("useSubset.checked");
+  var varsSelectedShortname = getValue("varsSelected.shortname").split("\n").join("\", \"");
+  var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
+  if(useSubsetChecked && varsSelectedShortname != "") {
+    comment("Use subset of variables", "  ");  
+    echo("\t" + dataSelected + " <- subset(" + dataSelected + ", select=c(\"" + varsSelectedShortname + "\"))\n");  
+  } else {}
+  if(frmDtprprtnEnabled && omitNA) {
+    comment("Listwise removal of missings", "  ");  
+    echo("\t" + dataSelected + " <- na.omit(" + dataSelected + ")\n");  
+  } else {}
+  if(frmDtprprtnEnabled && scaleValues) {
+    comment("Standardizing values", "  ");  
+    echo("\t" + dataSelected + " <- scale(" + dataSelected + ")\n");  
+  } else {}
+  var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
+  if(nClustMethod == "kmeans" && dataSelected) {
+    echo("\t# Calculate within groups sum of squares" + "\n\tclust.wss <- (nrow(" + dataSelected + ")-1) * sum(apply(" + dataSelected + ", 2, var))\n" + "\tfor (i in 2:" + nMaxClust + "){\n\t\tclust.wss[i] <- kmeans(" + dataSelected + ", centers=i)$tot.withinss\n\t}\n\n");  
+  } else {}
+  if(nClustMethod == "hclust" && dataSelected) {
+    echo("\t# Get clustering criterion");  
+    if(frmDtprprtnEnabled) {
+      echo("\n\tclust.from <- nrow(" + dataSelected + ")-" + nMaxClust + "\n\tclust.to <- nrow(" + dataSelected + ")-1" + "\n\tclust.wss <- hclust(dist(" + dataSelected + ", method=\"" + distMethod + "\"), method=\"" + clustMethod + "\")$height[clust.from:clust.to]\n\n");  
+    } else {
+      echo("\n\tclust.from <- attr(" + dataSelected + ", \"Size\")-" + nMaxClust + "\n\tclust.to <- attr(" + dataSelected + ", \"Size\")-1" + "\n\tclust.wss <- hclust(" + dataSelected + ", method=\"" + clustMethod + "\")$height[clust.from:clust.to]\n\n");  
+    }  
+  } else {}
 }
 
 function printout(){
-	// all the real work is moved to a custom defined function doPrintout() below
-	// true in this case means: We want all the headers that should be printed in the output:
-	doPrintout(true);
+  // all the real work is moved to a custom defined function doPrintout() below
+  // true in this case means: We want all the headers that should be printed in the output:
+  doPrintout(true);
 }
 
 function preview(){
-	preprocess();
-	calculate();
-	doPrintout(false);
+  preprocess();
+  calculate();
+  doPrintout(false);
 }
 
 function doPrintout(full){
-	// read in variables from dialog
+  // read in variables from dialog
+  var dataSelected = getString("dataSelected");
+  var varsSelected = getString("varsSelected");
+  var nMaxClust = getString("nMaxClust");
+  var nClustMethod = getString("nClustMethod");
+  var distMethod = getString("distMethod");
+  var powerMinkowski = getString("powerMinkowski");
+  var clustMethod = getString("clustMethod");
+  var omitNA = getBoolean("omitNA.state");
+  var scaleValues = getBoolean("scaleValues.state");
+  var useSubsetChecked = getBoolean("useSubset.checked");
 
-	var varData = getString("var_data");
-	var vrslSlctdvrb = getString("vrsl_Slctdvrb");
-	var spnMxmmnmbr = getString("spn_Mxmmnmbr");
-	var radMethod = getString("rad_Method");
-	var drpCmpttnmt = getString("drp_Cmpttnmt");
-	var spnPwrfMnkw = getString("spn_PwrfMnkw");
-	var drpAgglmrtn = getString("drp_Agglmrtn");
-	var chcRmvmssng = getBoolean("chc_Rmvmssng.state");
-	var chcStdrdzvl = getBoolean("chc_Stdrdzvl.state");
-	var frmUsnlysbsChecked = getBoolean("frm_Usnlysbs.checked");
+  // create the plot
+  if(full) {
+    new Header(i18n("Determine number of clusters results")).print();
+  } else {}
 
-	// create the plot
-	if(full) {
-		new Header(i18n("Determine number of clusters results")).print();
+  var useSubsetChecked = getValue("useSubset.checked");
+  var varsSelectedShortname = getValue("varsSelected.shortname").split("\n").join("\", \"");
+  var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
+  echo("\n");
+  // in case there are generic plot options defined:
+    var embRkwrdpltptnGCodePreprocess = getValue("emb_rkwrdpltptnG.code.preprocess");
+    var embRkwrdpltptnGCodePrintout = getValue("emb_rkwrdpltptnG.code.printout");
+    var embRkwrdpltptnGCodeCalculate = getValue("emb_rkwrdpltptnG.code.calculate");
 
-	}
+    if(full) {
+      echo("rk.graph.on()\n");
+    } else {}
+    echo("    try({\n");
 
-	var frmUsnlysbsChecked = getValue("frm_Usnlysbs.checked");
-	var vrslSlctdvrbShortname = getValue("vrsl_Slctdvrb.shortname").split("\n").join("\", \"");
-	var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
-	echo("\n");
-	// in case there are generic plot options defined:
-	var embRkwrdpltptnGCodePreprocess = getValue("emb_rkwrdpltptnG.code.preprocess");
-	var embRkwrdpltptnGCodePrintout = getValue("emb_rkwrdpltptnG.code.printout");
-	var embRkwrdpltptnGCodeCalculate = getValue("emb_rkwrdpltptnG.code.calculate");
+    // insert any option-setting code that should be run before the actual plotting commands:
+    printIndentedUnlessEmpty("      ", embRkwrdpltptnGCodePreprocess, "\n", "");
 
-	if(full) {
-		echo("rk.graph.on()\n");
-	}
-	echo("\ttry({\n");
+    // the actual plot:
+    if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/) && !frmDtprprtnEnabled) {
+      echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(" + dataSelected + ", \"method\")\n\n");  
+    } else {}
+    echo("\t\tplot(\n\t\t\t");
+    if(nClustMethod == "kmeans" && frmDtprprtnEnabled) {
+      echo("1:" + nMaxClust + ",\n\t\t\tclust.wss");  
+      if(!embRkwrdpltptnGCodePrintout.match(/type\s*=/)) {
+        echo(",\n\t\t\ttype=\"b\"");  
+      } else {}  
+      if(!embRkwrdpltptnGCodePrintout.match(/xlab\s*=/)) {
+        echo(",\n\t\t\txlab=\"Number of Clusters\"");  
+      } else {}  
+      if(!embRkwrdpltptnGCodePrintout.match(/ylab\s*=/)) {
+        echo(",\n\t\t\tylab=\"Within groups sum of squares\"");  
+      } else {}  
+      if(!embRkwrdpltptnGCodePrintout.match(/main\s*=/)) {
+        echo(",\n\t\t\tmain=\"Within sum of squares by clusters\"");  
+      } else {}  
+      if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/)) {
+        echo(",\n\t\t\tsub=\"Examined " + nMaxClust + " clusters using k-means partitioning\"");  
+      } else {}  
+      echo(embRkwrdpltptnGCodePrintout.replace(/, /g, ",\n\t\t\t"));  
+      echo(")");  
+    } else {}
+    if(nClustMethod == "hclust" || !frmDtprprtnEnabled) {
+      echo("clust.wss");  
+      if(!embRkwrdpltptnGCodePrintout.match(/type\s*=/)) {
+        echo(",\n\t\t\ttype=\"b\"");  
+      } else {}  
+      if(!embRkwrdpltptnGCodePrintout.match(/xlab\s*=/)) {
+        echo(",\n\t\t\txlab=\"Number of Clusters\"");  
+      } else {}  
+      if(!embRkwrdpltptnGCodePrintout.match(/ylab\s*=/)) {
+        echo(",\n\t\t\tylab=\"Agglomeration criterion\"");  
+      } else {}  
+      if(!embRkwrdpltptnGCodePrintout.match(/main\s*=/)) {
+        echo(",\n\t\t\tmain=\"Inverse Scree plot\"");  
+      } else {}  
+      if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/)) {
+        if(frmDtprprtnEnabled) {
+          echo(",\n\t\t\tsub=\"Examined " + nMaxClust + " clusters (dist: " + distMethod + ", hclust: " + clustMethod + ")\"");  
+        } else {
+          echo(",\n\t\t\tsub=paste(\"Examined " + nMaxClust + " clusters (dist: \", distance.computation, \", hclust: " + clustMethod + ")\", sep=\"\")");  
+        }  
+      } else {}  
+      echo(",\n\t\t\txaxt=\"n\"");  
+      echo(embRkwrdpltptnGCodePrintout.replace(/, /g, ",\n\t\t\t"));  
+      echo(")" + "\n\t\taxis(1, at=1:" + nMaxClust + ", labels=" + nMaxClust + ":1)");  
+    } else {}
 
-	// insert any option-setting code that should be run before the actual plotting commands:
-	printIndentedUnlessEmpty("\t\t", embRkwrdpltptnGCodePreprocess, "\n", "");
+    // insert any option-setting code that should be run after the actual plot:
+    printIndentedUnlessEmpty("      ", embRkwrdpltptnGCodeCalculate, "\n", "");
 
-	// the actual plot:
-	if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/) && !frmDtprprtnEnabled) {
-		echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(" + varData + ", \"method\")\n\n");
-	}
-	echo("\t\tplot(\n\t\t\t");
-	if(radMethod == "kmeans" && frmDtprprtnEnabled) {
-		echo("1:" + spnMxmmnmbr + ",\n\t\t\tclust.wss");
-		if(!embRkwrdpltptnGCodePrintout.match(/type\s*=/)) {
-			echo(",\n\t\t\ttype=\"b\"");
-		}
-		if(!embRkwrdpltptnGCodePrintout.match(/xlab\s*=/)) {
-			echo(",\n\t\t\txlab=\"Number of Clusters\"");
-		}
-		if(!embRkwrdpltptnGCodePrintout.match(/ylab\s*=/)) {
-			echo(",\n\t\t\tylab=\"Within groups sum of squares\"");
-		}
-		if(!embRkwrdpltptnGCodePrintout.match(/main\s*=/)) {
-			echo(",\n\t\t\tmain=\"Within sum of squares by clusters\"");
-		}
-		if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/)) {
-			echo(",\n\t\t\tsub=\"Examined " + spnMxmmnmbr + " clusters using k-means partitioning\"");
-		}
-		echo(embRkwrdpltptnGCodePrintout.replace(/, /g, ",\n\t\t\t"));
-		echo(")");
-	}
-	if(radMethod == "hclust" || !frmDtprprtnEnabled) {
-		echo("clust.wss");
-		if(!embRkwrdpltptnGCodePrintout.match(/type\s*=/)) {
-			echo(",\n\t\t\ttype=\"b\"");
-		}
-		if(!embRkwrdpltptnGCodePrintout.match(/xlab\s*=/)) {
-			echo(",\n\t\t\txlab=\"Number of Clusters\"");
-		}
-		if(!embRkwrdpltptnGCodePrintout.match(/ylab\s*=/)) {
-			echo(",\n\t\t\tylab=\"Agglomeration criterion\"");
-		}
-		if(!embRkwrdpltptnGCodePrintout.match(/main\s*=/)) {
-			echo(",\n\t\t\tmain=\"Inverse Scree plot\"");
-		}
-		if(!embRkwrdpltptnGCodePrintout.match(/sub\s*=/)) {
-			if(frmDtprprtnEnabled) {
-				echo(",\n\t\t\tsub=\"Examined " + spnMxmmnmbr + " clusters (dist: " + drpCmpttnmt + ", hclust: " + drpAgglmrtn + ")\"");
-			} else {
-				echo(",\n\t\t\tsub=paste(\"Examined " + spnMxmmnmbr + " clusters (dist: \", distance.computation, \", hclust: " + drpAgglmrtn + ")\", sep=\"\")");
-			}
-		}
-		echo(",\n\t\t\txaxt=\"n\"");
-		echo(embRkwrdpltptnGCodePrintout.replace(/, /g, ",\n\t\t\t"));
-		echo(")" + "\n\t\taxis(1, at=1:" + spnMxmmnmbr + ", labels=" + spnMxmmnmbr + ":1)");
-	}
-
-	// insert any option-setting code that should be run after the actual plot:
-	printIndentedUnlessEmpty("\t\t", embRkwrdpltptnGCodeCalculate, "\n", "");
-
-	echo("\n\t})\n");
-	if(full) {
-		echo("rk.graph.off()\n");
-	}
-	if(!full) {
-		if(frmUsnlysbsChecked && vrslSlctdvrbShortname != "") {
-		echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"" + vrslSlctdvrbShortname + "\"))\n\n");
-	}
-	}
+    echo("\n    })\n");
+    if(full) {
+      echo("rk.graph.off()\n");
+    } else {}
+  if(!full) {
+    if(useSubsetChecked && varsSelectedShortname != "") {
+      echo("\n");  
+      new Header(i18n("Subset of variables included the analysis"), 3).print();  
+      echo("rk.print(list(\"" + varsSelectedShortname + "\"))\n\n");  
+    } else {}  
+  } else {}
 }

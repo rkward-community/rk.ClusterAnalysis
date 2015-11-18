@@ -1,114 +1,114 @@
 <!DOCTYPE rkpluginmap >
 <document 
-	base_prefix=""
-	namespace="Kmeanspartitioning"
-	id="Kmeanspartitioning_rkward"
-	po_id="Kmeanspartitioning_rkward"
-	priority="medium"
+  base_prefix=""
+  namespace="Kmeanspartitioning"
+  id="Kmeanspartitioning_rkward"
+  po_id="Kmeanspartitioning_rkward"
+  priority="medium"
 >
-	<!-- 
-		this code was generated using the rkwarddev package.
-			perhaps don't make changes here, but in the rkwarddev script instead! 
-	-->
-	<dependencies rkward_min_version="0.6.0">
-		<package name="mclust" />
-	</dependencies>
-	<about 
-		name="rk.ClusterAnalysis"
-		shortinfo="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
-		longinfo="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
-		version="0.01-14"
-		releasedate="2015-11-08"
-		url="https://rkward.kde.org"
-		license="GPL (&gt;= 3)"
-	>
-		<author 
-			given="Meik"
-			family="Michalke"
-			email="meik.michalke@hhu.de"
-			role="aut, cre"
-		 />
-	</about>
-	<require 
-		map="rkward::menu"
-	 />
-	<require 
-		map="rkward::embedded"
-	 />
-	<components>
-		<component 
-			id="cmp_KmeanspartitinngHrrchclCA"
-			label="Hierarchical CA"
-			type="standard"
-			file="plugins/HierarchicalCA.xml"
-		>
-		</component>
-		<component 
-			id="cmp_KmeanspartitionngMdlbsdCA"
-			label="Model based CA"
-			type="standard"
-			file="plugins/ModelbasedCA.xml"
-		>
-		</component>
-		<component 
-			id="cmp_KmnsprttnngDtrmnnmbrfclst"
-			label="Determine number of clusters"
-			type="standard"
-			file="plugins/Determinenumberofclusters.xml"
-		>
-		</component>
-		<component 
-			id="cmp_KmeansparttnngKmnsprttnng"
-			label="K-means partitioning"
-			type="standard"
-			file="plugins/Kmeanspartitioning.xml"
-		>
-		</component>
-	</components>
-	<hierarchy>
-		<menu 
-			id="analysis"
-			label="Analysis"
-		>
-			<menu 
-				id="Clusteranalysis"
-				label="Cluster analysis"
-			>
-				<entry component="cmp_KmeanspartitinngHrrchclCA" />
-			</menu>
-		</menu>
-		<menu 
-			id="analysis"
-			label="Analysis"
-		>
-			<menu 
-				id="Clusteranalysis"
-				label="Cluster analysis"
-			>
-				<entry component="cmp_KmeanspartitionngMdlbsdCA" />
-			</menu>
-		</menu>
-		<menu 
-			id="plots"
-			label="Plots"
-		>
-			<menu 
-				id="Clusteranalysis"
-				label="Cluster analysis"
-			>
-				<entry component="cmp_KmnsprttnngDtrmnnmbrfclst" />
-			</menu>
-		</menu>
-		<menu 
-			id="analysis"
-			label="Analysis"
-		>
-			<menu 
-				id="Clusteranalysis"
-				label="Cluster analysis"
-			>
-				<entry component="cmp_KmeansparttnngKmnsprttnng" />
-			</menu>
-		</menu>
-	</hierarchy>
+  <!-- 
+      this code was generated using the rkwarddev package.
+        perhaps don't make changes here, but in the rkwarddev script instead! 
+  -->
+  <dependencies rkward_min_version="0.6.0">
+    <package name="mclust" />
+  </dependencies>
+  <about 
+    name="rk.ClusterAnalysis"
+    shortinfo="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
+    longinfo="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
+    version="0.01-14"
+    releasedate="2015-11-18"
+    url="https://rkward.kde.org"
+    license="GPL (&gt;= 3)"
+  >
+    <author 
+      given="Meik"
+      family="Michalke"
+      email="meik.michalke@hhu.de"
+      role="aut, cre"
+     />
+  </about>
+  <require 
+    map="rkward::menu"
+   />
+  <require 
+    map="rkward::embedded"
+   />
+  <components>
+    <component 
+      id="cmp_KmeanspartitinngHrrchclCA"
+      label="Hierarchical CA"
+      type="standard"
+      file="plugins/HierarchicalCA.xml"
+    >
+    </component>
+    <component 
+      id="cmp_KmeanspartitionngMdlbsdCA"
+      label="Model based CA"
+      type="standard"
+      file="plugins/ModelbasedCA.xml"
+    >
+    </component>
+    <component 
+      id="cmp_KmnsprttnngDtrmnnmbrfclst"
+      label="Determine number of clusters"
+      type="standard"
+      file="plugins/Determinenumberofclusters.xml"
+    >
+    </component>
+    <component 
+      id="cmp_KmeansparttnngKmnsprttnng"
+      label="K-means partitioning"
+      type="standard"
+      file="plugins/Kmeanspartitioning.xml"
+    >
+    </component>
+  </components>
+  <hierarchy>
+    <menu 
+      id="analysis"
+      label="Analysis"
+    >
+      <menu 
+        id="Clusteranalysis"
+        label="Cluster analysis"
+      >
+        <entry component="cmp_KmeanspartitinngHrrchclCA" />
+      </menu>
+    </menu>
+    <menu 
+      id="analysis"
+      label="Analysis"
+    >
+      <menu 
+        id="Clusteranalysis"
+        label="Cluster analysis"
+      >
+        <entry component="cmp_KmeanspartitionngMdlbsdCA" />
+      </menu>
+    </menu>
+    <menu 
+      id="plots"
+      label="Plots"
+    >
+      <menu 
+        id="Clusteranalysis"
+        label="Cluster analysis"
+      >
+        <entry component="cmp_KmnsprttnngDtrmnnmbrfclst" />
+      </menu>
+    </menu>
+    <menu 
+      id="analysis"
+      label="Analysis"
+    >
+      <menu 
+        id="Clusteranalysis"
+        label="Cluster analysis"
+      >
+        <entry component="cmp_KmeansparttnngKmnsprttnng" />
+      </menu>
+    </menu>
+  </hierarchy>
 </document>
