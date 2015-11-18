@@ -13,6 +13,8 @@ overwrite <- TRUE
 # if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0
 guess.getter <- TRUE
 rk.set.indent(by="  ")
+rk.set.empty.e(TRUE)
+update.translations <- FALSE
 
 about.info <- rk.XML.about(
   name="rk.ClusterAnalysis",
@@ -35,29 +37,55 @@ dependencies.info <- rk.XML.dependencies(
 generic.plot.options <- rk.plotOptions()
 
 # for data
-var.select <- rk.XML.varselector(label="Select data")
-var.data <- rk.XML.varslot(label="Data (data.frame, matrix or dist)", source=var.select, classes=c("data.frame", "matrix", "dist"), required=TRUE, id.name="var_data")
-var.data.nodist <- rk.XML.varslot(label="Data (data.frame or matrix)", source=var.select, classes=c("data.frame", "matrix"), required=TRUE)
-selected.vars <- rk.XML.varslot(label="Selected variables", source=var.select, multi=TRUE)
-frame.selected.vars <- rk.XML.frame(selected.vars, label="Use only a subset of variables", checkable=TRUE, chk=FALSE)
+data <- rk.XML.varselector(label="Select data", id.name="data")
+dataSelected <- rk.XML.varslot(
+  label="Data (data.frame, matrix or dist)",
+  source=data,
+  classes=c("data.frame", "matrix", "dist"),
+  required=TRUE,
+  id.name="dataSelected"
+)
+dataSelectedNodist <- rk.XML.varslot(
+  label="Data (data.frame or matrix)",
+  source=data,
+  classes=c("data.frame", "matrix"),
+  required=TRUE,
+  id.name="dataSelectedNodist"
+)
+varsSelected <- rk.XML.varslot(
+  label="Selected variables",
+  source=data,
+  multi=TRUE,
+  id.name="varsSelected"
+)
+useSubset <- rk.XML.frame(
+  varsSelected,
+  label="Use only a subset of variables",
+  checkable=TRUE,
+  chk=FALSE,
+  id.name="useSubset"
+)
 
 # prepare data
-clust.pre.omitNA <- rk.XML.cbox("Remove missing values", chk=TRUE)
-clust.pre.scale <- rk.XML.cbox("Stadardize values")
-clust.pre.frame <- rk.XML.frame(
-    clust.pre.omitNA,
-    clust.pre.scale,
-  label="Data preparation")
+omitNA <- rk.XML.cbox("Remove missing values", chk=TRUE, id.name="omitNA")
+scaleValues <- rk.XML.cbox("Stadardize values", id.name="scaleValues")
+dataPreparation <- rk.XML.frame(
+  omitNA,
+  scaleValues,
+  label="Data preparation"
+)
 
-clust.h.drop.dist <- rk.XML.dropdown(label="Computation method", options=list(
+distMethod <- rk.XML.dropdown(label="Computation method", options=list(
     "Euclidean"=c(val="euclidean", chk=TRUE),
     "Maximum"=c(val="maximum"),
     "Manhattan (city block)"=c(val="manhattan"),
     "Canberra"=c(val="canberra"),
     "Binary"=c(val="binary"),
     "Minkowski"=c(val="minkowski")
-  ))
-clust.h.drop.clst <- rk.XML.dropdown(label="Agglomeration method", options=list(
+  ),
+  id.name="distMethod"
+)
+clustMethod <- rk.XML.dropdown(label="Agglomeration method", options=list(
     "Ward (incl. clustering criterion)"=c(val="ward.D2"),
     "Ward (without clustering criterion)"=c(val="ward.D"),
     "Single linkage (nearest neighbor)"=c(val="single"),
@@ -66,18 +94,26 @@ clust.h.drop.clst <- rk.XML.dropdown(label="Agglomeration method", options=list(
     "McQuitty"=c(val="mcquitty"),
     "Median clustering"=c(val="median"),
     "Centroid clustering"=c(val="centroid")
-  ))
-clust.h.spin.pwmink <- rk.XML.spinbox(label="Power of Minkowski distance", min=1, initial=2, real=FALSE)
-clust.h.frame.dist <- rk.XML.frame(clust.h.drop.dist, clust.h.spin.pwmink, label="Distance matrix")
+  ),
+  id.name="clustMethod"
+)
+powerMinkowski <- rk.XML.spinbox(
+  label="Power of Minkowski distance",
+  min=1,
+  initial=2,
+  real=FALSE,
+  id.name="powerMinkowski"
+)
+clust.h.frame.dist <- rk.XML.frame(distMethod, powerMinkowski, label="Distance matrix")
 
 # for logic sections
 lgc.df.script <- rk.comment(id("
-  gui.addChangeCommand(\"", var.data, ".available\", \"dataChanged()\");
+  gui.addChangeCommand(\"", dataSelected, ".available\", \"dataChanged()\");
   // this function is called whenever the data was changed
   dataChanged = function(){
       var prepareFrame = \"true\";
       var selectFrame = \"true\";
-      var thisObject = makeRObject(gui.getValue(\"", var.data, ".available\"));
+      var thisObject = makeRObject(gui.getValue(\"", dataSelected, ".available\"));
        if(thisObject.classes()){
         if(!thisObject.isDataFrame()){
           selectFrame = \"false\";
@@ -86,98 +122,128 @@ lgc.df.script <- rk.comment(id("
           } else {}
         } else {}
       } else {}
-      gui.setValue(\"", frame.selected.vars, ".enabled\", selectFrame);
-      gui.setValue(\"", clust.pre.frame, ".enabled\", prepareFrame);
+      gui.setValue(\"", useSubset, ".enabled\", selectFrame);
+      gui.setValue(\"", dataPreparation, ".enabled\", prepareFrame);
     }", js=FALSE))
 
-lgc.current.object <- rk.XML.connect(governor="current_object", client=var.data, set="available")
-lgc.data.from.selection <- rk.XML.connect(governor=var.data, client=var.select, get="available", set="root")
-gov.data <- rk.XML.convert(sources=list(available=var.data), mode=c(notequals=""))
-lgc.enable.selected <- rk.XML.connect(governor=gov.data, client=frame.selected.vars, set="enabled")
+lgc.current.object <- rk.XML.connect(governor="current_object", client=dataSelected, set="available")
+lgc.data.from.selection <- rk.XML.connect(governor=dataSelected, client=data, get="available", set="root")
+gov.data <- rk.XML.convert(sources=list(available=dataSelected), mode=c(notequals=""))
+lgc.enable.selected <- rk.XML.connect(governor=gov.data, client=useSubset, set="enabled")
 # disable distance computation, if dist object given
-lgc.isntDistData <- rk.XML.connect(governor=clust.pre.frame, get="enabled", client=clust.h.frame.dist, set="enabled")
+lgc.isntDistData <- rk.XML.connect(governor=dataPreparation, get="enabled", client=clust.h.frame.dist, set="enabled")
 
 # for JavaScript
-js.frm.subset <- rk.JS.vars(frame.selected.vars, modifiers="checked") # see if the frame is checked
-js.selected.vars <- rk.JS.vars(selected.vars, modifiers="shortname", join="\\\", \\\"") # get selected vars
-js.prepare <- rk.JS.vars(clust.pre.frame, modifiers="enabled") # see if data preparation is off
+js.frm.subset <- rk.JS.vars(useSubset, modifiers="checked") # see if the frame is checked
+js.varsSelected <- rk.JS.vars(varsSelected, modifiers="shortname", join="\\\", \\\"") # get selected vars
+js.prepare <- rk.JS.vars(dataPreparation, modifiers="enabled") # see if data preparation is off
 js.data.preparation <- rk.paste.JS(
   js.frm.subset,
-  js.selected.vars,
+  js.varsSelected,
   js.prepare,
   js(
-    if(js.frm.subset && js.selected.vars != ""){
+    if(js.frm.subset && js.varsSelected != ""){
       R.comment("Use subset of variables")
-      echo("\t", var.data, " <- subset(",var.data,", select=c(\"", js.selected.vars, "\"))\n")
+      echo("\t", dataSelected, " <- subset(",dataSelected,", select=c(\"", js.varsSelected, "\"))\n")
     } else {},
-    if(js.prepare && clust.pre.omitNA){
+    if(js.prepare && omitNA){
       R.comment("Listwise removal of missings")
-      echo("\t", var.data, " <- na.omit(", var.data, ")\n")
+      echo("\t", dataSelected, " <- na.omit(", dataSelected, ")\n")
     } else {},
-    if(js.prepare && clust.pre.scale){
+    if(js.prepare && scaleValues){
       R.comment("Standardizing values")
-      echo("\t", var.data, " <- scale(", var.data, ")\n")
+      echo("\t", dataSelected, " <- scale(", dataSelected, ")\n")
     } else {},
     linebreaks=TRUE
   )
 )
 # print selected subsets, if needed
 js.prt.subset <- js(
-  if(js.frm.subset && js.selected.vars != ""){
+  if(js.frm.subset && js.varsSelected != ""){
     echo("\n")
     rk.JS.header("Subset of variables included the analysis", level=3)
-    echo("rk.print(list(\"", js.selected.vars, "\"))\n\n")
-  } else {}
+    echo("rk.print(list(\"", js.varsSelected, "\"))\n\n")
+  } else {},
+  level=3
 )
 
 ############
 ## k-means
 ############
-# temporarlily replace var.data to exclude dist objects
-var.data.nodistbackup <- var.data
-var.data <- rk.XML.varslot(label="Data (data.frame or matrix)", source=var.select, classes=c("data.frame", "matrix"), required=TRUE, id.name="var_data")
+# temporarlily replace dataSelected to exclude dist objects
+dataSelectedNodistbackup <- dataSelected
+dataSelected <- rk.XML.varslot(
+  label="Data (data.frame or matrix)",
+  source=data,
+  classes=c("data.frame", "matrix"),
+  required=TRUE,
+  id.name="dataSelected"
+)
 
-clust.k.spin.numcl <- rk.XML.spinbox(label="Number of clusters to extract", min=2, real=FALSE)
+numClust <- rk.XML.spinbox(
+  label="Number of clusters to extract",
+  min=2,
+  real=FALSE,
+  id.name="numClust"
+)
 
-clust.k.drop.meth <- rk.XML.dropdown(label="Algorithm", options=list(
+kMethod <- rk.XML.dropdown(label="Algorithm", options=list(
     "Hartigan & Wong"=c(val="Hartigan-Wong", chk=TRUE),
     "Lloyd"=c(val="Lloyd"),
     "Forgy"=c(val="Forgy"),
     "MacQueen"=c(val="MacQueen")
-  ))
+  ),
+  id.name="kMethod"
+)
 
-clust.k.spin.maxiter <- rk.XML.spinbox(label="Maximum number of iterations", min=1, initial=10, real=FALSE)
-clust.k.spin.nstart <- rk.XML.spinbox(label="Initial random set of centers", min=1, initial=1, real=FALSE)
+kMaxIter <- rk.XML.spinbox(
+  label="Maximum number of iterations",
+  min=1,
+  initial=10,
+  real=FALSE,
+  id.name="kMaxIter"
+)
+numStart <- rk.XML.spinbox(
+  label="Initial random set of centers",
+  min=1,
+  initial=1,
+  real=FALSE,
+  id.name="numStart"
+)
 
-save.results.k <- rk.XML.saveobj("Save results to workspace", initial="clust.k.result")
+kSaveResults <- rk.XML.saveobj("Save results to workspace", initial="clust.k.result", id.name="kSaveResults")
 
 # plot results
-clust.plotk.chk.points <- rk.XML.cbox("Plot cluster centers", chk=TRUE)
+plotClustCenters <- rk.XML.cbox("Plot cluster centers", chk=TRUE, id.name="plotClustCenters")
 
 clust.plotk.preview <- rk.XML.preview()
 
 tab.k.data <- rk.XML.row(
-    var.select,
+    data,
     rk.XML.col(
-      var.data,
-      frame.selected.vars,
-      clust.pre.frame,
+      dataSelected,
+      useSubset,
+      dataPreparation,
       rk.XML.stretch(),
-      save.results.k
+      kSaveResults
     ),
     rk.XML.col(
-      rk.XML.frame(clust.k.spin.numcl),
+      rk.XML.frame(numClust),
       rk.XML.stretch(),
       rk.XML.frame(
-        clust.k.drop.meth,
-        clust.k.spin.maxiter,
-        clust.k.spin.nstart,
+        kMethod,
+        kMaxIter,
+        numStart,
         label="Advanced options"),
-        clust.plotk.frame.dend <- rk.XML.frame(
-          clust.plotk.chk.points,
-          generic.plot.options,
-          clust.plotk.preview,
-        label="Plot results", checkable=TRUE, chk=TRUE)
+      kPlotResults <- rk.XML.frame(
+        plotClustCenters,
+        generic.plot.options,
+        clust.plotk.preview,
+        label="Plot results",
+        checkable=TRUE,
+        chk=TRUE,
+        id.name="kPlotResults"
+      )
     )
   )
 
@@ -198,20 +264,20 @@ clust.k.js.calc <- rk.paste.JS(
   js.data.preparation,
   echo("\tclust.k.result <- kmeans("),
   js(
-    if(var.data){
-      echo("\n\t\tx=", var.data)
+    if(dataSelected){
+      echo("\n\t\tx=", dataSelected)
     } else {}
   ),
-  echo(",\n\t\tcenters=", clust.k.spin.numcl),
+  echo(",\n\t\tcenters=", numClust),
   js(
-    if(clust.k.drop.meth != "Hartigan-Wong"){
-      echo(",\n\t\talgorithm=\"", clust.k.drop.meth,"\"")
+    if(kMethod != "Hartigan-Wong"){
+      echo(",\n\t\talgorithm=\"", kMethod,"\"")
     } else {},
-    if(clust.k.spin.maxiter != 10){
-      echo(",\n\t\titer.max=", clust.k.spin.maxiter)
+    if(kMaxIter != 10){
+      echo(",\n\t\titer.max=", kMaxIter)
     } else {},
-    if(clust.k.spin.nstart != 1){
-      echo(",\n\t\tnstart=", clust.k.spin.nstart)
+    if(numStart != 1){
+      echo(",\n\t\tnstart=", numStart)
     } else {},
     linebreaks=TRUE
   ),
@@ -219,69 +285,99 @@ clust.k.js.calc <- rk.paste.JS(
 )
 
 clust.k.js.plot <- rk.paste.JS(
-  js.plotk.dend <- rk.JS.vars(clust.plotk.frame.dend, modifiers="checked"),
+  js.plotk.dend <- rk.JS.vars(kPlotResults, modifiers="checked"),
   js.frm.subset,
-  js.selected.vars,
-  ite(js.plotk.dend, 
-    rk.paste.JS(echo("\n"), rk.paste.JS.graph(
-      echo("\t\tplot(", var.data,",\n\t\t\tcol=clust.k.result$cluster"),
-      ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
-        echo(",\n\t\t\tmain=\"K-means partitioning\"")),
-      ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
-        echo(",\n\t\t\tsub=\"Grouped into ", clust.k.spin.numcl, " clusters by the ", clust.k.drop.meth, " algorithm\"")),
-      # generic plot options go here
-      id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
-      echo(")"),
-      ite(clust.plotk.chk.points,
-        echo("\n\t\tpoints(clust.k.result$centers, col=1:", clust.k.spin.numcl, ", pch=8, cex=2)")),
-      plotOpts=generic.plot.options)
-    )
-  ),
+  js.varsSelected,
   js(
+    if(js.plotk.dend){
+      echo("\n")
+      rk.paste.JS.graph(
+        js(
+          echo("\t\tplot(", dataSelected,",\n\t\t\tcol=clust.k.result$cluster"),
+          if(id("!", generic.plot.options, ".match(/main\\s*=/)")){
+            echo(",\n\t\t\tmain=\"K-means partitioning\"")
+          } else {},
+          if(id("!", generic.plot.options, ".match(/sub\\s*=/)")){
+            echo(",\n\t\t\tsub=\"Grouped into ", numClust, " clusters by the ", kMethod, " algorithm\"")
+          } else {},
+          # generic plot options go here
+          id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
+          echo(")"),
+          if(plotClustCenters){
+            echo("\n\t\tpoints(clust.k.result$centers, col=1:", numClust, ", pch=8, cex=2)")
+          } else {},
+          level=3
+        ),
+        plotOpts=generic.plot.options,
+        level=3
+      )
+    },
     if("full"){
-      rk.paste.JS(echo("\nrk.print(clust.k.result)\n"), js.prt.subset, level=3)
+      echo("\nrk.print(clust.k.result)\n")
+      js.prt.subset
     }
   )
 )
 
-# revert var.data from backup
-var.data <- var.data.nodistbackup
+# revert dataSelected from backup
+dataSelected <- dataSelectedNodistbackup
 
 ############
 ## hierarchical
 ############
-save.results.h <- rk.XML.saveobj("Save results to workspace", initial="clust.h.result")
+hSaveResults <- rk.XML.saveobj("Save results to workspace", initial="clust.h.result", id.name="hSaveResults")
 
 # dendrogram
-clust.dend.spin.numcl <- rk.XML.spinbox(label="Draw border around clusters (1 for none)", min=1, initial=1, real=FALSE)
+clusterBorder <- rk.XML.spinbox(
+  label="Draw border around clusters (1 for none)",
+  min=1,
+  initial=1,
+  real=FALSE,
+  id.name="clusterBorder"
+)
 
-clust.dend.cbox.unit <- rk.XML.cbox("Plot splits at equally-spaced heights (not object height)", chk=FALSE)
-clust.dend.spin.hang <- rk.XML.spinbox(label="Fraction of height by which labels should hang below plot", min=0, initial=0.1, real=TRUE)
-clust.dend.spin.hmin <- rk.XML.spinbox(label="Minimum height (suppress details below)", min=0, initial=0, real=TRUE)
+hUnit <- rk.XML.cbox("Plot splits at equally-spaced heights (not object height)", chk=FALSE, id.name="hUnit")
+hHang <- rk.XML.spinbox(
+  label="Fraction of height by which labels should hang below plot",
+  min=0,
+  initial=0.1,
+  real=TRUE,
+  id.name="hHang"
+)
+hMinHeight <- rk.XML.spinbox(
+  label="Minimum height (suppress details below)",
+  min=0,
+  initial=0,
+  real=TRUE,
+  id.name="hMinHeight"
+)
 
 clust.dend.preview <- rk.XML.preview()
 
 tab.data <- rk.XML.row(
-    var.select,
+    data,
     rk.XML.col(
-      var.data,
-      frame.selected.vars,
-      clust.pre.frame,
+      dataSelected,
+      useSubset,
+      dataPreparation,
       rk.XML.stretch(),
-      save.results.h
+      hSaveResults
     ),
     rk.XML.col(
       clust.h.frame.dist,
-      rk.XML.frame(clust.h.drop.clst, label="Clustering"),
+      rk.XML.frame(clustMethod, label="Clustering"),
       rk.XML.stretch(),
-      clust.plot.dend.frame <- rk.XML.frame(
-        clust.dend.spin.numcl,
-        clust.dend.spin.hang,
-        clust.dend.spin.hmin,
-        rk.XML.frame(clust.dend.cbox.unit),
+      hDendrogram <- rk.XML.frame(
+        clusterBorder,
+        hHang,
+        hMinHeight,
+        rk.XML.frame(hUnit),
         generic.plot.options,
         clust.dend.preview,
-        label="Draw dendrogram", checkable=TRUE, chk=TRUE
+        label="Draw dendrogram",
+        checkable=TRUE,
+        chk=TRUE,
+        id.name="hDendrogram"
       )
     )
   )
@@ -297,8 +393,8 @@ clust.h.full.dialog <- rk.XML.dialog(
     gov.data,
     lgc.enable.selected,
     lgc.df.script,
-    CA.gov.dist <- rk.XML.convert(sources=list(string=clust.h.drop.dist), mode=c(equals="minkowski")),
-    rk.XML.connect(governor=CA.gov.dist, client=clust.h.spin.pwmink, set="enabled"),
+    CA.gov.dist <- rk.XML.convert(sources=list(string=distMethod), mode=c(equals="minkowski")),
+    rk.XML.connect(governor=CA.gov.dist, client=powerMinkowski, set="enabled"),
     rk.XML.set(generic.plot.options, set="allow_type", to=FALSE),
     rk.XML.set(generic.plot.options, set="axistypes.visible", to=FALSE),
     rk.XML.set(generic.plot.options, set="scale.visible", to=FALSE),
@@ -307,63 +403,90 @@ clust.h.full.dialog <- rk.XML.dialog(
 
 ## JavaScript
 clust.h.js.calc <- rk.paste.JS(
-#  js.selected.vars,
+#  js.varsSelected,
   js.data.preparation,
   js.prepare,
-  ite(id(js.prepare),
-    rk.paste.JS(
-      R.comment("Compute distance matrix"),
-      echo("\tclust.h.distances <- dist("),
-      ite(var.data, echo("\n\t\tx=", var.data)),
-      echo(",\n\t\tmethod=\"", clust.h.drop.dist, "\""),
-      ite(id(clust.h.drop.dist, " == \"minkowski\""), echo(",\n\t\tp=", clust.h.spin.pwmink)),
-      echo("\n\t)\n"),
-      R.comment("Hierarchical CA"),
-      echo("\tclust.h.result <- hclust(\n\t\td=clust.h.distances"),
-      echo(",\n\t\tmethod=\"", clust.h.drop.clst, "\""),
-      echo("\n\t)\n\n"), level=3
-    ),
-    rk.paste.JS(
-      R.comment("Hierarchical CA"),
-      echo("\tclust.h.result <- hclust("),
-      ite(var.data, echo("\n\t\td=", var.data)),
-      echo(",\n\t\tmethod=\"", clust.h.drop.clst, "\""),
-      echo("\n\t)\n\n"), level=3
-    )
+  js(
+    if(js.prepare){
+      R.comment("Compute distance matrix")
+      echo("\tclust.h.distances <- dist(")
+      if(dataSelected){
+        echo("\n\t\tx=", dataSelected)
+      } else {}
+      echo(",\n\t\tmethod=\"", distMethod, "\"")
+      if(distMethod == "minkowski"){
+        echo(",\n\t\tp=", powerMinkowski)
+      } else {}
+      echo("\n\t)\n")
+      R.comment("Hierarchical CA")
+      echo("\tclust.h.result <- hclust(\n\t\td=clust.h.distances")
+      echo(",\n\t\tmethod=\"", clustMethod, "\"")
+      echo("\n\t)\n\n")
+    } else {
+      R.comment("Hierarchical CA")
+      echo("\tclust.h.result <- hclust(")
+      if(dataSelected){
+        echo("\n\t\td=", dataSelected)
+      } else {}
+      echo(",\n\t\tmethod=\"", clustMethod, "\"")
+      echo("\n\t)\n\n")
+    }
   )
 )
 
 clust.h.js.dend <- rk.paste.JS(
-  js.ploth.dend <- rk.JS.vars(clust.plot.dend.frame, modifiers="checked"),
+  js.ploth.dend <- rk.JS.vars(hDendrogram, modifiers="checked"),
   js.frm.subset,
-  js.selected.vars,
+  js.varsSelected,
   js.prepare,
-  ite(js.ploth.dend, rk.paste.JS(echo("\n"), rk.paste.JS.graph(
-      ite(id("!", generic.plot.options, ".match(/sub\\s*=/) && !", js.prepare),
-        echo("\t\t# extract distance computation method from dist object\n\t\tdistance.computation <- attr(", var.data, ", \"method\")\n")),
-      ite(id(clust.dend.spin.hmin, " != 0"), echo("\t\t# set minimum height\n\t\tclust.h.result$height <- pmax(clust.h.result$height, ", clust.dend.spin.hmin, ")\n")),
-      ite(clust.dend.cbox.unit, echo("\t\t# set equally spaced heights\n\t\tclust.h.result$height <- rank(clust.h.result$height)\n")),
-      echo("\t\tplot(clust.h.result"),
-      ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
-        echo(",\n\t\t\tmain=\"Cluster dendrogram\"")),
-      ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
-          ite(id(js.prepare),
-            echo(",\n\t\t\tsub=\"Distance computation: ", clust.h.drop.dist, ", agglomeration method: ",clust.h.drop.clst,"\""),
-            echo(",\n\t\t\tsub=paste(\"Distance computation: \", distance.computation, \", agglomeration method: ",clust.h.drop.clst,"\", sep=\"\")")
-          )
-      ),
-      ite(id("!", generic.plot.options, ".match(/xlab\\s*=/)"),
-        echo(",\n\t\t\txlab=\"Data: ", var.data, "\"")),
-      ite(id(clust.dend.spin.hang, " != 0.1"), echo(",\n\t\t\thang=", clust.dend.spin.hang)),
-      # generic plot options go here
-      id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
-      echo(")"),
-      ite(id(clust.dend.spin.numcl, " > 1"),
-        echo("\n\t\trect.hclust(clust.h.result, k=", clust.dend.spin.numcl, ", border=\"red\")")),
-      plotOpts=generic.plot.options
-    ))
-  ),
-  ite("full", rk.paste.JS(echo("\nrk.print(clust.h.result)\n"), js.prt.subset, level=3))
+  js(
+    if(js.ploth.dend){
+      echo("\n")
+      rk.paste.JS.graph(
+        js(
+          if(id("!", generic.plot.options, ".match(/sub\\s*=/)") && !js.prepare){
+            echo("\t\t# extract distance computation method from dist object\n\t\tdistance.computation <- attr(", dataSelected, ", \"method\")\n")
+          } else {},
+          if(hMinHeight != 0){
+            echo("\t\t# set minimum height\n\t\tclust.h.result$height <- pmax(clust.h.result$height, ", hMinHeight, ")\n")
+          } else {},
+          if(hUnit){
+            echo("\t\t# set equally spaced heights\n\t\tclust.h.result$height <- rank(clust.h.result$height)\n")
+          } else {},
+          echo("\t\tplot(clust.h.result"),
+          if(id("!", generic.plot.options, ".match(/main\\s*=/)")){
+            echo(",\n\t\t\tmain=\"Cluster dendrogram\"")
+          } else {},
+          if(id("!", generic.plot.options, ".match(/sub\\s*=/)")){
+            if(js.prepare){
+              echo(",\n\t\t\tsub=\"Distance computation: ", distMethod, ", agglomeration method: ",clustMethod,"\"")
+            } else {
+              echo(",\n\t\t\tsub=paste(\"Distance computation: \", distance.computation, \", agglomeration method: ",clustMethod,"\", sep=\"\")")
+            }
+          } else {},
+          if(id("!", generic.plot.options, ".match(/xlab\\s*=/)")){
+            echo(",\n\t\t\txlab=\"Data: ", dataSelected, "\"")
+          } else {},
+          if(hHang != 0.1){
+            echo(",\n\t\t\thang=", hHang)
+          } else {},
+          # generic plot options go here
+          id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
+          echo(")"),
+          if(clusterBorder > 1){
+            echo("\n\t\trect.hclust(clust.h.result, k=", clusterBorder, ", border=\"red\")")
+          } else {},
+          level=3
+        ),
+        plotOpts=generic.plot.options,
+        level=3
+      )
+    } else {},
+    if("full"){
+      echo("\nrk.print(clust.h.result)\n")
+      js.prt.subset
+    } else {}
+  )
 )
 
 ## make a whole component
@@ -383,39 +506,54 @@ clust.h.component <- rk.plugin.component("Hierarchical CA",
 #############
 ## model based CA
 #############
-# temporarlily replace var.data to exclude dist objects
-var.data.nodistbackup <- var.data
-var.data <- rk.XML.varslot(label="Data (data.frame or matrix)", source=var.select, classes=c("data.frame", "matrix"), required=TRUE, id.name="var_data")
+# temporarlily replace dataSelected to exclude dist objects
+dataSelectedNodistbackup <- dataSelected
+dataSelected <- rk.XML.varslot(
+  label="Data (data.frame or matrix)",
+  source=data,
+  classes=c("data.frame", "matrix"),
+  required=TRUE,
+  id.name="dataSelected"
+)
 
-clust.m.spin.numcl <- rk.XML.spinbox(label="Max number of clusters to test", min=2, initial=9, real=FALSE)
+mNumClust <- rk.XML.spinbox(
+  label="Max number of clusters to test",
+  min=2,
+  initial=9,
+  real=FALSE,
+  id.name="mNumClust"
+)
 
-save.results.m <- rk.XML.saveobj("Save results to workspace", initial="clust.m.result")
+mSaveResults <- rk.XML.saveobj("Save results to workspace", initial="clust.m.result", id.name="mSaveResults")
 
 # dendrogram
-clust.plotm.type <- rk.XML.radio("Plot type", options=list(
+mPlotType <- rk.XML.radio("Plot type",
+  options=list(
     "BIC"=c(val="BIC", chk=TRUE),
     "Classification"=c(val="classification"),
     "Classification uncertainty"=c(val="uncertainty"),
     "Density"=c(val="density")
-  ))
+  ),
+  id.name="mPlotType"
+)
 
 clust.plotm.preview <- rk.XML.preview()
 
 tab.m.data <- rk.XML.row(
-    var.select,
+    data,
     rk.XML.col(
-      var.data,
-      frame.selected.vars,
-      clust.pre.frame,
+      dataSelected,
+      useSubset,
+      dataPreparation,
       rk.XML.stretch(),
-      save.results.m
+      mSaveResults
     ),
     rk.XML.col(
       rk.XML.frame(
-        clust.m.spin.numcl,
+        mNumClust,
         label="Advanced options"),
       clust.plotm.frame.plot <- rk.XML.frame(
-        clust.plotm.type,
+        mPlotType,
         rk.XML.stretch(),
 #        generic.plot.options,
         clust.plotm.preview,
@@ -440,25 +578,41 @@ clust.m.full.dialog <- rk.XML.dialog(
 clust.m.js.calc <- rk.paste.JS(
   js.data.preparation,
   R.comment("Model based CA"),
-  echo("\tclust.m.result <- Mclust(data=", var.data),
-  ite(id(clust.m.spin.numcl, " != 9"), echo(",\n\t\tG=1:", clust.m.spin.numcl, "\n\t")),
+  echo("\tclust.m.result <- Mclust(data=", dataSelected),
+  js(
+    if(mNumClust != 9){
+      echo(",\n\t\tG=1:", mNumClust, "\n\t")
+    } else {}
+  ),
   echo(")\n\n")
 )
 
 clust.m.js.plot <- rk.paste.JS(
   js.plotm.plot <- rk.JS.vars(clust.plotm.frame.plot, modifiers="checked"),
   js.frm.subset,
-  js.selected.vars,
-  ite(js.plotm.plot, rk.paste.JS(echo("\n"), rk.paste.JS.graph(
-    echo("\t\tplot(clust.m.result,\n\t\t\tdata=",var.data,
-    ",\n\t\t\twhat=\"", clust.plotm.type, "\""),
-#     # generic plot options go here
-#     id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
-     echo(")")#,
-#     plotOpts=generic.plot.options,
-#     printoutObj=generic.plot.options
-    ))),
-  ite("full", rk.paste.JS(echo("\nrk.print(clust.m.result)\n"), js.prt.subset))
+  js.varsSelected,
+  js(
+    if(js.plotm.plot){
+      echo("\n")
+      rk.paste.JS.graph(
+        js(
+          echo("\t\tplot(clust.m.result,\n\t\t\tdata=",dataSelected,
+          ",\n\t\t\twhat=\"", mPlotType, "\""),
+      #     # generic plot options go here
+      #     id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
+          echo(")"),
+      #     plotOpts=generic.plot.options,
+      #     printoutObj=generic.plot.options
+          level=3
+        ),
+        level=3
+      )
+    } else {},
+    if("full"){
+      echo("\nrk.print(clust.m.result)\n")
+      js.prt.subset
+    } else {}
+  )
 )
 
 ## make a whole component
@@ -475,37 +629,55 @@ clust.m.component <- rk.plugin.component("Model based CA",
   hierarchy=list("analysis", "Cluster analysis"),
   create=c("xml", "js"))
 
-# revert var.data from backup
-var.data <- var.data.nodistbackup
+# revert dataSelected from backup
+dataSelected <- dataSelectedNodistbackup
 
 #############
 ## number of clusters
 #############
-clust.num.radio.type <- rk.XML.radio("Method", options=list(
+nClustMethod <- rk.XML.radio("Method",
+  options=list(
     "K-means total within sum of sqares"=c(val="kmeans"),
     "Hiearchical clustering criterion (Inverse Scree)"=c(val="hclust", chk=TRUE)
-  ))
+  ),
+  id.name="nClustMethod"
+)
 
-clust.num.spin.numcl <- rk.XML.spinbox(label="Maximum number of clusters to exexamine", min=2, initial=15, real=FALSE)
+nMaxClust <- rk.XML.spinbox(
+  label="Maximum number of clusters to exexamine",
+  min=2,
+  initial=15,
+  real=FALSE,
+  id.name="nMaxClust"
+)
 
 clust.num.preview <- rk.XML.preview()
 
 clust.num.full.dialog <- rk.XML.dialog(
   rk.XML.row(
-    var.select,
+    data,
     rk.XML.col(
-      var.data,
-      frame.selected.vars,
-      clust.pre.frame,
+      dataSelected,
+      useSubset,
+      dataPreparation,
       rk.XML.stretch(),
       rk.XML.frame(generic.plot.options,
       clust.num.preview, label="Plot options")),
     rk.XML.col(
-      clust.num.spin.numcl,
+      nMaxClust,
       rk.XML.stretch(),
-      clust.num.radio.type,
-      clust.num.frm.dist <- rk.XML.frame(clust.h.drop.dist, clust.h.spin.pwmink, label="Distance matrix"),
-      clust.num.frm.clst <- rk.XML.frame(clust.h.drop.clst, label="Clustering"))
+      nClustMethod,
+      nDistMatrix <- rk.XML.frame(
+        distMethod, powerMinkowski,
+        label="Distance matrix",
+        id.name="nDistMatrix"
+      ),
+      nClustering <- rk.XML.frame(
+        clustMethod,
+        label="Clustering",
+        id.name="nClustering"
+      )
+    )
   ), label="Cluster analysis: Determine number of clusters")
 
 ## logic section
@@ -516,32 +688,32 @@ clust.num.full.dialog <- rk.XML.dialog(
     lgc.enable.selected,
     # rewrite content lgc.df.script with additional actions
     rk.comment(id("
-      gui.addChangeCommand(\"", var.data, ".available\", \"dataChanged()\");
+      gui.addChangeCommand(\"", dataSelected, ".available\", \"dataChanged()\");
       // this function is called whenever the data was changed
       dataChanged = function(){
           var prepareFrame = \"true\";
           var selectFrame = \"true\";
-          var thisObject = makeRObject(gui.getValue(\"", var.data, ".available\"));
+          var thisObject = makeRObject(gui.getValue(\"", dataSelected, ".available\"));
           if(thisObject.classes()){
             if(!thisObject.isDataFrame()){
               selectFrame = \"false\";
               if(thisObject.classes().indexOf(\"dist\") != -1){
                 prepareFrame = \"false\";
-                gui.setValue(\"", clust.num.radio.type, ".string\", \"hclust\");
+                gui.setValue(\"", nClustMethod, ".string\", \"hclust\");
               } else {}
             } else {}
           } else {}
-          gui.setValue(\"", frame.selected.vars, ".enabled\", selectFrame);
-          gui.setValue(\"", clust.pre.frame, ".enabled\", prepareFrame);
+          gui.setValue(\"", useSubset, ".enabled\", selectFrame);
+          gui.setValue(\"", dataPreparation, ".enabled\", prepareFrame);
         }", js=FALSE)),
-    CA.gov.dist.num <- rk.XML.convert(sources=list(string=clust.h.drop.dist), mode=c(equals="minkowski")),
-    rk.XML.connect(governor=CA.gov.dist.num, client=clust.h.spin.pwmink, set="enabled"),
+    CA.gov.dist.num <- rk.XML.convert(sources=list(string=distMethod), mode=c(equals="minkowski")),
+    rk.XML.connect(governor=CA.gov.dist.num, client=powerMinkowski, set="enabled"),
     lgc.isntDistData,
-    rk.XML.connect(governor=clust.pre.frame, get="enabled", client=clust.num.radio.type, set="enabled"),
-    CA.gov.dist.num.type <- rk.XML.convert(sources=list(string=clust.num.radio.type), mode=c(equals="hclust")),
-    CA.gov.dist.notDistData <- rk.XML.convert(sources=list(CA.gov.dist.num.type, enabled=clust.pre.frame), mode=c(and="")),
-    rk.XML.connect(governor=CA.gov.dist.notDistData, client=clust.num.frm.dist, set="enabled"),
-    rk.XML.connect(governor=CA.gov.dist.num.type, client=clust.num.frm.clst, set="enabled")
+    rk.XML.connect(governor=dataPreparation, get="enabled", client=nClustMethod, set="enabled"),
+    CA.gov.dist.num.type <- rk.XML.convert(sources=list(string=nClustMethod), mode=c(equals="hclust")),
+    CA.gov.dist.notDistData <- rk.XML.convert(sources=list(CA.gov.dist.num.type, enabled=dataPreparation), mode=c(and="")),
+    rk.XML.connect(governor=CA.gov.dist.notDistData, client=nDistMatrix, set="enabled"),
+    rk.XML.connect(governor=CA.gov.dist.num.type, client=nClustering, set="enabled")
   )
 
 
@@ -551,71 +723,96 @@ clust.num.full.dialog <- rk.XML.dialog(
 clust.num.js.calc <- rk.paste.JS(
   js.data.preparation,
   js.prepare,
-  ite(id(clust.num.radio.type, " == \"kmeans\" && ", var.data), echo("\t# Calculate within groups sum of squares",
-    "\n\tclust.wss <- (nrow(",var.data,")-1) * sum(apply(",var.data,", 2, var))\n",
-    "\tfor (i in 2:",clust.num.spin.numcl,"){\n\t\tclust.wss[i] <- kmeans(",var.data,", centers=i)$tot.withinss\n\t}\n\n")),
-  ite(id(clust.num.radio.type, " == \"hclust\" && ", var.data), rk.paste.JS(
-      echo("\t# Get clustering criterion"),
-      ite(id(js.prepare),
-        echo("\n\tclust.from <- nrow(",var.data,")-",clust.num.spin.numcl,
-          "\n\tclust.to <- nrow(",var.data,")-1",
-          "\n\tclust.wss <- hclust(dist(",var.data,", method=\"", clust.h.drop.dist, "\"), method=\"",clust.h.drop.clst,"\")$height[clust.from:clust.to]\n\n"),
-        echo("\n\tclust.from <- attr(",var.data,", \"Size\")-",clust.num.spin.numcl,
-          "\n\tclust.to <- attr(",var.data,", \"Size\")-1",
-          "\n\tclust.wss <- hclust(",var.data, ", method=\"",clust.h.drop.clst,"\")$height[clust.from:clust.to]\n\n")
-      ), level=3
-    )
+  js(
+    if(nClustMethod == "kmeans" && dataSelected){
+      echo("\t# Calculate within groups sum of squares",
+      "\n\tclust.wss <- (nrow(",dataSelected,")-1) * sum(apply(",dataSelected,", 2, var))\n",
+      "\tfor (i in 2:",nMaxClust,"){\n\t\tclust.wss[i] <- kmeans(",dataSelected,", centers=i)$tot.withinss\n\t}\n\n")
+    } else {},
+    if(nClustMethod == "hclust" && dataSelected){
+      echo("\t# Get clustering criterion")
+      if(js.prepare){
+        echo("\n\tclust.from <- nrow(",dataSelected,")-",nMaxClust,
+          "\n\tclust.to <- nrow(",dataSelected,")-1",
+          "\n\tclust.wss <- hclust(dist(",dataSelected,", method=\"", distMethod, "\"), method=\"",clustMethod,"\")$height[clust.from:clust.to]\n\n")
+      } else {
+        echo("\n\tclust.from <- attr(",dataSelected,", \"Size\")-",nMaxClust,
+          "\n\tclust.to <- attr(",dataSelected,", \"Size\")-1",
+          "\n\tclust.wss <- hclust(",dataSelected, ", method=\"",clustMethod,"\")$height[clust.from:clust.to]\n\n")
+      }
+    } else {}
   )
 )
 
 clust.num.js.print <- rk.paste.JS(
   js.frm.subset,
-  js.selected.vars,
+  js.varsSelected,
   js.prepare,
   echo("\n"),
   rk.paste.JS.graph(
-    ite(id("!", generic.plot.options, ".match(/sub\\s*=/) && !", js.prepare),
-      echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(", var.data, ", \"method\")\n\n")),
-    echo("\t\tplot(\n\t\t\t"),
-    ite(id(clust.num.radio.type, " == \"kmeans\" && ", js.prepare),
-      rk.paste.JS(echo("1:",clust.num.spin.numcl,",\n\t\t\tclust.wss"),
-      ite(id("!", generic.plot.options, ".match(/type\\s*=/)"),
-        echo(",\n\t\t\ttype=\"b\"")),
-      ite(id("!", generic.plot.options, ".match(/xlab\\s*=/)"),
-        echo(",\n\t\t\txlab=\"Number of Clusters\"")),
-      ite(id("!", generic.plot.options, ".match(/ylab\\s*=/)"),
-        echo(",\n\t\t\tylab=\"Within groups sum of squares\"")),
-      ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
-        echo(",\n\t\t\tmain=\"Within sum of squares by clusters\"")),
-      ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
-        echo(",\n\t\t\tsub=\"Examined ", clust.num.spin.numcl, " clusters using k-means partitioning\"")),
-      # generic plot options go here
-      id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
-      echo(")"), level=3)),
-    ite(id(clust.num.radio.type, " == \"hclust\" || !", js.prepare),
-      rk.paste.JS(echo("clust.wss"),
-      ite(id("!", generic.plot.options, ".match(/type\\s*=/)"),
-        echo(",\n\t\t\ttype=\"b\"")),
-      ite(id("!", generic.plot.options, ".match(/xlab\\s*=/)"),
-        echo(",\n\t\t\txlab=\"Number of Clusters\"")),
-      ite(id("!", generic.plot.options, ".match(/ylab\\s*=/)"),
-        echo(",\n\t\t\tylab=\"Agglomeration criterion\"")),
-      ite(id("!", generic.plot.options, ".match(/main\\s*=/)"),
-        echo(",\n\t\t\tmain=\"Inverse Scree plot\"")),
-      ite(id("!", generic.plot.options, ".match(/sub\\s*=/)"),
-          ite(id(js.prepare),
-            echo(",\n\t\t\tsub=\"Examined ", clust.num.spin.numcl, " clusters (dist: ", clust.h.drop.dist, ", hclust: ",clust.h.drop.clst,")\""),
-            echo(",\n\t\t\tsub=paste(\"Examined ", clust.num.spin.numcl, " clusters (dist: \", distance.computation, \", hclust: ",clust.h.drop.clst,")\", sep=\"\")")
-          )
-      ),
-      echo(",\n\t\t\txaxt=\"n\""),
-      # generic plot options go here
-      id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));"),
-      echo(")",
-      "\n\t\taxis(1, at=1:",clust.num.spin.numcl,", labels=",clust.num.spin.numcl, ":1)"), level=3)),
-    plotOpts=generic.plot.options
+    js(
+      if(id("!", generic.plot.options, ".match(/sub\\s*=/) && !", js.prepare)){
+        echo("\t# extract distance computation method from dist object\n\tdistance.computation <- attr(", dataSelected, ", \"method\")\n\n")
+      } else {},
+      echo("\t\tplot(\n\t\t\t"),
+      if(nClustMethod == "kmeans" && js.prepare){
+        echo("1:",nMaxClust,",\n\t\t\tclust.wss")
+        if(id("!", generic.plot.options, ".match(/type\\s*=/)")){
+          echo(",\n\t\t\ttype=\"b\"")
+        } else {}
+        if(id("!", generic.plot.options, ".match(/xlab\\s*=/)")){
+          echo(",\n\t\t\txlab=\"Number of Clusters\"")
+        } else {}
+        if(id("!", generic.plot.options, ".match(/ylab\\s*=/)")){
+          echo(",\n\t\t\tylab=\"Within groups sum of squares\"")
+        } else {}
+        if(id("!", generic.plot.options, ".match(/main\\s*=/)")){
+          echo(",\n\t\t\tmain=\"Within sum of squares by clusters\"")
+        } else {}
+        if(id("!", generic.plot.options, ".match(/sub\\s*=/)")){
+          echo(",\n\t\t\tsub=\"Examined ", nMaxClust, " clusters using k-means partitioning\"")
+        } else {}
+        # generic plot options go here
+        id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));")
+        echo(")")
+      } else {},
+      if(nClustMethod == "hclust" || !js.prepare){
+        echo("clust.wss")
+        if(id("!", generic.plot.options, ".match(/type\\s*=/)")){
+          echo(",\n\t\t\ttype=\"b\"")
+        } else {}
+        if(id("!", generic.plot.options, ".match(/xlab\\s*=/)")){
+          echo(",\n\t\t\txlab=\"Number of Clusters\"")
+        } else {}
+        if(id("!", generic.plot.options, ".match(/ylab\\s*=/)")){
+          echo(",\n\t\t\tylab=\"Agglomeration criterion\"")
+        } else {}
+        if(id("!", generic.plot.options, ".match(/main\\s*=/)")){
+          echo(",\n\t\t\tmain=\"Inverse Scree plot\"")
+        } else {}
+        if(id("!", generic.plot.options, ".match(/sub\\s*=/)")){
+            if(js.prepare){
+              echo(",\n\t\t\tsub=\"Examined ", nMaxClust, " clusters (dist: ", distMethod, ", hclust: ",clustMethod,")\"")
+            } else {
+              echo(",\n\t\t\tsub=paste(\"Examined ", nMaxClust, " clusters (dist: \", distance.computation, \", hclust: ",clustMethod,")\", sep=\"\")")
+            }
+        } else {}
+        echo(",\n\t\t\txaxt=\"n\"")
+        # generic plot options go here
+        id("echo(", generic.plot.options, ".replace(/, /g, \",\\n\\t\\t\\t\"));")
+        echo(")",
+        "\n\t\taxis(1, at=1:",nMaxClust,", labels=",nMaxClust, ":1)")
+      } else {},
+      level=3
+    ),
+    plotOpts=generic.plot.options,
+    level=3
   ),
-  ite("!full", js.prt.subset)
+  js(
+    if("!full"){
+      js.prt.subset
+    } else {}
+  )
 )
 
 ## make a whole component
@@ -661,4 +858,8 @@ cluster.plugin.dir <<- rk.plugin.skeleton(
   load=TRUE,
 #  show=TRUE,
   hints=FALSE)
+
+  if(isTRUE(update.translations)){
+    rk.updatePluginMessages(file.path(output.dir,"rk.ClusterAnalysis","inst","rkward","rk.ClusterAnalysis.pluginmap"))
+  } else {}
 })

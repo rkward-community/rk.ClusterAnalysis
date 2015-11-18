@@ -1,0 +1,570 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# m.eik michalke <m@reaktanz.de>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://p.sf.net/rkward/bugs\n"
+"POT-Creation-Date: 2015-11-18 23:44+0100\n"
+"PO-Revision-Date: 2015-11-18 23:43+0100\n"
+"Last-Translator: m.eik michalke <m@reaktanz.de>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "m.eik michalke"
+
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "meik.michalke@hhu.de"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:16
+#. i18n: ectx: <about name="...">
+msgid "rk.ClusterAnalysis"
+msgstr "rk.ClusterAnalysis"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:16
+#. i18n: ectx: <about shortinfo="...">
+msgid ""
+"RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
+msgstr ""
+"RKWard GUI zur Durchführung von k-Means-, modellbasierter und hierarchischer "
+"Clusteranalysen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:25
+#. i18n: ectx: <about> <author given="...">
+msgctxt "Author name"
+msgid "Meik"
+msgstr "Meik"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:25
+#. i18n: ectx: <about> <author family="...">
+msgctxt "Author name"
+msgid "Michalke"
+msgstr "Michalke"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:39
+#. i18n: ectx: <components> <component label="...">
+msgid "Hierarchical CA"
+msgstr "Hierarchische CA"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.js:33
+#. i18n: ectx: (Loaded from Cluster analysis: Hierarchical)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.js:28
+#. i18n: ectx: (Loaded from Cluster analysis: Model based)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.js:29
+#. i18n: ectx: (Loaded from Cluster analysis: Determine number of clusters)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.js:31
+#. i18n: ectx: (Loaded from Cluster analysis: K-means partitioning)
+msgctxt "R code comment"
+msgid "Use subset of variables"
+msgstr "Benutze eine Auswahl von Variablen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.js:37
+#. i18n: ectx: (Loaded from Cluster analysis: Hierarchical)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.js:32
+#. i18n: ectx: (Loaded from Cluster analysis: Model based)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.js:33
+#. i18n: ectx: (Loaded from Cluster analysis: Determine number of clusters)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.js:35
+#. i18n: ectx: (Loaded from Cluster analysis: K-means partitioning)
+msgctxt "R code comment"
+msgid "Listwise removal of missings"
+msgstr "Listenweiser Ausschluss fehlender Werte"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.js:41
+#. i18n: ectx: (Loaded from Cluster analysis: Hierarchical)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.js:36
+#. i18n: ectx: (Loaded from Cluster analysis: Model based)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.js:37
+#. i18n: ectx: (Loaded from Cluster analysis: Determine number of clusters)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.js:39
+#. i18n: ectx: (Loaded from Cluster analysis: K-means partitioning)
+msgctxt "R code comment"
+msgid "Standardizing values"
+msgstr "Werte standardisieren"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.js:46
+#. i18n: ectx: (Loaded from Cluster analysis: Hierarchical)
+msgctxt "R code comment"
+msgid "Compute distance matrix"
+msgstr "Berechne Distanzmatrix"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.js:56
+#. i18n: ectx: (Loaded from Cluster analysis: Hierarchical)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.js:61
+#. i18n: ectx: (Loaded from Cluster analysis: Hierarchical)
+msgctxt "R code comment"
+msgid "Hierarchical CA"
+msgstr "Hierarchische CA"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.js:102
+#. i18n: ectx: (Loaded from Cluster analysis: Hierarchical)
+msgid "Hierarchical CA results"
+msgstr "Hierarchische CA Ergebnisse"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.js:169
+#. i18n: ectx: (Loaded from Cluster analysis: Hierarchical)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.js:105
+#. i18n: ectx: (Loaded from Cluster analysis: Model based)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.js:162
+#. i18n: ectx: (Loaded from Cluster analysis: Determine number of clusters)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.js:135
+#. i18n: ectx: (Loaded from Cluster analysis: K-means partitioning)
+msgid "Subset of variables included the analysis"
+msgstr "Für die Analyse verwendete Auswahl von Variablen "
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:42
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="...">
+msgid "Cluster analysis: Hierarchical"
+msgstr "Clusteranalyse: Hierarchisch"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:44
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <varselector label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:38
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <varselector label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:47
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <varselector label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:38
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <varselector label="...">
+msgid "Select data"
+msgstr "Wähle Daten"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:46
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <varslot label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:49
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <varslot label="...">
+msgid "Data (data.frame, matrix or dist)"
+msgstr "Daten (data.frame, matrix oder dist)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:47
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:41
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:50
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:41
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="...">
+msgid "Use only a subset of variables"
+msgstr "Benutze nur eine Auswahl von Variablen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:48
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Use only a subset of variables"> <varslot label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:42
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Use only a subset of variables"> <varslot label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:51
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Use only a subset of variables"> <varslot label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:42
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Use only a subset of variables"> <varslot label="...">
+msgid "Selected variables"
+msgstr "Ausgewählte Variablen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:50
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:44
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:53
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:44
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="...">
+msgid "Data preparation"
+msgstr "Aufbereitung der Daten"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:51
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Data preparation"> <checkbox label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:45
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Data preparation"> <checkbox label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:54
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Data preparation"> <checkbox label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:45
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Data preparation"> <checkbox label="...">
+msgid "Remove missing values"
+msgstr "Fehlende Werte entfernen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:52
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Data preparation"> <checkbox label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:46
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Data preparation"> <checkbox label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:55
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Data preparation"> <checkbox label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:46
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Data preparation"> <checkbox label="...">
+msgid "Stadardize values"
+msgstr "Werte standardisieren"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:55
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <saveobject label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:49
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <saveobject label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:49
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <saveobject label="...">
+msgid "Save results to workspace"
+msgstr "Speichere Ergebnisse im Workspace"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:58
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:70
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="...">
+msgid "Distance matrix"
+msgstr "Distanzmatrix"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:59
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Distance matrix"> <dropdown label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:71
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Distance matrix"> <dropdown label="...">
+msgid "Computation method"
+msgstr "Berechnungsmethode"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:60
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:72
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+msgid "Euclidean"
+msgstr "Euklidisch"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:61
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:73
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+msgid "Maximum"
+msgstr "Maximum"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:62
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:74
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+msgid "Manhattan (city block)"
+msgstr "Manhattan (City Block)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:63
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:75
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+msgid "Canberra"
+msgstr "Canberra"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:64
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:76
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+msgid "Binary"
+msgstr "Binär"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:65
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:77
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Distance matrix"> <dropdown label="Computation method"> <option label="...">
+msgid "Minkowski"
+msgstr "Minkowski"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:67
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Distance matrix"> <spinbox label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:79
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Distance matrix"> <spinbox label="...">
+msgid "Power of Minkowski distance"
+msgstr "Potenz der Minkowski-Distanz"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:69
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:81
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="...">
+msgid "Clustering"
+msgstr "Clustern"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:70
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:82
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="...">
+msgid "Agglomeration method"
+msgstr "Agglomerationsmethode"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:71
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:83
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+msgid "Ward (incl. clustering criterion)"
+msgstr "Ward (inkl. Clusterkriterium)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:72
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:84
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+msgid "Ward (without clustering criterion)"
+msgstr "Ward (ohne Clusterkriterium)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:73
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:85
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+msgid "Single linkage (nearest neighbor)"
+msgstr "Single linkage (nächster Nachbar)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:74
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:86
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+msgid "Complete linkage (furthest neighbor)"
+msgstr "Complete linkage (weitester Nachbar)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:75
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:87
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+msgid "Average linkage (between groups linkage)"
+msgstr "Average linkage (Verlinkung zwischen Gruppen)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:76
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:88
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+msgid "McQuitty"
+msgstr "McQuitty"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:77
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:89
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+msgid "Median clustering"
+msgstr "Medianclusterung"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:78
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:90
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Clustering"> <dropdown label="Agglomeration method"> <option label="...">
+msgid "Centroid clustering"
+msgstr "Zentroidclusterung"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:82
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="...">
+msgid "Draw dendrogram"
+msgstr "Zeichne Dendrogramm"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:83
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Draw dendrogram"> <spinbox label="...">
+msgid "Draw border around clusters (1 for none)"
+msgstr "Rand um Cluster (1 für keinen)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:84
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Draw dendrogram"> <spinbox label="...">
+msgid "Fraction of height by which labels should hang below plot"
+msgstr "Bruchteil der Höhe, um die Labels unter dem Plot hängen sollen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:85
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Draw dendrogram"> <spinbox label="...">
+msgid "Minimum height (suppress details below)"
+msgstr "Mindesthöhe (unterdrücke Details darunter)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:87
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Draw dendrogram"> <checkbox label="...">
+msgid "Plot splits at equally-spaced heights (not object height)"
+msgstr "Plot bei gleichabständigen Höhen trennen (nicht Objekthöhe)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/HierarchicalCA.xml:89
+#. i18n: ectx: (Cluster analysis: Hierarchical) <dialog label="Cluster analysis: Hierarchical"> <frame label="Draw dendrogram"> <embed label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:59
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="Plot options"> <embed label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:68
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Plot results"> <embed label="...">
+msgid "Generic plot options"
+msgstr "Allgemeine Plotoptionen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:46
+#. i18n: ectx: <components> <component label="...">
+msgid "Model based CA"
+msgstr "Modellbasierte CA"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.js:39
+#. i18n: ectx: (Loaded from Cluster analysis: Model based)
+msgctxt "R code comment"
+msgid "Model based CA"
+msgstr "Modellbasierte CA"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.js:73
+#. i18n: ectx: (Loaded from Cluster analysis: Model based)
+msgid "Model based CA results"
+msgstr "Modellbasierte CA Ergebnisse"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:36
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="...">
+msgid "Cluster analysis: Model based"
+msgstr "Clusteranalyse: Modellbasiert"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:40
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <varslot label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:40
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <varslot label="...">
+msgid "Data (data.frame or matrix)"
+msgstr "Daten (data.frame oder matrix)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:52
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:56
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="...">
+msgid "Advanced options"
+msgstr "Fortgeschrittene Optionen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:53
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Advanced options"> <spinbox label="...">
+msgid "Max number of clusters to test"
+msgstr "Höchstzahl zu testender Cluster"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:55
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:66
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="...">
+msgid "Plot results"
+msgstr "Plotte Ergebnisse"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:56
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Plot results"> <radio label="...">
+msgid "Plot type"
+msgstr "Art des Plots"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:57
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Plot results"> <radio label="Plot type"> <option label="...">
+msgid "BIC"
+msgstr "BIC"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:58
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Plot results"> <radio label="Plot type"> <option label="...">
+msgid "Classification"
+msgstr "Klassifikation"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:59
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Plot results"> <radio label="Plot type"> <option label="...">
+msgid "Classification uncertainty"
+msgstr "Klassifikationunsicherheit"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/ModelbasedCA.xml:60
+#. i18n: ectx: (Cluster analysis: Model based) <dialog label="Cluster analysis: Model based"> <frame label="Plot results"> <radio label="Plot type"> <option label="...">
+msgid "Density"
+msgstr "Dichte"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:53
+#. i18n: ectx: <components> <component label="...">
+msgid "Determine number of clusters"
+msgstr "Bestimmte Zahl von Clustern"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.js:81
+#. i18n: ectx: (Loaded from Cluster analysis: Determine number of clusters)
+msgid "Determine number of clusters results"
+msgstr "Bestimmte Zahl von Clustern Ergebnisse"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:45
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="...">
+msgid "Cluster analysis: Determine number of clusters"
+msgstr "Clusteranalyse: Bestimmte Zahl von Clustern"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:58
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <frame label="...">
+msgid "Plot options"
+msgstr "Plotoptionen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:64
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <spinbox label="...">
+msgid "Maximum number of clusters to exexamine"
+msgstr "Höchstzahl zu untersuchender Cluster"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:66
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <radio label="...">
+msgid "Method"
+msgstr "Methode"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:67
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <radio label="Method"> <option label="...">
+msgid "K-means total within sum of sqares"
+msgstr "K-means gesamte within-Quadratsumme"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Determinenumberofclusters.xml:68
+#. i18n: ectx: (Cluster analysis: Determine number of clusters) <dialog label="Cluster analysis: Determine number of clusters"> <radio label="Method"> <option label="...">
+msgid "Hiearchical clustering criterion (Inverse Scree)"
+msgstr "Hiearchisches ClusterKriterium (inverser Scree)"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:60
+#. i18n: ectx: <components> <component label="...">
+msgid "K-means partitioning"
+msgstr "K-means Partitionierung"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.js:88
+#. i18n: ectx: (Loaded from Cluster analysis: K-means partitioning)
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:73
+#. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:84
+#. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:95
+#. i18n: ectx: <hierarchy> <menu label="Plots"> <menu label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:106
+#. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
+msgid "Cluster analysis"
+msgstr "Clusteranalyse"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:36
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="...">
+msgid "Cluster analysis: K-means partitioning"
+msgstr "Cluster analysis: K-means Partitionierung"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:53
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <spinbox label="...">
+msgid "Number of clusters to extract"
+msgstr "Anzahl zu extrahierender Cluster"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:57
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Advanced options"> <dropdown label="...">
+msgid "Algorithm"
+msgstr "Algorithmus"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:58
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Advanced options"> <dropdown label="Algorithm"> <option label="...">
+msgid "Hartigan & Wong"
+msgstr "Hartigan & Wong"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:59
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Advanced options"> <dropdown label="Algorithm"> <option label="...">
+msgid "Lloyd"
+msgstr "Lloyd"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:60
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Advanced options"> <dropdown label="Algorithm"> <option label="...">
+msgid "Forgy"
+msgstr "Lloyd"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:61
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Advanced options"> <dropdown label="Algorithm"> <option label="...">
+msgid "MacQueen"
+msgstr "MacQueen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:63
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Advanced options"> <spinbox label="...">
+msgid "Maximum number of iterations"
+msgstr "Maximale Anzahl an Interationen"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:64
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Advanced options"> <spinbox label="...">
+msgid "Initial random set of centers"
+msgstr "Initiale Zufallssätze von Zentren "
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/plugins/Kmeanspartitioning.xml:67
+#. i18n: ectx: (Cluster analysis: K-means partitioning) <dialog label="Cluster analysis: K-means partitioning"> <frame label="Plot results"> <checkbox label="...">
+msgid "Plot cluster centers"
+msgstr "Plotte Clusterzentren"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:69
+#. i18n: ectx: <hierarchy> <menu label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:80
+#. i18n: ectx: <hierarchy> <menu label="...">
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:102
+#. i18n: ectx: <hierarchy> <menu label="...">
+msgid "Analysis"
+msgstr "Analyse"
+
+#. i18n: file: /tmp/RtmpkyLppb/rk.ClusterAnalysis/inst/rkward/rk.ClusterAnalysis.pluginmap:91
+#. i18n: ectx: <hierarchy> <menu label="...">
+msgid "Plots"
+msgstr "Plots"
