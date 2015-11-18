@@ -124,7 +124,9 @@ js.data.preparation <- rk.paste.JS(
 # print selected subsets, if needed
 js.prt.subset <- js(
   if(js.frm.subset && js.selected.vars != ""){
-    echo("\nrk.header(\"Subset of variables included the analysis\", level=3)\nrk.print(list(\"", js.selected.vars, "\"))\n\n")
+    echo("\n")
+    rk.JS.header("Subset of variables included the analysis", level=3)
+    echo("rk.print(list(\"", js.selected.vars, "\"))\n\n")
   } else {}
 )
 
