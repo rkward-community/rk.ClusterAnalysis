@@ -1,11 +1,13 @@
 <!DOCTYPE rkplugin >
 <document>
-  <!--   this code was generated using the rkwarddev package.
-        perhaps don't make changes here, but in the rkwarddev script instead! -->
+  <!-- this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead!
+    
+    look for a file called: $SRC/inst/rkward/rkwarddev_CA_plugin_script.R -->
   <code file="ModelbasedCA.js" />
   <help file="ModelbasedCA.rkh" />
-  <!--   <dependencies>
-        </dependencies> -->
+  <!-- <dependencies>
+      </dependencies> -->
   <logic>
     <connect governor="current_object.state" client="dataSelected.available" />
     <connect governor="dataSelected.available" client="data.root" />
@@ -13,23 +15,23 @@
     <connect governor="lgc_datSlctd" client="useSubset.enabled" />
     <script>
       <![CDATA[ 
-              gui.addChangeCommand("dataSelected.available", "dataChanged()");
-                // this function is called whenever the data was changed
-                dataChanged = function(){
-                    var prepareFrame = "true";
-                    var selectFrame = "true";
-                    var thisObject = makeRObject(gui.getValue("dataSelected.available"));
-                     if(thisObject.classes()){
-                      if(!thisObject.isDataFrame()){
-                        selectFrame = "false";
-                        if(thisObject.classes().indexOf("dist") != -1){
-                          prepareFrame = "false";
-                        } else {}
-                      } else {}
-                    } else {}
-                    gui.setValue("useSubset.enabled", selectFrame);
-                    gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
-                  } 
+        gui.addChangeCommand("dataSelected.available", "dataChanged()");
+          // this function is called whenever the data was changed
+          dataChanged = function(){
+              var prepareFrame = "true";
+              var selectFrame = "true";
+              var thisObject = makeRObject(gui.getValue("dataSelected.available"));
+               if(thisObject.classes()){
+                if(!thisObject.isDataFrame()){
+                  selectFrame = "false";
+                  if(thisObject.classes().indexOf("dist") != -1){
+                    prepareFrame = "false";
+                  } else {}
+                } else {}
+              } else {}
+              gui.setValue("useSubset.enabled", selectFrame);
+              gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
+            } 
       ]]>
     </script>
   </logic>

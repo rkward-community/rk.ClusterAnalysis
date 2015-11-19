@@ -7,8 +7,10 @@
   priority="medium"
 >
   <!-- 
-      this code was generated using the rkwarddev package.
-        perhaps don't make changes here, but in the rkwarddev script instead! 
+    this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead!
+    
+    look for a file called: $SRC/inst/rkward/rkwarddev_CA_plugin_script.R 
   -->
   <dependencies rkward_min_version="0.6.0">
     <package name="mclust" />
@@ -18,7 +20,7 @@
     shortinfo="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
     longinfo="RKWard GUI to conduct k-means, model based and hierarchical cluster analyses"
     version="0.01-14"
-    releasedate="2015-11-18"
+    releasedate="2015-11-19"
     url="https://rkward.kde.org"
     license="GPL (&gt;= 3)"
   >

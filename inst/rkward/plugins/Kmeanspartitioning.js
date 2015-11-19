@@ -1,5 +1,7 @@
 // this code was generated using the rkwarddev package.
-//perhaps don't make changes here, but in the rkwarddev script instead!
+// perhaps don't make changes here, but in the rkwarddev script instead!
+// 
+// look for a file called: $SRC/inst/rkward/rkwarddev_CA_plugin_script.R
 
 
 
