@@ -2,7 +2,7 @@
 
 This R package provides a GUI to conduct k-means, model based and hierarchical cluster analyses.
 
-![rk.ClusterAnalysis hierarchical CA](/inst/screenshots/hierarchical_CA_de.png?raw=true "rk.ClusterAnalysis hierarchical CA")
+![rk.ClusterAnalysis hierarchical CA](/inst/screenshots/hierarchical_CA_de.jpg?raw=true "rk.ClusterAnalysis hierarchical CA")
 
 It is a plugin package for [RKWard](https://rkward.kde.org), a powerful GUI and IDE for [R](https://r-project.org),
 and will **only work in conjunction with RKWard**. However, RKWard is free software, please
