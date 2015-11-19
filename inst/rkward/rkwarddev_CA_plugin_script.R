@@ -8,7 +8,7 @@ rkwarddev.required("0.07-4")
 
 local({
 # set the output directory to overwrite the actual plugin
-output.dir <- tempdir()
+output.dir <- "/home/m/daten/R/rkward_plugins/git/"#tempdir()
 overwrite <- TRUE
 # if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0
 guess.getter <- TRUE
@@ -501,7 +501,8 @@ clust.h.component <- rk.plugin.component("Hierarchical CA",
   ),
   guess.getter=guess.getter,
   hierarchy=list("analysis", "Cluster analysis"),
-  create=c("xml", "js"))
+  create=c("xml", "js"),
+  gen.info="$SRC/inst/rkward/rkwarddev_CA_plugin_script.R")
 
 #############
 ## model based CA
@@ -627,7 +628,8 @@ clust.m.component <- rk.plugin.component("Model based CA",
   ),
   guess.getter=guess.getter,
   hierarchy=list("analysis", "Cluster analysis"),
-  create=c("xml", "js"))
+  create=c("xml", "js"),
+  gen.info="$SRC/inst/rkward/rkwarddev_CA_plugin_script.R")
 
 # revert dataSelected from backup
 dataSelected <- dataSelectedNodistbackup
@@ -826,7 +828,8 @@ clust.num.component <- rk.plugin.component("Determine number of clusters",
     doPrintout=clust.num.js.print),
   guess.getter=guess.getter,
   hierarchy=list("plots", "Cluster analysis"),
-  create=c("xml", "js"))
+  create=c("xml", "js"),
+  gen.info="$SRC/inst/rkward/rkwarddev_CA_plugin_script.R")
 
 
 #############
@@ -857,6 +860,7 @@ cluster.plugin.dir <<- rk.plugin.skeleton(
 #  edit=TRUE,
   load=TRUE,
 #  show=TRUE,
+  gen.info="$SRC/inst/rkward/rkwarddev_CA_plugin_script.R",
   hints=FALSE)
 
   if(isTRUE(update.translations)){
