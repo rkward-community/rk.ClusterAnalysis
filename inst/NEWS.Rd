@@ -1,5 +1,24 @@
 \name{NEWS}
 \title{News for Package 'rk.ClusterAnalysis'}
+\section{Changes in rk.ClusterAnalysis version 0.01-14 (2015-11-08)}{
+  \subsection{fixed}{
+    \itemize{
+      \item JavaScript header for k-means clustering was quoted too often
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item updated the generator script
+      \item rebuilt with rkwarddev 0.08-1
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item plugin is now translatable (see inst/rkward/po/)
+      \item german translation
+    }
+  }
+}
 \section{Changes in rk.ClusterAnalysis version 0.01-13 (2015-06-17)}{
   \subsection{fixed}{
     \itemize{
