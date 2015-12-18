@@ -1,6 +1,10 @@
 ChangeLog for package rk.ClusterAnalysis
 
-changes in version 0.01-14 (2015-11-08)
+changes in version 0.01-15 (2015-12-18)
+unreleased:
+  - this release is under development
+
+changes in version 0.01-14 (2015-12-18)
 fixed:
   - JavaScript header for k-means clustering was quoted too often
 changed:
