@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://p.sf.net/rkward/bugs\n"
+"Report-Msgid-Bugs-To: https://mail.kde.org/mailman/listinfo/kde-i18n-doc\n"
 "POT-Creation-Date: 2015-11-18 23:44+0100\n"
 "PO-Revision-Date: 2015-11-18 23:43+0100\n"
 "Last-Translator: m.eik michalke <m@reaktanz.de>\n"

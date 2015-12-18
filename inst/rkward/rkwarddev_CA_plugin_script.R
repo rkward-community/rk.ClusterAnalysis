@@ -4,7 +4,7 @@
 # *EXCEPT* for the last call, see below.
 
 require(rkwarddev)
-rkwarddev.required("0.07-4")
+rkwarddev.required("0.08-1")
 
 local({
 # set the output directory to overwrite the actual plugin

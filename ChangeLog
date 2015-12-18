@@ -1,10 +1,14 @@
 ChangeLog for package rk.ClusterAnalysis
 
 changes in version 0.01-14 (2015-11-08)
-unreleased:
-  - this release is under devoplment
 fixed:
   - JavaScript header for k-means clustering was quoted too often
+changed:
+  - updated the generator script
+  - rebuilt with rkwarddev 0.08-1
+added:
+  - plugin is now translatable (see inst/rkward/po/)
+  - german translation
 
 changes in version 0.01-13 (2015-06-17)
 fixed:
