@@ -1,5 +1,7 @@
 # rk.ClusterAnalysis
 
+[![Flattr this git repo](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=tfry&url=https://github.com/rkward-community/rk.ClusterAnalysis&title=rk.ClusterAnalysis&language=en_GB&tags=github&category=software)
+
 This R package provides a GUI to conduct k-means, model based and hierarchical cluster analyses.
 
 ![rk.ClusterAnalysis hierarchical CA](/inst/screenshots/hierarchical_CA_de.jpg?raw=true "rk.ClusterAnalysis hierarchical CA")
