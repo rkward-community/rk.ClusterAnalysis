@@ -30,7 +30,8 @@ To install it directly from GitHub, you can use `install_github()` from the [dev
 
 ```
 library(devtools)
-install_github("rkward-community/rk.ClusterAnalysis")
+install_github("rkward-community/rk.ClusterAnalysis") # stable release
+install_github("rkward-community/rk.ClusterAnalysis", ref="develop") # development release
 ```
 
 You can safely ignore warnings about the (unavailable) package "rkward", it was installed together with RKWard.
@@ -38,7 +39,8 @@ You can safely ignore warnings about the (unavailable) package "rkward", it was 
 ## Contributing
 
 See http://api.kde.org/doc/rkwardplugins/ for documentation on writing plugins for RKWard.
-Contact rkward-devel@kde.org for help and requests.
+Please contact the [RKWard development mailing list](https://mail.kde.org/mailman/listinfo/rkward-devel)
+for help, reports and requests.
 
 - Submit pull requests or patches
 - Contact us to get write access
@@ -53,7 +55,7 @@ Please note that all development happens in the `develop` branch. Pull requests 
 
 ## Licence
 
-Copyright 2012-2015 Meik Michalke <meik.michalke@hhu.de>
+Copyright 2012-2017 Meik Michalke <meik.michalke@hhu.de>
 
 rk.ClusterAnalysis is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
