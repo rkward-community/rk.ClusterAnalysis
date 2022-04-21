@@ -2,12 +2,14 @@
 % Please edit documentation in R/rk.ClusterAnalysis-package.R
 \docType{package}
 \name{rk.ClusterAnalysis-package}
+\alias{rk.ClusterAnalysis}
 \alias{rk.ClusterAnalysis-package}
-\title{The rk.ClusterAnalysis Package}
+\title{\packageTitle{rk.ClusterAnalysis}}
 \description{
-RKWard GUI to conduct k-means, model based and hierarchical cluster analyses.
+\packageDescription{rk.ClusterAnalysis}
 }
 \details{
+The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab rk.ClusterAnalysis\cr
 Type: \tab Package\cr
@@ -19,11 +21,16 @@ License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
 URL: \tab https://rkward.kde.org\cr
 }
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://rkward.kde.org}
+}
 
-RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
 }
 \author{
-Meik Michalke
-}
-\keyword{package}
+\packageAuthor{rk.ClusterAnalysis}
 
+Maintainer: \packageMaintainer{rk.ClusterAnalysis}
+}

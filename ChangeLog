@@ -4,23 +4,26 @@ changes in version 0.01-15 (2015-12-18)
 unreleased:
   - this release is under development
 
-changes in version 0.01-14 (2015-12-18)
+changes in version 0.01-14 (2015-11-19)
 fixed:
   - JavaScript header for k-means clustering was quoted too often
+  - missing ChangeLog
 changed:
   - updated the generator script
   - rebuilt with rkwarddev 0.08-1
+  - initial release
 added:
   - plugin is now translatable (see inst/rkward/po/)
   - german translation
 
 changes in version 0.01-13 (2015-06-17)
 fixed:
-  - fixed bugs in the checkbox evaluation, didn't work in recent RKWard versions any longer
+  - fixed bugs in the checkbox evaluation, didn't work in recent RKWard
+    versions any longer
   - replacing "ward" with "ward.D" (as of R 3.0.3)
 changed:
-  - replaced the deprecated plclust() with plot(), including workarounds for the options
-    "unit" and "hmin" which are no longer available with plot()
+  - replaced the deprecated plclust() with plot(), including workarounds for
+    the options "unit" and "hmin" which are no longer available with plot()
 added:
   - new clustering method "ward.D2" (as of R 3.0.3)
 
@@ -34,8 +37,8 @@ changed:
 
 changes in version 0.01-10 (2013-04-14)
 fixed:
-  - corrected logic sections in hierarchical CA and determine number of clusters dialogs
-    (distance calculation was not correctly enabled/disabled)
+  - corrected logic sections in hierarchical CA and determine number of
+    clusters dialogs (distance calculation was not correctly enabled/disabled)
 
 changes in version 0.01-9 (2013-04-04)
 added:
@@ -45,7 +48,8 @@ fixed:
 
 changes in version 0.01-8 (2013-02-24)
 changed:
-  - updated rkwarddev generator script (compatibility with 0.06-2) and regenerated plugin code
+  - updated rkwarddev generator script (compatibility with 0.06-2) and
+    regenerated plugin code
 
 changes in version 0.01-7 (2012-09-29)
 fixed:
@@ -55,3 +59,4 @@ changes in version 0.01-6 (2012-04-06)
 changes:
   - added a ChangeLog file
   - rebuild package for R 2.15
+
