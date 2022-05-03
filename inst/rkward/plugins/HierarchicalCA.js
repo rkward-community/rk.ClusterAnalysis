@@ -3,18 +3,21 @@
 // 
 // look for a file called: $SRC/inst/rkward/rkwarddev_CA_plugin_script.R
 
+function preview(){
+  preprocess(true);
+  calculate(true);
+  printout(true);
+}
 
-
-function preprocess(){
+function preprocess(is_preview){
   // add requirements etc. here
 
 }
 
-function calculate(){
+function calculate(is_preview){
   // read in variables from dialog
   var dataSelected = getString("dataSelected");
   var varsSelected = getString("varsSelected");
-  var hSaveResults = getString("hSaveResults");
   var distMethod = getString("distMethod");
   var powerMinkowski = getString("powerMinkowski");
   var clustMethod = getString("clustMethod");
@@ -70,23 +73,10 @@ function calculate(){
   }
 }
 
-function printout(){
-  // all the real work is moved to a custom defined function doPrintout() below
-  // true in this case means: We want all the headers that should be printed in the output:
-  doPrintout(true);
-}
-
-function preview(){
-  preprocess();
-  calculate();
-  doPrintout(false);
-}
-
-function doPrintout(full){
+function printout(is_preview){
   // read in variables from dialog
   var dataSelected = getString("dataSelected");
   var varsSelected = getString("varsSelected");
-  var hSaveResults = getString("hSaveResults");
   var distMethod = getString("distMethod");
   var powerMinkowski = getString("powerMinkowski");
   var clustMethod = getString("clustMethod");
@@ -99,12 +89,10 @@ function doPrintout(full){
   var useSubsetChecked = getBoolean("useSubset.checked");
   var hDendrogramChecked = getBoolean("hDendrogram.checked");
 
-  // create the plot
-  if(full) {
-    new Header(i18n("Hierarchical CA results")).print();
-  } else {}
-
-  var hDendrogramChecked = getValue("hDendrogram.checked");
+  // printout the results
+  if(!is_preview) {
+    new Header(i18n("Hierarchical CA results")).print();  
+  } else {}  var hDendrogramChecked = getValue("hDendrogram.checked");
   var useSubsetChecked = getValue("useSubset.checked");
   var varsSelectedShortname = getValue("varsSelected.shortname").split("\n").join("\", \"");
   var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
@@ -115,9 +103,9 @@ function doPrintout(full){
     var embRkwrdpltptnGCodePrintout = getValue("emb_rkwrdpltptnG.code.printout");
     var embRkwrdpltptnGCodeCalculate = getValue("emb_rkwrdpltptnG.code.calculate");
 
-    if(full) {
-      echo("rk.graph.on()\n");
-    } else {}
+    if(!is_preview) {
+    echo("rk.graph.on()\n");  
+  } else {}
     echo("    try({\n");
 
     // insert any option-setting code that should be run before the actual plotting commands:
@@ -160,11 +148,11 @@ function doPrintout(full){
     printIndentedUnlessEmpty("      ", embRkwrdpltptnGCodeCalculate, "\n", "");
 
     echo("\n    })\n");
-    if(full) {
-      echo("rk.graph.off()\n");
-    } else {}  
+    if(!is_preview) {
+    echo("rk.graph.off()\n");  
+  } else {}  
   } else {}
-  if(full) {
+  if(!is_preview) {
     echo("\nrk.print(clust.h.result)\n");  
     if(useSubsetChecked && varsSelectedShortname != "") {
       echo("\n");  
@@ -172,18 +160,17 @@ function doPrintout(full){
       echo("rk.print(list(\"" + varsSelectedShortname + "\"))\n\n");  
     } else {}  
   } else {}
-
-  // left over from the printout function
-
-  //// save result object
-  // read in saveobject variables
-  var hSaveResults = getValue("hSaveResults");
-  var hSaveResultsActive = getValue("hSaveResults.active");
-  var hSaveResultsParent = getValue("hSaveResults.parent");
-  // assign object to chosen environment
-  if(hSaveResultsActive) {
-    echo(".GlobalEnv$" + hSaveResults + " <- clust.h.result\n");
+  if(!is_preview) {
+    //// save result object
+    // read in saveobject variables
+    var hSaveResults = getValue("hSaveResults");
+    var hSaveResultsActive = getValue("hSaveResults.active");
+    var hSaveResultsParent = getValue("hSaveResults.parent");
+    // assign object to chosen environment
+    if(hSaveResultsActive) {
+      echo(".GlobalEnv$" + hSaveResults + " <- clust.h.result\n");
+    } else {}  
   } else {}
 
-
 }
+

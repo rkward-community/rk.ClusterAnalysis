@@ -3,18 +3,25 @@
 // 
 // look for a file called: $SRC/inst/rkward/rkwarddev_CA_plugin_script.R
 
-
-
-function preprocess(){
-  // add requirements etc. here
-  echo("require(mclust)\n");
+function preview(){
+  preprocess(true);
+  calculate(true);
+  printout(true);
 }
 
-function calculate(){
+function preprocess(is_preview){
+  // add requirements etc. here
+  if(is_preview) {
+    echo("if(!base::require(mclust)){stop(" + i18n("Preview not available, because package mclust is not installed or cannot be loaded.") + ")}\n");
+  } else {
+    echo("require(mclust)\n");
+  }
+}
+
+function calculate(is_preview){
   // read in variables from dialog
   var dataSelected = getString("dataSelected");
   var varsSelected = getString("varsSelected");
-  var mSaveResults = getString("mSaveResults");
   var mNumClust = getString("mNumClust");
   var mPlotType = getString("mPlotType");
   var omitNA = getBoolean("omitNA.state");
@@ -46,23 +53,10 @@ function calculate(){
   echo(")\n\n");
 }
 
-function printout(){
-  // all the real work is moved to a custom defined function doPrintout() below
-  // true in this case means: We want all the headers that should be printed in the output:
-  doPrintout(true);
-}
-
-function preview(){
-  preprocess();
-  calculate();
-  doPrintout(false);
-}
-
-function doPrintout(full){
+function printout(is_preview){
   // read in variables from dialog
   var dataSelected = getString("dataSelected");
   var varsSelected = getString("varsSelected");
-  var mSaveResults = getString("mSaveResults");
   var mNumClust = getString("mNumClust");
   var mPlotType = getString("mPlotType");
   var omitNA = getBoolean("omitNA.state");
@@ -70,21 +64,19 @@ function doPrintout(full){
   var useSubsetChecked = getBoolean("useSubset.checked");
   var frmPltrsltsChecked = getBoolean("frm_Pltrslts.checked");
 
-  // create the plot
-  if(full) {
-    new Header(i18n("Model based CA results")).print();
-  } else {}
-
-  var frmPltrsltsChecked = getValue("frm_Pltrslts.checked");
+  // printout the results
+  if(!is_preview) {
+    new Header(i18n("Model based CA results")).print();  
+  } else {}  var frmPltrsltsChecked = getValue("frm_Pltrslts.checked");
   var useSubsetChecked = getValue("useSubset.checked");
   var varsSelectedShortname = getValue("varsSelected.shortname").split("\n").join("\", \"");
   if(frmPltrsltsChecked) {
     echo("\n");  
         
 
-    if(full) {
-      echo("rk.graph.on()\n");
-    } else {}
+    if(!is_preview) {
+    echo("rk.graph.on()\n");  
+  } else {}
     echo("    try({\n");
 
     
@@ -96,11 +88,11 @@ function doPrintout(full){
     
 
     echo("\n    })\n");
-    if(full) {
-      echo("rk.graph.off()\n");
-    } else {}  
+    if(!is_preview) {
+    echo("rk.graph.off()\n");  
+  } else {}  
   } else {}
-  if(full) {
+  if(!is_preview) {
     echo("\nrk.print(clust.m.result)\n");  
     if(useSubsetChecked && varsSelectedShortname != "") {
       echo("\n");  
@@ -108,18 +100,17 @@ function doPrintout(full){
       echo("rk.print(list(\"" + varsSelectedShortname + "\"))\n\n");  
     } else {}  
   } else {}
-
-  // left over from the printout function
-
-  //// save result object
-  // read in saveobject variables
-  var mSaveResults = getValue("mSaveResults");
-  var mSaveResultsActive = getValue("mSaveResults.active");
-  var mSaveResultsParent = getValue("mSaveResults.parent");
-  // assign object to chosen environment
-  if(mSaveResultsActive) {
-    echo(".GlobalEnv$" + mSaveResults + " <- clust.m.result\n");
+  if(!is_preview) {
+    //// save result object
+    // read in saveobject variables
+    var mSaveResults = getValue("mSaveResults");
+    var mSaveResultsActive = getValue("mSaveResults.active");
+    var mSaveResultsParent = getValue("mSaveResults.parent");
+    // assign object to chosen environment
+    if(mSaveResultsActive) {
+      echo(".GlobalEnv$" + mSaveResults + " <- clust.m.result\n");
+    } else {}  
   } else {}
 
-
 }
+

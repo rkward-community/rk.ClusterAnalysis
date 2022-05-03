@@ -312,7 +312,7 @@ clust.k.js.plot <- rk.paste.JS(
         level=3
       )
     },
-    if("full"){
+    if("!is_preview"){
       echo("\nrk.print(clust.k.result)\n")
       js.prt.subset
     }
@@ -482,7 +482,7 @@ clust.h.js.dend <- rk.paste.JS(
         level=3
       )
     } else {},
-    if("full"){
+    if("!is_preview"){
       echo("\nrk.print(clust.h.result)\n")
       js.prt.subset
     } else {}
@@ -497,7 +497,7 @@ clust.h.component <- rk.plugin.component("Hierarchical CA",
   js=list(
 #    require="fcp",
     calculate=clust.h.js.calc,
-    doPrintout=clust.h.js.dend
+    printout=clust.h.js.dend
   ),
   guess.getter=guess.getter,
   hierarchy=list("analysis", "Cluster analysis"),
@@ -609,7 +609,7 @@ clust.m.js.plot <- rk.paste.JS(
         level=3
       )
     } else {},
-    if("full"){
+    if("!is_preview"){
       echo("\nrk.print(clust.m.result)\n")
       js.prt.subset
     } else {}
@@ -624,7 +624,7 @@ clust.m.component <- rk.plugin.component("Model based CA",
   js=list(
     require="mclust",
     calculate=clust.m.js.calc,
-    doPrintout=clust.m.js.plot
+    printout=clust.m.js.plot
   ),
   guess.getter=guess.getter,
   hierarchy=list("analysis", "Cluster analysis"),
@@ -811,7 +811,7 @@ clust.num.js.print <- rk.paste.JS(
     level=3
   ),
   js(
-    if("!full"){
+    if("is_preview"){
       js.prt.subset
     } else {}
   )
@@ -825,7 +825,7 @@ clust.num.component <- rk.plugin.component("Determine number of clusters",
   js=list(
 #    require="fcp",
     calculate=clust.num.js.calc,
-    doPrintout=clust.num.js.print),
+    printout=clust.num.js.print),
   guess.getter=guess.getter,
   hierarchy=list("plots", "Cluster analysis"),
   create=c("xml", "js"),
@@ -847,7 +847,7 @@ cluster.plugin.dir <<- rk.plugin.skeleton(
   js=list(results.header="Cluster analysis",
 #    require="fpc",
     calculate=clust.k.js.calc,
-    doPrintout=clust.k.js.plot),
+    printout=clust.k.js.plot),
   pluginmap=list(name="K-means partitioning", hierarchy=list("analysis", "Cluster analysis")),
   components=list(
     clust.h.component,

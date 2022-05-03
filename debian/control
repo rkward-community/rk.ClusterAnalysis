@@ -1,15 +1,18 @@
 Source: r-other-rkward-rk.clusteranalysis
-Section: math
+Section: gnu-r
 Priority: optional
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Build-Depends-Indep: debhelper (>> 7.0.0), r-base-dev (>= 2.9.0), cdbs, rkward (>= 0.6.0)
+Build-Depends-Indep: debhelper (>> 9.0.0), r-base-dev (>= 4.2.0), cdbs, rkward (>= 0.6.0)
 Standards-Version: 3.9.3.1
 Homepage: https://rkward.kde.org
 
 Package: r-other-rkward-rk.clusteranalysis
 Architecture: all
-Section: math
-Depends: r-base (>= 3.2.0), rkward (>= 0.6.0)
-Description: GNU R package: RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
+Section: gnu-r
+Depends: r-base-core (>= 4.2.0), r-api-4.0, rkward (>= 0.6.0)
+Description: GNU R package "RKWard GUI to conduct k-means, model based and hierarchical
+ cluster analyses"
+ .
+ RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
 Homepage: https://rkward.kde.org
 Suggests: r-cran-mclust

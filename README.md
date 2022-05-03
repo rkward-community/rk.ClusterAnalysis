@@ -1,10 +1,8 @@
 # rk.ClusterAnalysis
 
-[![Flattr this git repo](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=tfry&url=https://github.com/rkward-community/rk.ClusterAnalysis&title=rk.ClusterAnalysis&language=en_GB&tags=github&category=software)
-
 This R package provides a GUI to conduct k-means, model based and hierarchical cluster analyses.
 
-![rk.ClusterAnalysis hierarchical CA](/inst/screenshots/hierarchical_CA_de.jpg?raw=true "rk.ClusterAnalysis hierarchical CA")
+![rk.ClusterAnalysis hierarchical CA](./inst/screenshots/hierarchical_CA_de.jpg?raw=true "rk.ClusterAnalysis hierarchical CA")
 
 It is a plugin package for [RKWard](https://rkward.kde.org), a powerful GUI and IDE for [R](https://r-project.org),
 and will **only work in conjunction with RKWard**. However, RKWard is free software, please
@@ -29,16 +27,15 @@ usually no need to restart the application.
 To install it directly from GitHub, you can use `install_github()` from the [devtools](https://github.com/hadley/devtools) package:
 
 ```
-library(devtools)
-install_github("rkward-community/rk.ClusterAnalysis") # stable release
-install_github("rkward-community/rk.ClusterAnalysis", ref="develop") # development release
+devtools::install_github("rkward-community/rk.ClusterAnalysis") # stable release
+devtools::install_github("rkward-community/rk.ClusterAnalysis", ref="develop") # development release
 ```
 
 You can safely ignore warnings about the (unavailable) package "rkward", it was installed together with RKWard.
  
 ## Contributing
 
-See http://api.kde.org/doc/rkwardplugins/ for documentation on writing plugins for RKWard.
+See https://docs.kde.org/trunk5/en/rkward/rkwardplugins/index.html for documentation on writing plugins for RKWard.
 Please contact the [RKWard development mailing list](https://mail.kde.org/mailman/listinfo/rkward-devel)
 for help, reports and requests.
 
@@ -55,7 +52,7 @@ Please note that all development happens in the `develop` branch. Pull requests 
 
 ## Licence
 
-Copyright 2012-2017 Meik Michalke <meik.michalke@hhu.de>
+Copyright 2012-2022 Meik Michalke <meik.michalke@hhu.de>
 
 rk.ClusterAnalysis is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -16,23 +16,23 @@
     <script>
       <![CDATA[ 
         gui.addChangeCommand("dataSelected.available", "dataChanged()");
-              // this function is called whenever the data was changed
-              dataChanged = function(){
-                  var prepareFrame = "true";
-                  var selectFrame = "true";
-                  var thisObject = makeRObject(gui.getValue("dataSelected.available"));
-                  if(thisObject.classes()){
-                    if(!thisObject.isDataFrame()){
-                      selectFrame = "false";
-                      if(thisObject.classes().indexOf("dist") != -1){
-                        prepareFrame = "false";
-                        gui.setValue("nClustMethod.string", "hclust");
-                      } else {}
-                    } else {}
-                  } else {}
-                  gui.setValue("useSubset.enabled", selectFrame);
-                  gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
-                } 
+      // this function is called whenever the data was changed
+      dataChanged = function(){
+          var prepareFrame = "true";
+          var selectFrame = "true";
+          var thisObject = makeRObject(gui.getValue("dataSelected.available"));
+          if(thisObject.classes()){
+            if(!thisObject.isDataFrame()){
+              selectFrame = "false";
+              if(thisObject.classes().indexOf("dist") != -1){
+                prepareFrame = "false";
+                gui.setValue("nClustMethod.string", "hclust");
+              } else {}
+            } else {}
+          } else {}
+          gui.setValue("useSubset.enabled", selectFrame);
+          gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
+        } 
       ]]>
     </script>
     <convert id="lgc_dstMthdm" sources="distMethod.string" mode="equals" standard="minkowski" />
@@ -59,7 +59,7 @@
         <stretch />
         <frame label="Plot options" id="frm_Plotptns">
           <embed component="rkward::plot_options" as_button="true" label="Generic plot options" id="emb_rkwrdpltptnG" />
-          <preview />
+          <preview label="Preview" id="prv_Preview" />
         </frame>
       </column>
       <column id="clm_sMMC152CMM">

@@ -16,22 +16,22 @@
     <script>
       <![CDATA[ 
         gui.addChangeCommand("dataSelected.available", "dataChanged()");
-          // this function is called whenever the data was changed
-          dataChanged = function(){
-              var prepareFrame = "true";
-              var selectFrame = "true";
-              var thisObject = makeRObject(gui.getValue("dataSelected.available"));
-               if(thisObject.classes()){
-                if(!thisObject.isDataFrame()){
-                  selectFrame = "false";
-                  if(thisObject.classes().indexOf("dist") != -1){
-                    prepareFrame = "false";
-                  } else {}
-                } else {}
-              } else {}
-              gui.setValue("useSubset.enabled", selectFrame);
-              gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
-            } 
+  // this function is called whenever the data was changed
+  dataChanged = function(){
+      var prepareFrame = "true";
+      var selectFrame = "true";
+      var thisObject = makeRObject(gui.getValue("dataSelected.available"));
+       if(thisObject.classes()){
+        if(!thisObject.isDataFrame()){
+          selectFrame = "false";
+          if(thisObject.classes().indexOf("dist") != -1){
+            prepareFrame = "false";
+          } else {}
+        } else {}
+      } else {}
+      gui.setValue("useSubset.enabled", selectFrame);
+      gui.setValue("frm_Dtprprtn.enabled", prepareFrame);
+    } 
       ]]>
     </script>
   </logic>
@@ -62,7 +62,7 @@
             <option label="Density" value="density" />
           </radio>
           <stretch />
-          <preview />
+          <preview label="Preview" id="prv_Preview" />
         </frame>
       </column>
     </row>
