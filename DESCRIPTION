@@ -1,8 +1,8 @@
 Package: rk.ClusterAnalysis
 Type: Package
 Title: RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
-Version: 0.01-14
-Date: 2015-11-19
+Version: 0.01-15
+Date: 2022-05-03
 Author: Meik Michalke
 Maintainer: Meik Michalke <meik.michalke@hhu.de>
 Depends: rkward (>= 0.6.0)
@@ -10,7 +10,9 @@ Suggests: mclust
 Enhances: rkward
 Description: RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
 License: GPL (>= 3)
+Encoding: UTF-8
 LazyLoad: yes
 URL: https://rkward.kde.org
-Authors@R: person(given="Meik", family="Michalke", email="meik.michalke@hhu.de", role=c("aut", "cre"))
-RoxygenNote: 5.0.1
+Authors@R: person(given="Meik", family="Michalke", email="meik.michalke@hhu.de",
+          role=c("aut", "cre"))
+RoxygenNote: 7.1.2

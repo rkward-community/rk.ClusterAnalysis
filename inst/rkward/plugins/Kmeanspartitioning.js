@@ -3,18 +3,21 @@
 // 
 // look for a file called: $SRC/inst/rkward/rkwarddev_CA_plugin_script.R
 
+function preview(){
+  preprocess(true);
+  calculate(true);
+  printout(true);
+}
 
-
-function preprocess(){
+function preprocess(is_preview){
   // add requirements etc. here
 
 }
 
-function calculate(){
+function calculate(is_preview){
   // read in variables from dialog
   var dataSelected = getString("dataSelected");
   var varsSelected = getString("varsSelected");
-  var kSaveResults = getString("kSaveResults");
   var numClust = getString("numClust");
   var kMethod = getString("kMethod");
   var kMaxIter = getString("kMaxIter");
@@ -58,23 +61,10 @@ function calculate(){
   echo("\n\t)\n\n");
 }
 
-function printout(){
-  // all the real work is moved to a custom defined function doPrintout() below
-  // true in this case means: We want all the headers that should be printed in the output:
-  doPrintout(true);
-}
-
-function preview(){
-  preprocess();
-  calculate();
-  doPrintout(false);
-}
-
-function doPrintout(full){
+function printout(is_preview){
   // read in variables from dialog
   var dataSelected = getString("dataSelected");
   var varsSelected = getString("varsSelected");
-  var kSaveResults = getString("kSaveResults");
   var numClust = getString("numClust");
   var kMethod = getString("kMethod");
   var kMaxIter = getString("kMaxIter");
@@ -85,12 +75,10 @@ function doPrintout(full){
   var useSubsetChecked = getBoolean("useSubset.checked");
   var kPlotResultsChecked = getBoolean("kPlotResults.checked");
 
-  // create the plot
-  if(full) {
-    new Header(i18n("Cluster analysis")).print();
-  } else {}
-
-  var kPlotResultsChecked = getValue("kPlotResults.checked");
+  // printout the results
+  if(!is_preview) {
+    new Header(i18n("Cluster analysis")).print();  
+  } else {}  var kPlotResultsChecked = getValue("kPlotResults.checked");
   var useSubsetChecked = getValue("useSubset.checked");
   var varsSelectedShortname = getValue("varsSelected.shortname").split("\n").join("\", \"");
   if(kPlotResultsChecked) {
@@ -100,9 +88,9 @@ function doPrintout(full){
     var embRkwrdpltptnGCodePrintout = getValue("emb_rkwrdpltptnG.code.printout");
     var embRkwrdpltptnGCodeCalculate = getValue("emb_rkwrdpltptnG.code.calculate");
 
-    if(full) {
-      echo("rk.graph.on()\n");
-    } else {}
+    if(!is_preview) {
+    echo("rk.graph.on()\n");  
+  } else {}
     echo("    try({\n");
 
     // insert any option-setting code that should be run before the actual plotting commands:
@@ -126,11 +114,11 @@ function doPrintout(full){
     printIndentedUnlessEmpty("      ", embRkwrdpltptnGCodeCalculate, "\n", "");
 
     echo("\n    })\n");
-    if(full) {
-      echo("rk.graph.off()\n");
-    } else {}  
+    if(!is_preview) {
+    echo("rk.graph.off()\n");  
+  } else {}  
   } else {}
-  if(full) {
+  if(!is_preview) {
     echo("\nrk.print(clust.k.result)\n");  
     if(useSubsetChecked && varsSelectedShortname != "") {
       echo("\n");  
@@ -138,18 +126,17 @@ function doPrintout(full){
       echo("rk.print(list(\"" + varsSelectedShortname + "\"))\n\n");  
     } else {}  
   } else {}
-
-  // left over from the printout function
-
-  //// save result object
-  // read in saveobject variables
-  var kSaveResults = getValue("kSaveResults");
-  var kSaveResultsActive = getValue("kSaveResults.active");
-  var kSaveResultsParent = getValue("kSaveResults.parent");
-  // assign object to chosen environment
-  if(kSaveResultsActive) {
-    echo(".GlobalEnv$" + kSaveResults + " <- clust.k.result\n");
+  if(!is_preview) {
+    //// save result object
+    // read in saveobject variables
+    var kSaveResults = getValue("kSaveResults");
+    var kSaveResultsActive = getValue("kSaveResults.active");
+    var kSaveResultsParent = getValue("kSaveResults.parent");
+    // assign object to chosen environment
+    if(kSaveResultsActive) {
+      echo(".GlobalEnv$" + kSaveResults + " <- clust.k.result\n");
+    } else {}  
   } else {}
 
-
 }
+

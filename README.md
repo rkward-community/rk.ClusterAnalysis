@@ -2,7 +2,7 @@
 
 This R package provides a GUI to conduct k-means, model based and hierarchical cluster analyses.
 
-![rk.ClusterAnalysis hierarchical CA](/inst/screenshots/hierarchical_CA_de.jpg?raw=true "rk.ClusterAnalysis hierarchical CA")
+![rk.ClusterAnalysis hierarchical CA](./inst/screenshots/hierarchical_CA_de.jpg?raw=true "rk.ClusterAnalysis hierarchical CA")
 
 It is a plugin package for [RKWard](https://rkward.kde.org), a powerful GUI and IDE for [R](https://r-project.org),
 and will **only work in conjunction with RKWard**. However, RKWard is free software, please
@@ -27,16 +27,17 @@ usually no need to restart the application.
 To install it directly from GitHub, you can use `install_github()` from the [devtools](https://github.com/hadley/devtools) package:
 
 ```
-library(devtools)
-install_github("rkward-community/rk.ClusterAnalysis")
+devtools::install_github("rkward-community/rk.ClusterAnalysis") # stable release
+devtools::install_github("rkward-community/rk.ClusterAnalysis", ref="develop") # development release
 ```
 
 You can safely ignore warnings about the (unavailable) package "rkward", it was installed together with RKWard.
  
 ## Contributing
 
-See http://api.kde.org/doc/rkwardplugins/ for documentation on writing plugins for RKWard.
-Contact rkward-devel@kde.org for help and requests.
+See https://docs.kde.org/trunk5/en/rkward/rkwardplugins/index.html for documentation on writing plugins for RKWard.
+Please contact the [RKWard development mailing list](https://mail.kde.org/mailman/listinfo/rkward-devel)
+for help, reports and requests.
 
 - Submit pull requests or patches
 - Contact us to get write access
@@ -45,9 +46,13 @@ This plugin is built using the [rkwarddev](https://files.kde.org/rkward/R/pckg/r
 script file, located at `rk.ClusterAnalysis/inst/rkward/rkwarddev_CA_plugin_script.R`. This script is written in `R` code and *generates*
 all of the other plugin files when run. Therefore, in case you'd like to add to this plugin, please add to this script file.
 
+### Branches
+
+Please note that all development happens in the `develop` branch. Pull requests against the `master` branch will be rejected, as it is reserved for the current stable release.
+
 ## Licence
 
-Copyright 2012-2015 Meik Michalke <meik.michalke@hhu.de>
+Copyright 2012-2022 Meik Michalke <meik.michalke@hhu.de>
 
 rk.ClusterAnalysis is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

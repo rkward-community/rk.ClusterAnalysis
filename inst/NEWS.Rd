@@ -1,9 +1,19 @@
 \name{NEWS}
 \title{News for Package 'rk.ClusterAnalysis'}
-\section{Changes in rk.ClusterAnalysis version 0.01-14 (2015-11-08)}{
+\encoding{UTF-8}
+\section{Changes in rk.ClusterAnalysis version 0.01-15 (2022-05-03)}{
+  \subsection{fixed}{
+    \itemize{
+      \item screenshot URL and removed flattr-link in README.md
+      \item replaced deprecated \code{doPrintout()} with \code{printout()} in JavaScript
+    }
+  }
+}
+\section{Changes in rk.ClusterAnalysis version 0.01-14 (2015-11-19)}{
   \subsection{fixed}{
     \itemize{
       \item JavaScript header for k-means clustering was quoted too often
+      \item missing ChangeLog
     }
   }
   \subsection{changed}{
@@ -22,14 +32,15 @@
 \section{Changes in rk.ClusterAnalysis version 0.01-13 (2015-06-17)}{
   \subsection{fixed}{
     \itemize{
-      \item fixed bugs in the checkbox evaluation, didn't work in recent RKWard versions any longer
+      \item fixed bugs in the checkbox evaluation, didn't work in recent RKWard
+        versions any longer
       \item replacing \code{"ward"} with \code{"ward.D"} (as of R 3.0.3)
     }
   }
   \subsection{changed}{
     \itemize{
-      \item replaced the deprecated \code{plclust()} with \code{plot()}, including workarounds for the options
-        \code{"unit"} and \code{"hmin"} which are no longer available with \code{plot()}
+      \item replaced the deprecated \code{plclust()} with \code{plot()}, including workarounds for
+        the options \code{"unit"} and \code{"hmin"} which are no longer available with \code{plot()}
     }
   }
   \subsection{added}{
@@ -55,8 +66,8 @@
 \section{Changes in rk.ClusterAnalysis version 0.01-10 (2013-04-14)}{
   \subsection{fixed}{
     \itemize{
-      \item corrected logic sections in hierarchical CA and determine number of clusters dialogs
-        (distance calculation was not correctly enabled/disabled)
+      \item corrected logic sections in hierarchical CA and determine number of
+        clusters dialogs (distance calculation was not correctly enabled/disabled)
     }
   }
 }
@@ -75,7 +86,8 @@
 \section{Changes in rk.ClusterAnalysis version 0.01-8 (2013-02-24)}{
   \subsection{changed}{
     \itemize{
-      \item updated rkwarddev generator script (compatibility with 0.06-2) and regenerated plugin code
+      \item updated rkwarddev generator script (compatibility with 0.06-2) and
+        regenerated plugin code
     }
   }
 }

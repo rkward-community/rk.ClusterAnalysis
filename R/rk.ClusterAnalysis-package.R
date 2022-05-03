@@ -1,23 +1,23 @@
-#' RKWard GUI to conduct k-means, model based and hierarchical cluster analyses.
+#' \packageDescription{rk.ClusterAnalysis}
 #'
+#' The DESCRIPTION file:
 #' \tabular{ll}{
 #' Package: \tab rk.ClusterAnalysis\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.01-14\cr
-#' Date: \tab 2015-11-19\cr
+#' Version: \tab 0.01-15\cr
+#' Date: \tab 2022-05-03\cr
 #' Depends: \tab rkward (>= 0.6.0)\cr
 #' Enhances: \tab rkward\cr
+#' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
 #' LazyLoad: \tab yes\cr
 #' URL: \tab https://rkward.kde.org\cr
 #' }
 #'
-#' RKWard GUI to conduct k-means, model based and hierarchical cluster analyses
+#' @title
+#' \packageTitle{rk.ClusterAnalysis}
+#' @author
+#' \packageAuthor{rk.ClusterAnalysis}
 #'
-#' @aliases rk.ClusterAnalysis-package
-#' @name rk.ClusterAnalysis-package
-#' @docType package
-#' @title The rk.ClusterAnalysis Package
-#' @author Meik Michalke
-#' @keywords package
-NULL
+#' Maintainer: \packageMaintainer{rk.ClusterAnalysis}
+"_PACKAGE"

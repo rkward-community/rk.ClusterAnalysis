@@ -3,21 +3,24 @@
 // 
 // look for a file called: $SRC/inst/rkward/rkwarddev_CA_plugin_script.R
 
+function preview(){
+  preprocess(true);
+  calculate(true);
+  printout(true);
+}
 
-
-function preprocess(){
+function preprocess(is_preview){
   // add requirements etc. here
 
 }
 
-function calculate(){
+function calculate(is_preview){
   // read in variables from dialog
   var dataSelected = getString("dataSelected");
   var varsSelected = getString("varsSelected");
   var nMaxClust = getString("nMaxClust");
   var nClustMethod = getString("nClustMethod");
   var distMethod = getString("distMethod");
-  var powerMinkowski = getString("powerMinkowski");
   var clustMethod = getString("clustMethod");
   var omitNA = getBoolean("omitNA.state");
   var scaleValues = getBoolean("scaleValues.state");
@@ -53,37 +56,22 @@ function calculate(){
   } else {}
 }
 
-function printout(){
-  // all the real work is moved to a custom defined function doPrintout() below
-  // true in this case means: We want all the headers that should be printed in the output:
-  doPrintout(true);
-}
-
-function preview(){
-  preprocess();
-  calculate();
-  doPrintout(false);
-}
-
-function doPrintout(full){
+function printout(is_preview){
   // read in variables from dialog
   var dataSelected = getString("dataSelected");
   var varsSelected = getString("varsSelected");
   var nMaxClust = getString("nMaxClust");
   var nClustMethod = getString("nClustMethod");
   var distMethod = getString("distMethod");
-  var powerMinkowski = getString("powerMinkowski");
   var clustMethod = getString("clustMethod");
   var omitNA = getBoolean("omitNA.state");
   var scaleValues = getBoolean("scaleValues.state");
   var useSubsetChecked = getBoolean("useSubset.checked");
 
-  // create the plot
-  if(full) {
-    new Header(i18n("Determine number of clusters results")).print();
-  } else {}
-
-  var useSubsetChecked = getValue("useSubset.checked");
+  // printout the results
+  if(!is_preview) {
+    new Header(i18n("Determine number of clusters results")).print();  
+  } else {}  var useSubsetChecked = getValue("useSubset.checked");
   var varsSelectedShortname = getValue("varsSelected.shortname").split("\n").join("\", \"");
   var frmDtprprtnEnabled = getValue("frm_Dtprprtn.enabled");
   echo("\n");
@@ -92,9 +80,9 @@ function doPrintout(full){
     var embRkwrdpltptnGCodePrintout = getValue("emb_rkwrdpltptnG.code.printout");
     var embRkwrdpltptnGCodeCalculate = getValue("emb_rkwrdpltptnG.code.calculate");
 
-    if(full) {
-      echo("rk.graph.on()\n");
-    } else {}
+    if(!is_preview) {
+    echo("rk.graph.on()\n");  
+  } else {}
     echo("    try({\n");
 
     // insert any option-setting code that should be run before the actual plotting commands:
@@ -155,14 +143,15 @@ function doPrintout(full){
     printIndentedUnlessEmpty("      ", embRkwrdpltptnGCodeCalculate, "\n", "");
 
     echo("\n    })\n");
-    if(full) {
-      echo("rk.graph.off()\n");
-    } else {}
-  if(!full) {
+    if(!is_preview) {
+    echo("rk.graph.off()\n");  
+  } else {}
+  if(is_preview) {
     if(useSubsetChecked && varsSelectedShortname != "") {
       echo("\n");  
       new Header(i18n("Subset of variables included the analysis"), 3).print();  
       echo("rk.print(list(\"" + varsSelectedShortname + "\"))\n\n");  
     } else {}  
   } else {}
+
 }
