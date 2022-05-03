@@ -4,7 +4,7 @@
 #' \tabular{ll}{
 #' Package: \tab rk.ClusterAnalysis\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.01-15\cr
+#' Version: \tab 0.01-16\cr
 #' Date: \tab 2022-05-03\cr
 #' Depends: \tab rkward (>= 0.6.0)\cr
 #' Enhances: \tab rkward\cr

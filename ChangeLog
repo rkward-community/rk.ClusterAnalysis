@@ -1,5 +1,9 @@
 ChangeLog for package rk.ClusterAnalysis
 
+changes in version 0.01-16 (2022-05-03)
+unreleased:
+  - this release is under development
+
 changes in version 0.01-15 (2022-05-03)
 fixed:
   - screenshot URL and removed flattr-link in README.md
@@ -12,7 +16,6 @@ fixed:
 changed:
   - updated the generator script
   - rebuilt with rkwarddev 0.08-1
-  - initial release
 added:
   - plugin is now translatable (see inst/rkward/po/)
   - german translation
